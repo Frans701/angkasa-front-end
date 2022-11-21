@@ -1,16 +1,7 @@
-import logo from "./logo.svg";
-import "./App.css";
+import { Menu, Transition } from "@headlessui/react";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { AcademicCapIcon } from "@heroicons/react/20/solid";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <div>
-          <h1 className="font-bold text-pink-500">Test</h1>
-        </div>
-      </header>
-    </div>
-  );
+export default function App() {
+  return <div className="fixed top-16 w-56 text-right">Test</div>;
 }
-
-export default App;
