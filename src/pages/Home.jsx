@@ -1,5 +1,12 @@
+import React from "react";
+import Navbar from "../components/Navbar";
+
 function Home() {
-    return <div className="fixed top-16 w-56 text-right">Test</div>
+  return (
+    <>
+      <Navbar />
+    </>
+  );
 }
 
 export default Home;
