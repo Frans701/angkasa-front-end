@@ -1,6 +1,7 @@
 import React from "react";
 import Cards from "../components/Cards";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 function Search() {
   return (
@@ -12,6 +13,7 @@ function Search() {
         </p>
         <Cards />
       </div>
+      <Footer />
     </>
   );
 }
