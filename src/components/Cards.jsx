@@ -53,7 +53,7 @@ function Cards() {
           </div>
           <a
             href="/register"
-            className="text-white bg-yellow-300 hover:bg-yellow-400 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-[48px] py-2.5 dark:bg-yellow-400 dark:hover:bg-yellow-300 focus:outline-none dark:focus:ring-yellow-400 text-blue-500"
+            className=" bg-yellow-300 hover:bg-yellow-400 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-[48px] py-2.5 dark:bg-yellow-400 dark:hover:bg-yellow-300 focus:outline-none dark:focus:ring-yellow-400 text-blue-500"
           >
             Pilih
           </a>
