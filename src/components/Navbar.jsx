@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
 import angkasaLogo from "../assets/angkasaLogo.svg";
+import { Link } from "react-router-dom";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div>
       <nav className="bg-white">
-        <div className="container mx-auto">
-          <div className="flex items-center justify-between py-[14px] px-[8px]">
+        <div className="px-6">
+          <div className="flex items-center justify-between py-[14px] px-[16px] xl:px-0">
             <div className="flex items-center justify-between w-full">
               <div className="flex-shrink-0">
                 <img
@@ -37,12 +39,11 @@ function Nav() {
                   >
                     Login
                   </a>
-                  <a
-                    href="/register"
-                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                  >
-                    Register
-                  </a>
+                  <Link to="/register">
+                    <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                      Register
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -103,10 +104,10 @@ function Nav() {
           leaveTo="opacity-0 scale-95"
         >
           {(ref) => (
-            <div className="md:hidden" id="mobile-menu">
+            <div className="md:hidden bg-white py-[24px]" id="mobile-menu">
               <div
                 ref={ref}
-                className="flex flex-col items-center px-[8px] gap-[16px] mt-[16px]"
+                className="flex flex-col items-center px-[8px] gap-[16px]"
               >
                 <a
                   href="#"
@@ -126,12 +127,11 @@ function Nav() {
                 >
                   Login
                 </a>
-                <a
-                  href="/register"
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                >
-                  Register
-                </a>
+                <Link to="/register">
+                  <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    Register
+                  </button>
+                </Link>
               </div>
             </div>
           )}

@@ -8,5 +8,4 @@ module.exports = {
     current: "currentColor",
     "angkasa-blue": "#296BFF",
   },
-  plugins: [],
 };
