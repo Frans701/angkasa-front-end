@@ -17,16 +17,6 @@ function SearchCard() {
   const [selected, setSelected] = useState(people[0]);
   const [query, setQuery] = useState("");
 
-  const [value, setValue] = useState({
-    startDate: null,
-    endDate: null,
-  });
-
-  const handleValueChange = (newValue) => {
-    console.log("newValue:", newValue);
-    setValue(newValue);
-  };
-
   const filteredPeople =
     query === ""
       ? people
