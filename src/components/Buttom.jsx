@@ -1,6 +1,6 @@
 import React from "react";
 
-function Buttom({ type = "submit", color, children }) {
+function Buttom({ type = "submit", color, children, onPress }) {
   const variant = {
     blue: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-[24px] py-2.5 focus:outline-none focus:ring-blue-800",
     yellow:
@@ -10,7 +10,7 @@ function Buttom({ type = "submit", color, children }) {
   const buttonColor = variant[color || "blue"];
 
   return (
-    <button type={type} className={buttonColor}>
+    <button type={type} className={buttonColor} onClick={onPress}>
       {children}
     </button>
   );

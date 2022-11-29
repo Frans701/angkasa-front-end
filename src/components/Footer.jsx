@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import angkasaLogo from "../assets/angkasaLogo.svg";
+import Buttom from "./Buttom";
 
 function Footer() {
   return (
@@ -48,9 +49,7 @@ function Footer() {
                 Any Question
               </h6>
               <Link to="/">
-                <button className="text-blue-500 hover:bg-blue-500 hover:text-white border-blue-500 border-2 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none dark:focus:ring-blue-800">
-                  Contact Us
-                </button>
+                <Buttom>Contact Us</Buttom>
               </Link>
             </div>
           </div>
