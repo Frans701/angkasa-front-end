@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import SearchCard from "../components/SearchCard";
 
 function Home() {
+  let [changeText, setChangeText] = useState(true);
+  const handleChange = (id) => {
+    return setChangeText(id);
+  };
   return (
     <>
       <Navbar />
@@ -15,6 +19,11 @@ function Home() {
         />
         <div className="flex justify-center">
           <SearchCard />
+          <div>
+            <button onClick={() => handleChange(true)}>click benar</button>
+            <button onClick={() => handleChange(false)}>click salah</button>
+            {changeText ? <>benar</> : <>salah</>}
+          </div>
         </div>
       </section>
       <Footer />

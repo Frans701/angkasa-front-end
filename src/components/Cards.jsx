@@ -1,5 +1,7 @@
 import React from "react";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
+import { Link } from "react-router-dom";
+import Buttom from "./Buttom";
 
 function Cards() {
   return (
@@ -51,12 +53,9 @@ function Cards() {
             <span className="cursor-pointer">Detail Harga</span>
             <span className="cursor-pointer">Kebijakan</span>
           </div>
-          <a
-            href="/register"
-            className=" bg-yellow-300 hover:bg-yellow-400 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-[48px] py-2.5 dark:bg-yellow-400 dark:hover:bg-yellow-300 focus:outline-none dark:focus:ring-yellow-400 text-blue-500"
-          >
-            Pilih
-          </a>
+          <Link to="/">
+            <Buttom color="yellow">Pilih</Buttom>
+          </Link>
         </div>
       </div>
     </>
