@@ -14,11 +14,14 @@ function Nav() {
           <div className="flex items-center justify-between py-[14px] px-[16px] xl:px-0">
             <div className="flex items-center justify-between w-full">
               <div className="flex-shrink-0">
-                <img
-                  className="h-[40px]"
-                  src={angkasaLogo}
-                  alt="Angkasa Logo"
-                />
+                <Link to="/">
+                  {" "}
+                  <img
+                    className="h-[40px]"
+                    src={angkasaLogo}
+                    alt="Angkasa Logo"
+                  />
+                </Link>
               </div>
               <div className="hidden md:block">
                 <div className="flex flex-row items-center gap-[24px]">
