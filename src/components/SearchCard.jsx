@@ -40,7 +40,7 @@ function SearchCard() {
   return (
     <>
       <div className=" bg-white p-[24px] absolute bottom-[40px] gap-[16px] rounded-lg w-[1000px]">
-        <div className="flex">
+        <div className="flex space-x-1 rounded-xl bg-blue-900/20 p-1 w-[40%]">
           <TabsButtom select={active} onPress={() => handleChange("oneWay")}>
             One Way
           </TabsButtom>
