@@ -69,7 +69,7 @@ function Cards() {
                 Detail Harga
               </button>
             </div>
-            <Link to="/">
+            <Link to="/chart">
               <Buttom color="yellow" width="w-full">
                 Pilih
               </Buttom>

@@ -7,7 +7,7 @@ function Search() {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto px-[24px]">
+      <div className="px-[24px] xl:px-[80px]">
         <p className="mt-[32px] mb-[16px]">
           Menampilkan 49 penerbangan terbaik dengan harga terbaik.
         </p>
