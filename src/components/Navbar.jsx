@@ -10,7 +10,7 @@ function Nav() {
   return (
     <div>
       <nav className="bg-white">
-        <div className="flex items-center justify-between py-[14px] px-[16px] xl:px-[80px]">
+        <div className="flex items-center justify-between py-[14px] px-[24px] xl:px-[80px]">
           <div className="flex items-center justify-between w-full">
             <div className="flex-shrink-0">
               <Link to="/">

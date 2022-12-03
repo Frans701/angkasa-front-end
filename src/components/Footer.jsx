@@ -7,7 +7,7 @@ function Footer() {
   return (
     <>
       <footer class="lg:text-left bg-white ">
-        <div class="xl:px-[80px] py-[40px] md:text-left px-[16px]">
+        <div class="xl:px-[80px] py-[40px] md:text-left px-[24px]">
           <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
             <div class="flex flex-col gap-[16px] items-start">
               <Link to="/">

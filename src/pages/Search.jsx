@@ -11,7 +11,14 @@ function Search() {
         <p className="mt-[32px] mb-[16px]">
           Menampilkan 49 penerbangan terbaik dengan harga terbaik.
         </p>
-        <Cards />
+        <div className="flex flex-col gap-[16px]">
+          <Cards />
+          <Cards />
+          <Cards />
+          <Cards />
+          <Cards />
+          <Cards />
+        </div>
       </div>
       <Footer />
     </>
