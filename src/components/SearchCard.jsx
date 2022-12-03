@@ -18,12 +18,37 @@ const people = [
 function SearchCard() {
   const [selected, setSelected] = useState(people[0]);
   const [query, setQuery] = useState("");
-  const [active, setActive] = useState(true);
-  const [actives, setActives] = useState(false);
+  const [active, setActive] = useState({ tab1: true, tab2: false });
 
   let [changeLFlight, setChangeLFlight] = useState("oneWay");
-  const handleChange = (e) => {
-    return setChangeLFlight(e), setActive(!active), setActives(!actives);
+  const handleChange1 = (e) => {
+    return (
+      setChangeLFlight(e),
+      setActive((prev) => {
+        return {
+          ...prev,
+
+          tab1: true,
+          tab2: false,
+        };
+      })
+    );
+  };
+
+  console.log(active);
+
+  const handleChange2 = (e) => {
+    return (
+      setChangeLFlight(e),
+      setActive((prev) => {
+        return {
+          ...prev,
+
+          tab2: true,
+          tab1: false,
+        };
+      })
+    );
   };
 
   console.log(changeLFlight);
@@ -41,10 +66,16 @@ function SearchCard() {
     <>
       <div className=" bg-white p-[24px] absolute bottom-[40px] gap-[16px] rounded-lg w-[1000px]">
         <div className="flex space-x-1 rounded-xl bg-blue-900/20 p-1 w-[40%]">
-          <TabsButtom select={active} onPress={() => handleChange("oneWay")}>
+          <TabsButtom
+            select={active.tab1}
+            onPress={() => handleChange1("oneWay")}
+          >
             One Way
           </TabsButtom>
-          <TabsButtom select={actives} onPress={() => handleChange("return")}>
+          <TabsButtom
+            select={active.tab2}
+            onPress={() => handleChange2("return")}
+          >
             Return
           </TabsButtom>
         </div>
