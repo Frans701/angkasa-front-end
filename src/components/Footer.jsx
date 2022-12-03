@@ -6,9 +6,9 @@ import Buttom from "./Buttom";
 function Footer() {
   return (
     <>
-      <footer class="text-center lg:text-left bg-white ">
-        <div class="mx-6 py-10 text-center md:text-left">
-          <div class="grid grid-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <footer class="lg:text-left bg-white ">
+        <div class="xl:px-[80px] py-[40px] md:text-left px-[16px]">
+          <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
             <div class="flex flex-col gap-[16px] items-start">
               <Link to="/">
                 {" "}
@@ -24,8 +24,8 @@ function Footer() {
                 elit.
               </p>
             </div>
-            <div class="justify-self-center">
-              <h6 class="uppercase font-semibold mb-4 flex justify-center md:justify-start">
+            <div class="xl:justify-self-center">
+              <h6 class="uppercase font-semibold mb-4 xl:flex justify-center md:justify-start">
                 Navigation
               </h6>
               <p class="mb-4">
@@ -44,8 +44,8 @@ function Footer() {
                 </a>
               </p>
             </div>
-            <div class="justify-self-center">
-              <h6 class="uppercase font-semibold mb-4 flex justify-center md:justify-start">
+            <div class="xl:justify-self-center">
+              <h6 class="uppercase font-semibold mb-4 xl:flex justify-center md:justify-start">
                 Any Question
               </h6>
               <Link to="/">
