@@ -25,13 +25,13 @@ const cabinClass = [
 function SearchCard() {
   const [selected, setSelected] = useState(people[0]);
   const [selecteds, setSelecteds] = useState(cabinClass[0]);
-  const [passenger, setPassenger] = useState(0);
+  const [passenger, setPassenger] = useState(1);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState({ tab1: true, tab2: false });
 
   const dec = () => {
-    if (passenger <= 0) {
-      return 0;
+    if (passenger <= 1) {
+      return 1;
     } else {
       setPassenger(passenger - 1);
     }
