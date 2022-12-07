@@ -89,18 +89,12 @@ function SearchCard() {
 
   return (
     <>
-<<<<<<< HEAD
       <div className=" bg-white p-[24px] xl:absolute bottom-[40px] gap-[16px] rounded-lg xl:w-[1000px] w-full">
         <div className="flex space-x-1 rounded-xl bg-blue-900/20 p-1 xl:w-[40%] w-full">
           <TabsButtom
             select={active.tab1}
             onPress={() => handleChange1("oneWay")}
           >
-=======
-      <div className=" bg-white p-[24px] absolute bottom-[40px] gap-[16px] rounded-lg w-[1000px]">
-        <div className="flex space-x-1 rounded-xl bg-blue-900/20 p-1 w-[40%]">
-          <TabsButtom select={active} onPress={() => handleChange("oneWay")}>
->>>>>>> fad889dc4fce30278e9de1ce55105d654245a0b4
             One Way
           </TabsButtom>
           <TabsButtom

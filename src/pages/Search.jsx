@@ -16,7 +16,11 @@ function Search() {
     const fetchPosts = async () => {
       setLoading(true);
       const res = await axios.get("https://jsonplaceholder.typicode.com/posts");
-      setPosts(res.data);
+      const newRes = res.data.map((item) => ({
+        ...item,
+        isDescVisible: false,
+      }));
+      setPosts(newRes);
       setLoading(false);
     };
 
@@ -41,7 +45,7 @@ function Search() {
           Menampilkan 49 penerbangan terbaik dengan harga terbaik.
         </p>
         <div className="flex flex-col gap-[16px]">
-          <Cards posts={currentPosts} />
+          <Cards posts={posts} setPosts={setPosts} />
           <Pagination
             postsPerPage={postsPerPage}
             totalPosts={posts.length}
