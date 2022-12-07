@@ -16,12 +16,23 @@ function Search() {
     const fetchPosts = async () => {
       setLoading(true);
       const res = await axios.get("https://jsonplaceholder.typicode.com/posts");
-      setPosts(res.data);
+      const newRes = res.data.map((item) => ({
+        ...item,
+        isDescVisible: false,
+      }));
+      setPosts(newRes);
       setLoading(false);
     };
 
     fetchPosts();
   }, []);
+
+  const toggleDesc = (id) => {
+    const newPosts = posts.map((post) =>
+      post.id === id ? { ...post, isDescVisible: !post.isDescVisible } : post
+    );
+    setPosts(newPosts);
+  };
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;

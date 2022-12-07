@@ -7,7 +7,7 @@ import Buttom from "./Buttom";
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log(isOpen);
+  // console.log(isOpen);
   return (
     <div>
       <nav className="bg-white">
