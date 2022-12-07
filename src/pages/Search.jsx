@@ -1,9 +1,38 @@
-import React from "react";
 import Cards from "../components/Cards";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import React, { useState, useEffect } from "react";
+import Posts from "../Posts";
+import Pagination from "../Pagination";
+import axios from "axios";
 
 function Search() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      setLoading(true);
+      const res = await axios.get("https://jsonplaceholder.typicode.com/posts");
+      setPosts(res.data);
+      setLoading(false);
+    };
+
+    fetchPosts();
+  }, []);
+
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  // console.log(currentPosts);
+  // Change page
+  const paginateFront = () => setCurrentPage(currentPage + 1);
+  const paginateBack = () => setCurrentPage(currentPage - 1);
+
   return (
     <>
       <Navbar />
@@ -12,12 +41,14 @@ function Search() {
           Menampilkan 49 penerbangan terbaik dengan harga terbaik.
         </p>
         <div className="flex flex-col gap-[16px]">
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
+          <Cards posts={currentPosts} />
+          <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={posts.length}
+            paginateBack={paginateBack}
+            paginateFront={paginateFront}
+            currentPage={currentPage}
+          />
         </div>
       </div>
       <Footer />
