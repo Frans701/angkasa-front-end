@@ -27,6 +27,13 @@ function Search() {
     fetchPosts();
   }, []);
 
+  const toggleDesc = (id) => {
+    const newPosts = posts.map((post) =>
+      post.id === id ? { ...post, isDescVisible: !post.isDescVisible } : post
+    );
+    setPosts(newPosts);
+  };
+
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -45,7 +52,7 @@ function Search() {
           Menampilkan 49 penerbangan terbaik dengan harga terbaik.
         </p>
         <div className="flex flex-col gap-[16px]">
-          <Cards posts={posts} setPosts={setPosts} />
+          <Cards posts={currentPosts} />;
           <Pagination
             postsPerPage={postsPerPage}
             totalPosts={posts.length}

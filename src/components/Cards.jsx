@@ -22,12 +22,6 @@ const Cards = ({ posts, setPosts, loading, onPress }) => {
     <>
       <ul>
         {posts.map((post) => {
-          // const toggleDesc = (id) => {
-          //   post.id === id
-          //     ? { ...post, isDescVisible: !post.isDescVisible }
-          //     : post;
-          //   // setPosts(newPost);
-          // };
           return (
             <li
               key={post.id}
