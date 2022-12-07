@@ -5,11 +5,13 @@ import Buttom from "./Buttom";
 import { Transition } from "@headlessui/react";
 
 const Cards = ({ posts, setPosts, loading, onPress }) => {
-  const [details, setDetails] = useState();
-  const [isOpen, setIsOpen] = useState(false);
-  const [isOpens, setIsOpens] = useState(false);
-  const [test, setTest] = useState("test");
-  const [postss, setPostss] = useState([]);
+  // const [details, setDetails] = useState();
+  // const [isOpen, setIsOpen] = useState(false);
+  // const [isOpens, setIsOpens] = useState(false);
+  // const [test, setTest] = useState("test");
+  // const [postss, setPostss] = useState([]);
+  const [test, setTest] = useState("");
+  console.log(test);
 
   console.log(posts);
 
@@ -71,7 +73,13 @@ const Cards = ({ posts, setPosts, loading, onPress }) => {
                 <div className="w-full flex justify-between xl:items-center xl:flex-row flex-col gap-[8px] xl:gap-0">
                   <div className="flex flex-row gap-[24px] items-center text-blue-500">
                     <button
-                      onClick={true}
+                      onClick={() => {
+                        if (test == post.id) {
+                          setTest("");
+                        } else {
+                          setTest(post.id);
+                        }
+                      }}
                       type="button"
                       className="cursor-pointer"
                       aria-controls="mobile-menu"
@@ -97,7 +105,7 @@ const Cards = ({ posts, setPosts, loading, onPress }) => {
               </div>
               <div className="w-full">
                 <Transition
-                  show={post.isDescVisible}
+                  show={post.id == test ? true : false}
                   enter="transition ease-out duration-100 transform"
                   enterFrom="opacity-0 scale-95"
                   enterTo="opacity-100 scale-100"

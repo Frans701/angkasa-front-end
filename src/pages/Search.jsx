@@ -52,7 +52,7 @@ function Search() {
           Menampilkan 49 penerbangan terbaik dengan harga terbaik.
         </p>
         <div className="flex flex-col gap-[16px]">
-          <Cards posts={currentPosts} />;
+          <Cards posts={currentPosts} />
           <Pagination
             postsPerPage={postsPerPage}
             totalPosts={posts.length}

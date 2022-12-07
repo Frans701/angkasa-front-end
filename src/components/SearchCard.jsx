@@ -1,7 +1,12 @@
 import React from "react";
 import { Fragment, useState } from "react";
 import { Combobox, Transition, Menu } from "@headlessui/react";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import {
+  CheckIcon,
+  ChevronUpDownIcon,
+  PlusIcon,
+  MinusIcon,
+} from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import Buttom from "./Buttom";
 import TabsButtom from "./TabsButtom";
@@ -66,7 +71,7 @@ function SearchCard() {
     );
   };
 
-  console.log(changeLFlight);
+  // console.log(changeLFlight);
   const filteredPeople =
     query === ""
       ? people
@@ -89,7 +94,7 @@ function SearchCard() {
 
   return (
     <>
-      <div className=" bg-white p-[24px] xl:absolute bottom-[40px] gap-[16px] rounded-lg xl:w-[1000px] w-full">
+      <div className=" bg-white p-[24px] xl:absolute bottom-0 gap-[16px] rounded-lg xl:w-[1000px] w-full shadow-lg">
         <div className="flex space-x-1 rounded-xl bg-blue-900/20 p-1 xl:w-[40%] w-full">
           <TabsButtom
             select={active.tab1}
@@ -105,14 +110,14 @@ function SearchCard() {
           </TabsButtom>
         </div>
         <div className="flex flex-col gap-[16px] items-end">
-          <div className="flex items-end xl:flex-row flex-col justify-between mt-[16px] w-full gap-[16px]">
+          <div className="flex items-end xl:flex-row flex-col justify-between mt-[16px] w-full gap-[24px]">
             <div className="w-full relative Z-20">
               <h6>From</h6>
               <Combobox value={selected} onChange={setSelected}>
                 <div className="relative mt-1 Z-20">
-                  <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+                  <div className="">
                     <Combobox.Input
-                      className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+                      className="px-2 form-select appearance-none block w-full py-1.5 xl:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
                       displayValue={(person) => person.name}
                       onChange={(event) => setQuery(event.target.value)}
                     />
@@ -142,7 +147,7 @@ function SearchCard() {
                             className={({ active }) =>
                               `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                 active
-                                  ? "bg-teal-600 text-white"
+                                  ? "bg-blue-600 text-white"
                                   : "text-gray-900"
                               }`
                             }
@@ -160,7 +165,7 @@ function SearchCard() {
                                 {selected ? (
                                   <span
                                     className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                      active ? "text-white" : "text-teal-600"
+                                      active ? "text-white" : "text-blue-600"
                                     }`}
                                   >
                                     <CheckIcon
@@ -183,9 +188,9 @@ function SearchCard() {
               <h6>To</h6>
               <Combobox value={selected} onChange={setSelected}>
                 <div className="relative mt-1 z-20">
-                  <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+                  <div className="">
                     <Combobox.Input
-                      className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+                      className="px-2 form-select appearance-none block w-full py-1.5 xl:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
                       displayValue={(person) => person.name}
                       onChange={(event) => setQuery(event.target.value)}
                     />
@@ -215,7 +220,7 @@ function SearchCard() {
                             className={({ active }) =>
                               `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                 active
-                                  ? "bg-teal-600 text-white"
+                                  ? "bg-blue-600 text-white"
                                   : "text-gray-900"
                               }`
                             }
@@ -233,7 +238,7 @@ function SearchCard() {
                                 {selected ? (
                                   <span
                                     className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                      active ? "text-white" : "text-teal-600"
+                                      active ? "text-white" : "text-blue-600"
                                     }`}
                                   >
                                     <CheckIcon
@@ -254,9 +259,9 @@ function SearchCard() {
             </div>
             <div className="w-full relative">
               <h6>Departure</h6>
-              <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+              <div className="">
                 <input
-                  className="w-full border-none py-2 px-3 text-sm leading-5 text-gray-900 focus:outline-none"
+                  className="px-2 form-select appearance-none block w-full py-1.5 xl:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
                   type="date"
                 />
               </div>
@@ -264,9 +269,9 @@ function SearchCard() {
             {changeLFlight === "return" ? (
               <div className="w-full relative">
                 <h6>Return</h6>
-                <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+                <div className="">
                   <input
-                    className="w-full border-none py-2 px-3 text-sm leading-5 text-gray-900 focus:outline-none"
+                    className="px-2 form-select appearance-none block w-full py-1.5 xl:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
                     type="date"
                   />
                 </div>
@@ -275,14 +280,14 @@ function SearchCard() {
               ""
             )}
           </div>
-          <div className="flex xl:flex-row flex-col items-end gap-[16px] w-full">
+          <div className="flex xl:flex-row flex-col items-end gap-[24px] w-full">
             <div className="w-full relative">
               <h6>Cabin Class</h6>
               <Combobox value={selecteds} onChange={setSelecteds}>
                 <div className="relative mt-1">
-                  <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+                  <div className="">
                     <Combobox.Input
-                      className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+                      className="px-2 form-select appearance-none block w-full py-1.5 xl:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
                       displayValue={(cabinClass) => cabinClass.name}
                       onChange={(event) => setQuery(event.target.value)}
                     />
@@ -312,7 +317,7 @@ function SearchCard() {
                             className={({ active }) =>
                               `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                 active
-                                  ? "bg-teal-600 text-white"
+                                  ? "bg-blue-600 text-white"
                                   : "text-gray-900"
                               }`
                             }
@@ -330,7 +335,7 @@ function SearchCard() {
                                 {selected ? (
                                   <span
                                     className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                      active ? "text-white" : "text-teal-600"
+                                      active ? "text-white" : "text-blue-600"
                                     }`}
                                   >
                                     <CheckIcon
@@ -351,21 +356,18 @@ function SearchCard() {
             </div>
             <div className="w-full relative">
               <h6>Passenger</h6>
-              <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
-                <div className="w-full border-none py-2 px-3 text-sm leading-5 text-gray-900 focus:outline-none flex flex-row justify-between">
-                  <div
+              <div className="py-2 px-3 form-select appearance-none block w-full xl:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none">
+                <div className="w-full border-none text-sm leading-5 text-gray-900 focus:outline-none flex flex-row justify-between">
+                  <MinusIcon
                     onClick={() => setPassenger(dec)}
-                    className="cursor-pointer"
-                  >
-                    -
-                  </div>
+                    className=" h-5 w-5 cursor-pointer"
+                  />
+
                   {passenger}
-                  <div
+                  <PlusIcon
+                    className="h-5 w-5 cursor-pointer"
                     onClick={() => setPassenger(passenger + 1)}
-                    className="cursor-pointer"
-                  >
-                    +
-                  </div>
+                  />
                 </div>
               </div>
             </div>
