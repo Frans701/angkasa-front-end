@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import Posts from "../Posts";
 import Pagination from "../Pagination";
 import axios from "axios";
+import CardSkeleton from "../components/CardSkeleton";
 
 function Search() {
   const [posts, setPosts] = useState([]);
@@ -41,8 +42,7 @@ function Search() {
 
   // console.log(currentPosts);
   // Change page
-  const paginateFront = () => setCurrentPage(currentPage + 1);
-  const paginateBack = () => setCurrentPage(currentPage - 1);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -52,12 +52,13 @@ function Search() {
           Menampilkan 49 penerbangan terbaik dengan harga terbaik.
         </p>
         <div className="flex flex-col gap-[16px]">
+          {loading && <CardSkeleton cards={10} />}
+
           <Cards posts={currentPosts} />
           <Pagination
             postsPerPage={postsPerPage}
             totalPosts={posts.length}
-            paginateBack={paginateBack}
-            paginateFront={paginateFront}
+            paginate={paginate}
             currentPage={currentPage}
           />
         </div>

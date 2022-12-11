@@ -3,6 +3,8 @@ import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import Buttom from "./Buttom";
 import { Transition } from "@headlessui/react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Cards = ({ posts, setPosts, loading, onPress }) => {
   // const [details, setDetails] = useState();
@@ -30,7 +32,7 @@ const Cards = ({ posts, setPosts, loading, onPress }) => {
               className="mb-[16px] flex flex-col items-start gap-[16px] px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white"
             >
               <div className="flex flex-col w-full gap-[24px]">
-                <div>{post.title}</div>
+                <div>{post.title || <Skeleton count={10} />} </div>
                 <div className="flex xl:flex-row flex-col justify-between xl:items-center w-full items-start gap-[16px] xl:gap-0">
                   <div className="flex flex-row gap-[16px] xl:items-center">
                     <div className="">
