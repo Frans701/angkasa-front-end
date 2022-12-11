@@ -357,7 +357,7 @@ function SearchCard() {
               <h6>Passenger</h6>
               <div className="py-2 px-3 form-select appearance-none block w-full xl:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none">
                 <div className="w-full border-none text-sm leading-5 text-gray-900 focus:outline-none flex flex-row justify-between">
-                  <MinusIcon=
+                  <MinusIcon
                     onClick={dec}
                     className=" h-5 w-5 cursor-pointer"
                   />
