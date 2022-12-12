@@ -37,6 +37,14 @@ function Nav() {
                 >
                   Check Order
                 </a>
+                {/* TESTING PROFILE */}
+                <a
+                  href="/profile"
+                  className="px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Profile
+                </a>
+                {/* END OF TESTING PROFILE */}
                 <a
                   href="/login"
                   className="px-3 py-2 rounded-md text-sm font-medium"
