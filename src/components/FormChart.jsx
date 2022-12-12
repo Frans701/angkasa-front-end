@@ -1,43 +1,68 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Buttom from "./Buttom";
+import FormInput from "./FormInput";
 import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
 
 function FormChart() {
+  const [values, setValues] = useState({
+    username: "",
+    email: "",
+    fullname: "",
+  });
+
+  const inputs = [
+    {
+      id: 1,
+      name: "username",
+      type: "text",
+      placeholder: "Username",
+      errorMsg: "Username 3-16 and and shouldn't include any special character",
+      label: "Username",
+      pattern: "^[A-Za-z0-9]{3,16}$",
+      required: true,
+    },
+    {
+      id: 2,
+      name: "email",
+      type: "text",
+      placeholder: "Email",
+      errorMsg: "It should be valid email address",
+      label: "Email",
+      required: true,
+    },
+  ];
+
+  // console.log(username);
+  const handleSubmit = (e) => {
+    // console.log(usernameRef);
+    e.preventDefault();
+  };
+
+  const onChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  // console.log(values);
   return (
     <>
       <div className="flex xl:flex-row flex-col gap-[16px] mt-[32px] items-start">
         <div className="w-full flex flex-col gap-[16px] items-end">
           <div className="flex flex-col items-start gap-[16px] px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full">
             <h2 className="text-xl font-semibold">Detail Pemesan</h2>
-            <div className="w-full">
-              <label for="name" class="">
-                Nama Lengkap
-              </label>
-              <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm mt-1">
-                <input
-                  type="text"
-                  id="name"
-                  class="w-full border-none py-2 px-3 text-sm leading-5 text-gray-900 focus:outline-none"
-                  placeholder="John"
-                  required
-                />
-              </div>
-            </div>
-            <div className="w-full">
-              <label for="address" class="">
-                Address
-              </label>
-              <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm mt-1">
-                <input
-                  type="text"
-                  id="address"
-                  class="w-full border-none py-2 px-3 text-sm leading-5 text-gray-900 focus:outline-none"
-                  placeholder="Address"
-                  required
-                />
-              </div>
-            </div>
+            <form onSubmit={handleSubmit}>
+              {inputs.map((input) => {
+                return (
+                  <FormInput
+                    key={input.id}
+                    {...input}
+                    value={values[input.name]}
+                    onChange={onChange}
+                  />
+                );
+              })}
+              <Buttom>Submit</Buttom>
+            </form>
           </div>
           <Link to="/chart">
             <Buttom color="yellow">Lanjutkan Ke Pembayaran</Buttom>

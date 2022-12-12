@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Fragment, useState } from "react";
 import { Combobox, Transition, Menu } from "@headlessui/react";
 import {
@@ -36,39 +36,23 @@ function SearchCard() {
 
   const dec = () => {
     if (passenger <= 1) {
-      return 1;
+      setPassenger(1);
     } else {
       setPassenger(passenger - 1);
     }
   };
 
-  let [changeLFlight, setChangeLFlight] = useState("oneWay");
-  const handleChange1 = (e) => {
-    return (
-      setChangeLFlight(e),
-      setActive((prev) => {
-        return {
-          ...prev,
-          tab1: true,
-          tab2: false,
-        };
-      })
-    );
+  const add = () => {
+    if (passenger >= 5) {
+      setPassenger(5);
+    } else {
+      setPassenger(passenger + 1);
+    }
   };
 
-  console.log(active);
-
-  const handleChange2 = (e) => {
-    return (
-      setChangeLFlight(e),
-      setActive((prev) => {
-        return {
-          ...prev,
-          tab2: true,
-          tab1: false,
-        };
-      })
-    );
+  let [changeLFlight, setChangeLFlight] = useState("oneWay");
+  const handleChange = (e) => {
+    setChangeLFlight(e);
   };
 
   // console.log(changeLFlight);
@@ -92,24 +76,39 @@ function SearchCard() {
             .includes(query.toLowerCase().replace(/\s+/g, ""))
         );
 
+  useEffect(() => {
+    setActive({
+      tab1: changeLFlight === "oneWay",
+      tab2: changeLFlight === "return",
+    });
+  }, [changeLFlight]);
+
+  const handleSubmit = (e) => {
+    // console.log(usernameRef);
+    e.preventDefault();
+  };
+
   return (
     <>
       <div className=" bg-white p-[24px] xl:absolute bottom-0 gap-[16px] rounded-lg xl:w-[1000px] w-full shadow-lg">
         <div className="flex space-x-1 rounded-xl bg-blue-900/20 p-1 xl:w-[40%] w-full">
           <TabsButtom
             select={active.tab1}
-            onPress={() => handleChange1("oneWay")}
+            onPress={() => handleChange("oneWay")}
           >
             One Way
           </TabsButtom>
           <TabsButtom
             select={active.tab2}
-            onPress={() => handleChange2("return")}
+            onPress={() => handleChange("return")}
           >
             Return
           </TabsButtom>
         </div>
-        <div className="flex flex-col gap-[16px] items-end">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-[16px] items-end"
+        >
           <div className="flex items-end xl:flex-row flex-col justify-between mt-[16px] w-full gap-[24px]">
             <div className="w-full relative Z-20">
               <h6>From</h6>
@@ -359,15 +358,12 @@ function SearchCard() {
               <div className="py-2 px-3 form-select appearance-none block w-full xl:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none">
                 <div className="w-full border-none text-sm leading-5 text-gray-900 focus:outline-none flex flex-row justify-between">
                   <MinusIcon
-                    onClick={() => setPassenger(dec)}
+                    onClick={dec}
                     className=" h-5 w-5 cursor-pointer"
                   />
 
                   {passenger}
-                  <PlusIcon
-                    className="h-5 w-5 cursor-pointer"
-                    onClick={() => setPassenger(passenger + 1)}
-                  />
+                  <PlusIcon className="h-5 w-5 cursor-pointer" onClick={add} />
                 </div>
               </div>
             </div>
@@ -375,7 +371,7 @@ function SearchCard() {
               <Buttom width="w-full">Search</Buttom>
             </Link>
           </div>
-        </div>
+        </form>
       </div>
     </>
   );
