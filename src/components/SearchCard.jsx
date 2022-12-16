@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Fragment, useState } from "react";
 import { Combobox, Transition, Menu } from "@headlessui/react";
+import axios from "axios";
 import {
   CheckIcon,
   ChevronUpDownIcon,
@@ -11,15 +12,6 @@ import { Link } from "react-router-dom";
 import Buttom from "./Buttom";
 import TabsButtom from "./TabsButtom";
 
-const people = [
-  { id: 1, name: "Wade Cooper" },
-  { id: 2, name: "Arlene Mccoy" },
-  { id: 3, name: "Devon Webb" },
-  { id: 4, name: "Tom Cook" },
-  { id: 5, name: "Tanya Fox" },
-  { id: 6, name: "Hellen Schmidt" },
-];
-
 const cabinClass = [
   { id: 1, name: "Economy" },
   { id: 2, name: "Premium Economy" },
@@ -28,11 +20,27 @@ const cabinClass = [
 ];
 
 function SearchCard() {
-  const [selected, setSelected] = useState(people[0]);
+  const [selectedFrom, setSelectedFrom] = useState({});
+  const [selectedTo, setSelectedTo] = useState({});
   const [selecteds, setSelecteds] = useState(cabinClass[0]);
   const [passenger, setPassenger] = useState(1);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState({ tab1: true, tab2: false });
+
+  const [airports, setAirpots] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const res = await axios.get(
+        "https://angkasa-api-staging.km3ggwp.com/api/airports/popular"
+      );
+      setAirpots(res.data.data.airports);
+      setSelectedFrom(res.data.data.airports[0]);
+      setSelectedTo(res.data.data.airports[0]);
+    };
+
+    fetchPosts();
+  }, []);
 
   const dec = () => {
     if (passenger <= 1) {
@@ -56,10 +64,10 @@ function SearchCard() {
   };
 
   // console.log(changeLFlight);
-  const filteredPeople =
+  let filteredAirports =
     query === ""
-      ? people
-      : people.filter((person) =>
+      ? airports
+      : airports.filter((person) =>
           person.name
             .toLowerCase()
             .replace(/\s+/g, "")
@@ -88,6 +96,33 @@ function SearchCard() {
     e.preventDefault();
   };
 
+  const [data, setData] = useState(null);
+
+  const handleClick = async () => {
+    try {
+      const data = await (
+        await fetch(
+          `https://angkasa-api-staging.km3ggwp.com/api/airports/search?airport=${query}`
+        )
+      ).json();
+      setData(data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  useEffect(() => {
+    if (query !== "") {
+      setTimeout(() => {
+        if (filteredAirports.length === 0) {
+          handleClick();
+        }
+      }, 1000);
+    }
+  }, [query]);
+
+  console.log(data);
+
   return (
     <>
       <div className=" bg-white p-[24px] xl:absolute bottom-0 gap-[16px] rounded-lg xl:w-[1000px] w-full shadow-lg">
@@ -112,7 +147,7 @@ function SearchCard() {
           <div className="flex items-end xl:flex-row flex-col justify-between mt-[16px] w-full gap-[24px]">
             <div className="w-full relative Z-20">
               <h6>From</h6>
-              <Combobox value={selected} onChange={setSelected}>
+              <Combobox value={selectedFrom} onChange={setSelectedFrom}>
                 <div className="relative mt-1 Z-20">
                   <div className="">
                     <Combobox.Input
@@ -135,12 +170,60 @@ function SearchCard() {
                     afterLeave={() => setQuery("")}
                   >
                     <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                      {filteredPeople.length === 0 && query !== "" ? (
+                      {filteredAirports.length === 0 && query !== "" ? (
                         <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
-                          Nothing found.
+                          {data === null ? (
+                            <p>Nothing found.</p>
+                          ) : (
+                            <>
+                              {data.data.airports.map((airport) => {
+                                return (
+                                  <Combobox.Option
+                                    key={airport.id}
+                                    className={({ active }) =>
+                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                        active
+                                          ? "bg-blue-600 text-white"
+                                          : "text-gray-900"
+                                      }`
+                                    }
+                                    value={airport}
+                                  >
+                                    {({ selected, active }) => (
+                                      <>
+                                        <span
+                                          className={`block truncate ${
+                                            selected
+                                              ? "font-medium"
+                                              : "font-normal"
+                                          }`}
+                                        >
+                                          {airport.name}
+                                        </span>
+                                        {selected ? (
+                                          <span
+                                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                                              active
+                                                ? "text-white"
+                                                : "text-blue-600"
+                                            }`}
+                                          >
+                                            <CheckIcon
+                                              className="h-5 w-5"
+                                              aria-hidden="true"
+                                            />
+                                          </span>
+                                        ) : null}
+                                      </>
+                                    )}
+                                  </Combobox.Option>
+                                );
+                              })}
+                            </>
+                          )}
                         </div>
                       ) : (
-                        filteredPeople.map((person) => (
+                        filteredAirports.map((person) => (
                           <Combobox.Option
                             key={person.id}
                             className={({ active }) =>
@@ -185,7 +268,7 @@ function SearchCard() {
             </div>
             <div className="w-full relative z-20">
               <h6>To</h6>
-              <Combobox value={selected} onChange={setSelected}>
+              <Combobox value={selectedTo} onChange={setSelectedTo}>
                 <div className="relative mt-1 z-20">
                   <div className="">
                     <Combobox.Input
@@ -208,12 +291,12 @@ function SearchCard() {
                     afterLeave={() => setQuery("")}
                   >
                     <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                      {filteredPeople.length === 0 && query !== "" ? (
+                      {filteredAirports.length === 0 && query !== "" ? (
                         <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                           Nothing found.
                         </div>
                       ) : (
-                        filteredPeople.map((person) => (
+                        filteredAirports.map((person) => (
                           <Combobox.Option
                             key={person.id}
                             className={({ active }) =>
