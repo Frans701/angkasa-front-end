@@ -12,6 +12,7 @@ import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import Navbar from "../components/Navbar";
+import Home from "./Home";
 
 const NAME_REGEX = /^[a-z ,.'-]+$/i;
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -98,9 +99,10 @@ const Register = () => {
     try {
       const response = await axios.post(REGISTER_URL, {
         fullname,
-        email,
         username,
+        email,
         password,
+        passwordConfirmation
       });
       console.log(JSON.stringify(response?.data));
       setSuccess(true);
@@ -120,19 +122,16 @@ const Register = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
-        <div className="bg-gray-100 flex flex-col justify-center">
-          <div className="flex flex-col gap-[16px] items-center py-5">
-            <img className="w-[140px]" src={angkasaLogo} alt="" />
-          </div>
           {success ? (
-            <div>
-              <h1>Sugoi</h1>
-              <a href="/"></a>
-            </div>
+            <Home/>
           ) : (
             <section>
+              <Navbar />
+              <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
+                <div className="bg-gray-100 flex flex-col justify-center">
+                  <div className="flex flex-col gap-[16px] items-center py-5">
+                    <img className="w-[140px]" src={angkasaLogo} alt="" />
+                  </div>
               <p
                 ref={errRef}
                 className={errMsg ? "errmsg" : "offscreen"}
@@ -260,13 +259,13 @@ const Register = () => {
                   Sudah memiliki akun?
                 </p>
               </form>
+              </div>
+              <div className="hidden sm:block">
+                <img className="w-full h-full object-cover" src={loginIMG} alt="" />
+              </div>
+            </div>
             </section>
           )}
-        </div>
-        <div className="hidden sm:block">
-          <img className="w-full h-full object-cover" src={loginIMG} alt="" />
-        </div>
-      </div>
     </>
   );
 };
