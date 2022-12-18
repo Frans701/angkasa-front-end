@@ -7,15 +7,11 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const Cards = ({ posts, setPosts, loading, onPress }) => {
-  // const [details, setDetails] = useState();
-  // const [isOpen, setIsOpen] = useState(false);
-  // const [isOpens, setIsOpens] = useState(false);
-  // const [test, setTest] = useState("test");
-  // const [postss, setPostss] = useState([]);
   const [test, setTest] = useState("");
-  console.log(test);
 
-  console.log(posts);
+  // console.log(test);
+
+  // console.log(posts);
 
   if (loading) {
     return <h2>Loading...</h2>;
@@ -26,29 +22,42 @@ const Cards = ({ posts, setPosts, loading, onPress }) => {
     <>
       <ul>
         {posts.map((post) => {
+          const formattedDateFrom = new Date(post.date.raw).toLocaleDateString(
+            {},
+            { timeZone: "UTC", month: "short", day: "2-digit", year: "numeric" }
+          );
+          const fromDate = formattedDateFrom.split(" ");
+
+          const formattedDateTo = new Date(post.date.raw).toLocaleDateString(
+            {},
+            { timeZone: "UTC", month: "short", day: "2-digit", year: "numeric" }
+          );
+          const toDate = formattedDateTo.split(" ");
           return (
             <li
               key={post.id}
               className="mb-[16px] flex flex-col items-start gap-[16px] px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white"
             >
               <div className="flex flex-col w-full gap-[24px]">
-                <div>{post.title || <Skeleton count={10} />} </div>
+                <div>{post.airplane.airline.name}</div>
                 <div className="flex xl:flex-row flex-col justify-between xl:items-center w-full items-start gap-[16px] xl:gap-0">
                   <div className="flex flex-row gap-[16px] xl:items-center">
                     <div className="">
                       <img
                         className="w-[80px] border p-[8px] rounded-lg"
-                        src="https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/rsfit00gsmenlarge1/string/2021/07/02/082df819-8a50-4c9d-a178-181258372b74-1625237794501-7572e19a7cdb12996c96b225c3a7efa9.png"
+                        src={post.airplane.airline.logo}
                         alt=""
                       />
                     </div>
                     <div className="flex flex-col gap-[8px] items-start">
-                      <h1 className="font-bold text-xl">04:45</h1>
-                      <span className="text-lg">CGK</span>
+                      <h1 className="font-bold text-xl">{post.std.hours}</h1>
+                      <span className="text-lg">{post.fromAirport.iata}</span>
                     </div>
                     <div className="flex flex-row items-center w-[100px]">
                       <div className="flex flex-col items-center gap-[8px] w-full">
-                        <span className="text-sm text-gray-300">1j 30m</span>
+                        <span className="text-sm text-gray-300">
+                          {post.estimated}
+                        </span>
                         <span className="border-b-2 w-full"></span>
                         <span className="text-sm text-gray-300">Langsung</span>
                       </div>
@@ -57,14 +66,14 @@ const Cards = ({ posts, setPosts, loading, onPress }) => {
                       </div>
                     </div>
                     <div className="flex flex-col gap-[8px] items-start">
-                      <h1 className="font-bold text-xl">06:15</h1>
-                      <span className="text-lg">SUB</span>
+                      <h1 className="font-bold text-xl">{post.sta.hours}</h1>
+                      <span className="text-lg">{post.toAirport.iata}</span>
                     </div>
                   </div>
                   <div>
                     <div>
                       <h1 className="text-2xl font-bold text-blue-500">
-                        IDR 924.550
+                        {post.class.price.formatted}
                         <span className="text-base text-gray-300 font-medium">
                           /pax
                         </span>
@@ -120,59 +129,61 @@ const Cards = ({ posts, setPosts, loading, onPress }) => {
                       <div className="flex flex-row gap-[40px]">
                         <div className="flex flex-col py-[16px]">
                           <span className="w-[80px] text-lg font-semibold">
-                            {" "}
-                            11:15
+                            <h1 className="font-bold text-xl">
+                              {post.std.hours}
+                            </h1>
                           </span>
-                          <span className="text-gray-500">05 Dec </span>
+                          <span className="text-gray-500">{`${fromDate[1]} ${fromDate[0]}`}</span>
                         </div>
                         <div className="border-l-2"></div>
                         <div className="flex flex-col py-[16px]">
                           <span className="font-semibold text-lg">
                             {" "}
-                            Jakarta (CGK)
+                            {post.fromAirport.city} ({post.fromAirport.iata})
                           </span>
                           <span className="text-gray-500">
-                            Soekarno Hatta International Airport
+                            {post.fromAirport.name}
                           </span>
                         </div>
                       </div>
                       <div className="flex flex-row gap-[40px]">
                         <span className="w-[80px] flex justify-center flex-col text-gray-500">
-                          1h 50m
+                          {post.estimated}
                         </span>
                         <div className="border-l-2"></div>
                         <div className="xl:border rounded-md xl:py-[16px] xl:px-[24px] flex-col flex gap-[16px] xl:bg-blue-500/5 xl:w-[50%]">
                           {" "}
-                          <div className="flex xl:flex-row flex-col xl:items-center gap-[8px] border-b pb-[16px]">
+                          <div className="flex xl:flex-row flex-col xl:items-center gap-[8px]">
                             <img
                               className="w-[40px] border p-[8px] rounded bg-white"
-                              src="https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/rsfit00gsmenlarge1/string/2021/07/02/082df819-8a50-4c9d-a178-181258372b74-1625237794501-7572e19a7cdb12996c96b225c3a7efa9.png"
+                              src={post.airplane.airline.logo}
                               alt=""
                             />
                             <span className="text-xs xl:text-base">
-                              IU-330 | ECONOMY
+                              {post.airplane.airplaneCode} | {post.class.type}
                             </span>
                           </div>
-                          <div className="font-semibold xl:text-base text-xs">
+                          {/* <div className="font-semibold xl:text-base text-xs">
                             Kabin: 7 kg, bagasi: 20 kg
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                       <div className="flex flex-row gap-[40px]">
                         <div className="flex flex-col py-[16px]">
                           <span className="w-[80px] text-lg font-semibold">
-                            {" "}
-                            14:05
+                            {post.sta.hours}
                           </span>
-                          <span className="text-gray-500">05 Dec</span>
+                          <span className="text-gray-500">{`${toDate[1]} ${toDate[0]}`}</span>
                         </div>
                         <div className="border-l-2"></div>
                         <div className="flex flex-col py-[16px]">
                           <span className="font-semibold text-lg">
                             {" "}
-                            Singapore (SIN)
+                            {post.toAirport.city} ({post.toAirport.iata})
                           </span>
-                          <span className="text-gray-500">Changi Intl</span>
+                          <span className="text-gray-500">
+                            {post.toAirport.name}
+                          </span>
                         </div>
                       </div>
                     </div>

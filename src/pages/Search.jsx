@@ -6,27 +6,37 @@ import Posts from "../Posts";
 import Pagination from "../Pagination";
 import axios from "axios";
 import CardSkeleton from "../components/CardSkeleton";
+import { useSearchParams, Link } from "react-router-dom";
 
 function Search() {
+  let [searchParams, setSearchParams] = useSearchParams();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
+  let departure = searchParams.get("departure");
+  let arrival = searchParams.get("arrival");
+  let date = searchParams.get("date");
+  let seatClass = searchParams.get("class");
 
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
-      const res = await axios.get("https://jsonplaceholder.typicode.com/posts");
-      const newRes = res.data.map((item) => ({
-        ...item,
-        isDescVisible: false,
-      }));
-      setPosts(newRes);
+      const res = await axios.get(
+        `https://angkasa-api-staging.km3ggwp.com/api/flights/search?departure=${departure}&arrival=${arrival}&date=${date}&class=${seatClass}`
+      );
+      // const newRes = res.data.map((item) => ({
+      //   ...item,
+      //   isDescVisible: false,
+      // }));
+      setPosts(res.data.data.flights);
       setLoading(false);
     };
 
     fetchPosts();
   }, []);
+
+  console.log(posts);
 
   const toggleDesc = (id) => {
     const newPosts = posts.map((post) =>
