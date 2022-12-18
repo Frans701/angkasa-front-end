@@ -52,6 +52,19 @@ function SearchCard() {
     fetchSeatClass();
   }, []);
 
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const res = await axios.get(
+        "https://angkasa-api-staging.km3ggwp.com/api/airports/popular"
+      );
+      setAirpots(res.data.data.airports);
+      setSelectedFrom(res.data.data.airports[0]);
+      setSelectedTo(res.data.data.airports[1]);
+    };
+
+    fetchPosts();
+  }, []);
+
   const dec = () => {
     if (passenger <= 1) {
       setPassenger(1);
