@@ -1,30 +1,30 @@
 import React from "react";
 
 export default function Pagination({
-  postsPerPage,
-  totalPosts,
+  flightsPerPage,
+  totalFlights,
   paginate,
   currentPage,
 }) {
   const pageNumbers = [];
 
-  for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(totalFlights / flightsPerPage); i++) {
     pageNumbers.push(i);
   }
 
   return (
-    <div className="py-2">
+    <div className="py-2 flex flex-col gap-[8px]">
       <div>
         <p className="text-sm text-gray-700">
           Showing
           <span className="font-medium">
             {" "}
-            {currentPage * postsPerPage - 10}{" "}
+            {currentPage * flightsPerPage - 3}{" "}
           </span>
           to
-          <span className="font-medium"> {currentPage * postsPerPage} </span>
+          <span className="font-medium"> {currentPage * flightsPerPage} </span>
           of
-          <span className="font-medium"> {totalPosts} </span>
+          <span className="font-medium"> {totalFlights} </span>
           results
         </p>
       </div>
@@ -39,8 +39,8 @@ export default function Pagination({
                 href="#"
                 className={
                   currentPage === number
-                    ? "bg-blue border-red-300 text-red-500 hover:bg-blue-200 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-                    : "bg-white border-gray-300 text-gray-500 hover:bg-blue-200 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+                    ? "bg-yellow-300 border-blue-500 text-blue-500 hover:bg-yellow-200 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+                    : "bg-white border-gray-300 text-gray-500 hover:bg-yellow-200 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
                 }
               >
                 {number}
