@@ -3,25 +3,19 @@ import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import Buttom from "./Buttom";
 import { Transition } from "@headlessui/react";
-import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-const Cards = ({ posts, setPosts, loading, onPress }) => {
+const Cards = ({ fligts, loading }) => {
   const [test, setTest] = useState("");
-
-  // console.log(test);
-
-  // console.log(posts);
 
   if (loading) {
     return <h2>Loading...</h2>;
   }
 
-  // console.log(posts);
   return (
     <>
       <ul>
-        {posts.map((post) => {
+        {fligts.map((post) => {
           const formattedDateFrom = new Date(post.date.raw).toLocaleDateString(
             {},
             { timeZone: "UTC", month: "short", day: "2-digit", year: "numeric" }
@@ -98,14 +92,6 @@ const Cards = ({ posts, setPosts, loading, onPress }) => {
                     >
                       Detail Penerbangan
                     </button>
-                    {/* <button
-                      onClick={() => (setIsOpens(!isOpens), setIsOpen(false))}
-                      type="button"
-                      className="cursor-pointer"
-                      aria-expanded="false"
-                    >
-                      Detail Harga
-                    </button> */}
                   </div>
                   <Link to="/chart">
                     <Buttom color="yellow" width="w-full">
@@ -189,37 +175,6 @@ const Cards = ({ posts, setPosts, loading, onPress }) => {
                     </div>
                   )}
                 </Transition>
-                {/* <Transition
-                  show={isOpens}
-                  enter="transition ease-out duration-100 transform"
-                  enterFrom="opacity-0 scale-95"
-                  enterTo="opacity-100 scale-100"
-                  leave="transition ease-in duration-75 transform"
-                  leaveFrom="opacity-100 scale-100"
-                  leaveTo="opacity-0 scale-95"
-                >
-                  {(ref) => (
-                    <div className="w-full border-t-2 pt-[16px] flex-col flex gap-[16px]">
-                      <div>
-                        <span className="text-lg font-medium">Tarif</span>
-                        <ul>
-                          <li className="flex flex-row justify-between text-gray-400">
-                            <span>Dewasa (x1)</span>
-                            <span>IDR 1.314.550</span>
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="flex flex-row justify-between pt-[16px] border-t-2">
-                        <h5 className="font-medium xl:text-xl">
-                          Total Pembayaran
-                        </h5>
-                        <h5 className="font-medium xl:text-xl text-blue-500">
-                          IDR 1.303.550
-                        </h5>
-                      </div>
-                    </div>
-                  )}
-                </Transition> */}
               </div>
             </li>
           );

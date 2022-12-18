@@ -8,10 +8,9 @@ import {
   PlusIcon,
   MinusIcon,
 } from "@heroicons/react/20/solid";
-import { Link } from "react-router-dom";
 import Buttom from "./Buttom";
 import TabsButtom from "./TabsButtom";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function SearchCard() {
   const [selectedFrom, setSelectedFrom] = useState("");
@@ -22,7 +21,9 @@ function SearchCard() {
   const [active, setActive] = useState({ tab1: true, tab2: false });
   const [airports, setAirpots] = useState([]);
   const [seatClass, setSeatClass] = useState([]);
-  const [selectedDateDepature, setSelectedDateDepature] = useState(null);
+  const [selectedDateDepature, setSelectedDateDepature] = useState(
+    new Date().toISOString().split("T")[0]
+  );
   const [isLoading, setIsLoading] = useState(true);
 
   const redirect = useNavigate();
@@ -117,7 +118,6 @@ function SearchCard() {
   }, [changeLFlight]);
 
   const handleSubmit = (e) => {
-    // console.log(usernameRef);
     e.preventDefault();
     redirect(
       `/search?departure=${selectedFrom.iata}&arrival=${selectedTo.iata}&date=${selectedDateDepature}&class=${selectedSeatClass.type}`
@@ -148,10 +148,13 @@ function SearchCard() {
     }
   }, [query]);
 
-  // console.log(selectedSeatClass.type);
-  // console.log(selectedFrom.iata);
-  // console.log(selectedTo.iata);
-  // console.log(passenger);
+  const disablePastDate = () => {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    const yyyy = today.getFullYear();
+    return yyyy + "-" + mm + "-" + dd;
+  };
 
   return (
     <>
@@ -445,6 +448,8 @@ function SearchCard() {
               <h6>Departure</h6>
               <div className="">
                 <input
+                  value={selectedDateDepature}
+                  min={disablePastDate()}
                   onChange={(e) => {
                     setSelectedDateDepature(e.target.value);
                   }}
