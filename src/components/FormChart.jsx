@@ -50,7 +50,7 @@ function FormChart() {
         <div className="w-full flex flex-col gap-[16px] items-end">
           <div className="flex flex-col items-start gap-[16px] px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full">
             <h2 className="text-xl font-semibold">Detail Pemesan</h2>
-            <form onSubmit={handleSubmit}>
+            <form className="w-full" onSubmit={handleSubmit}>
               {inputs.map((input) => {
                 return (
                   <FormInput
