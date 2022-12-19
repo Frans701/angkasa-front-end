@@ -7,7 +7,7 @@ import Home from "./Home";
 import AuthContext from "../components/AuthProvider";
 
 const LOGIN_URL="/api/login";
-const Login = () => {
+const Login = ({token, setToken}) => {
   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
@@ -34,12 +34,12 @@ const Login = () => {
           email,
           password,
         });
+        const token = response?.data?.data.token;
+        console.log(response);
+        localStorage.setItem("token", response?.data?.data.token);
         console.log(JSON.stringify(response?.data));
-        const accessToken = response?.data?.accessToken;
-        localStorage.setItem("token", response?.data?.accessToken);
-        localStorage.getItem("token");
-        const roles = response?.data?.roles;
-        setAuth({ email, password, roles, accessToken });
+        const roles = response?.data?.data.roles;
+        setAuth({ email, password, roles, token });
         setEmail("");
         setPassword("");
         setSuccess(true);
