@@ -34,13 +34,15 @@ const Login = () => {
           email,
           password,
         });
-          console.log(JSON.stringify(response?.data));
-          const accessToken = response?.data?.accessToken;
-          const roles = response?.data?.roles;
-          setAuth({ email, password, roles, accessToken });
-          setEmail("");
-          setPassword("");
-          setSuccess(true);
+        console.log(JSON.stringify(response?.data));
+        const accessToken = response?.data?.accessToken;
+        localStorage.setItem("token", response?.data?.accessToken);
+        localStorage.getItem("token");
+        const roles = response?.data?.roles;
+        setAuth({ email, password, roles, accessToken });
+        setEmail("");
+        setPassword("");
+        setSuccess(true);
       } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
