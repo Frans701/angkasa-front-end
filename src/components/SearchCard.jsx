@@ -11,36 +11,50 @@ import {
 import Buttom from "./Buttom";
 import TabsButtom from "./TabsButtom";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAirportPopular } from "../redux/actions/AirportAction";
 
 function SearchCard() {
   const [selectedFrom, setSelectedFrom] = useState("");
-  const [selectedTo, setSelectedTo] = useState([""]);
-  const [selectedSeatClass, setSelectedSeatClass] = useState([""]);
+  const [selectedTo, setSelectedTo] = useState({});
+  const [selectedSeatClass, setSelectedSeatClass] = useState({});
   const [passenger, setPassenger] = useState(1);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState({ tab1: true, tab2: false });
-  const [airports, setAirpots] = useState([]);
+  // const [airports, setAirpots] = useState([]);
   const [seatClass, setSeatClass] = useState([]);
   const [selectedDateDepature, setSelectedDateDepature] = useState(
     new Date().toISOString().split("T")[0]
   );
   const [isLoading, setIsLoading] = useState(true);
 
-  const redirect = useNavigate();
+  const dispatch = useDispatch();
+
+  const { airports } = useSelector((state) => state.airport);
 
   useEffect(() => {
-    const fetchAirports = async () => {
-      const res = await axios.get(
-        "https://angkasa-api-staging.km3ggwp.com/api/airports/popular"
-      );
-      setAirpots(res.data.data.airports);
-      setSelectedFrom(res.data.data.airports[0]);
-      setSelectedTo(res.data.data.airports[1]);
-      setIsLoading(false);
-    };
+    dispatch(getAirportPopular());
+  }, [dispatch]);
 
-    fetchAirports();
-  }, []);
+  console.log(airports);
+
+  const redirect = useNavigate();
+
+  // useEffect(() => {
+  //   const fetchAirports = async () => {
+  //     const res = await axios.get(
+  //       "https://angkasa-api-staging.km3ggwp.com/api/airports/popular"
+  //     );
+  //     setAirpots(res.data.data.airports);
+  //     setSelectedFrom(res.data.data.airports[0]);
+  //     setSelectedTo(res.data.data.airports[1]);
+  //     setIsLoading(false);
+  //   };
+
+  //   fetchAirports();
+  // }, []);
+
+  console.log(airports);
 
   useEffect(() => {
     const fetchSeatClass = async () => {
@@ -53,19 +67,6 @@ function SearchCard() {
     };
 
     fetchSeatClass();
-  }, []);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await axios.get(
-        "https://angkasa-api-staging.km3ggwp.com/api/airports/popular"
-      );
-      setAirpots(res.data.data.airports);
-      setSelectedFrom(res.data.data.airports[0]);
-      setSelectedTo(res.data.data.airports[1]);
-    };
-
-    fetchPosts();
   }, []);
 
   const dec = () => {
