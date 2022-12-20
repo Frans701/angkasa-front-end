@@ -8,11 +8,11 @@ import CardSkeleton from "../components/CardSkeleton";
 import { useSearchParams, Link } from "react-router-dom";
 import noData from "../assets/noData.webp";
 import Buttom from "../components/Buttom";
+import { useDispatch, useSelector } from "react-redux";
+import { getSearchFlight } from "../redux/actions/FlightAction";
 
 function Search() {
   let [searchParams, setSearchParams] = useSearchParams();
-  const [flights, setFlight] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [flightsPerPage] = useState(3);
   let departure = searchParams.get("departure");
@@ -20,22 +20,21 @@ function Search() {
   let date = searchParams.get("date");
   let seatClass = searchParams.get("class");
 
-  useEffect(() => {
-    const fetchFlights = async () => {
-      setLoading(true);
-      const res = await axios.get(
-        `https://angkasa-api-staging.km3ggwp.com/api/flights/search?departure=${departure}&arrival=${arrival}&date=${date}&class=${seatClass}`
-      );
-      setFlight(res.data.data.flights);
-      setLoading(false);
-    };
+  const dispatch = useDispatch();
 
-    fetchFlights();
-  }, []);
+  const { searchFlight } = useSelector((state) => state.flight);
+  const { isFetching } = useSelector((state) => state.flight);
+
+  useEffect(() => {
+    dispatch(getSearchFlight(departure, arrival, date, seatClass));
+  }, [dispatch]);
 
   const indexOfLastFlights = currentPage * flightsPerPage;
   const indexOfFirstFlights = indexOfLastFlights - flightsPerPage;
-  const currentFlights = flights.slice(indexOfFirstFlights, indexOfLastFlights);
+  const currentFlights = searchFlight.slice(
+    indexOfFirstFlights,
+    indexOfLastFlights
+  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -44,12 +43,12 @@ function Search() {
       <Navbar />
       <div className="px-[24px] xl:px-[80px]">
         <p className="mt-[32px] mb-[16px]">
-          Displays the best {flights.length} flights at the best prices.
+          Displays the best {searchFlight.length} flights at the best prices.
         </p>
         <div className="flex flex-col gap-[16px]">
-          {loading && <CardSkeleton cards={10} />}
+          {isFetching && <CardSkeleton cards={10} />}
 
-          {flights.length !== 0 ? (
+          {searchFlight.length !== 0 ? (
             <Cards fligts={currentFlights} />
           ) : (
             <div className="flex flex-col items-center justify-center">
@@ -71,7 +70,7 @@ function Search() {
 
           <Pagination
             flightsPerPage={flightsPerPage}
-            totalFlights={flights.length}
+            totalFlights={searchFlight.length}
             paginate={paginate}
             currentPage={currentPage}
           />
