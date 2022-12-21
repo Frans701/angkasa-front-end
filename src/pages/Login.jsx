@@ -1,12 +1,13 @@
 import loginIMG from "../assets/loginIMG.png";
 import angkasaLogo from "../assets/angkasaLogo.svg";
-import axios from "axios";
+import axios from "../components/axios";
 import { useState, useRef, useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
-// import { data } from 'autoprefixer';
+import Home from "./Home";
 import AuthContext from "../components/AuthProvider";
-// const LOGIN_URL='/api/login;'
-const Login = () => {
+
+const LOGIN_URL="/api/login";
+const Login = ({token, setToken}) => {
   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
@@ -26,28 +27,28 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+  
     try {
-      const response = await axios.post(
-        "https://angkasa-api-staging.km3ggwp.com/api/login",
+      const response = await axios.post(LOGIN_URL,
         {
           email,
           password,
-        }
-      );
-      console.log(JSON.stringify(response?.data));
-      //console.log(JSON.stringify(response));
-      const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
-      setAuth({ email, password, roles, accessToken });
-      setEmail("");
-      setPassword("");
-      setSuccess(true);
-    } catch (err) {
+        });
+        const token = response?.data?.data.token;
+        console.log(response);
+        localStorage.setItem("token", response?.data?.data.token);
+        console.log(JSON.stringify(response?.data));
+        const roles = response?.data?.data.roles;
+        setAuth({ email, password, roles, token });
+        setEmail("");
+        setPassword("");
+        setSuccess(true);
+      } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response?.status === 400) {
-        setErrMsg("Missing Username or Password");
+        setErrMsg("Missing Email or Password");
       } else if (err.response?.status === 401) {
         setErrMsg("Unauthorized");
       } else {
@@ -57,24 +58,33 @@ const Login = () => {
     }
   };
 
+  const handleLogout =()=>{
+    localStorage.removeItem("token");
+    setToken(null);
+  };
+
   return (
-    <section>
-      <Navbar />
-      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
-        <div className="hidden sm:block">
-          <img className="w-full h-full object-cover" src={loginIMG} alt="" />
-        </div>
-        <div className="bg-gray-100 flex flex-col justify-center">
-          <div className="flex flex-col gap-[16px] items-center py-5">
-            <img className="w-[140px]" src={angkasaLogo} alt="" />
-          </div>
+    <>
           {success ? (
-            <div>
-              <h1>Sugoi</h1>
-              <a href="/"></a>
-            </div>
+              <section>
+              <Home/>
+              <button className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold" onClick={handleLogout}>
+                  Log out
+              </button>
+
+              </section>
+              
           ) : (
             <section>
+              <Navbar />
+            <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
+              <div className="hidden sm:block">
+                <img className="w-full h-full object-cover" src={loginIMG} alt="" />
+              </div>
+              <div className="bg-gray-100 flex flex-col justify-center">
+                <div className="flex flex-col gap-[16px] items-center py-5">
+                  <img className="w-[140px]" src={angkasaLogo} alt="" />
+                </div>
               <p
                 ref={errRef}
                 className={errMsg ? "errmsg" : "offscreen"}
@@ -135,11 +145,11 @@ const Login = () => {
                   </label>
                 </fieldset>
               </form>
+              </div>
+            </div>
             </section>
           )}
-        </div>
-      </div>
-    </section>
+    </>
   );
 };
 
