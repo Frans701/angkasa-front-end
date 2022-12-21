@@ -11,20 +11,38 @@ import {
 import Buttom from "./Buttom";
 import TabsButtom from "./TabsButtom";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAirportPopular,
+  getSearchPopular,
+} from "../redux/actions/AirportAction";
+import { getSeatClassPopular } from "../redux/actions/SeatClassAction";
 
 function SearchCard() {
-  const [selectedFrom, setSelectedFrom] = useState("");
-  const [selectedTo, setSelectedTo] = useState([""]);
-  const [selectedSeatClass, setSelectedSeatClass] = useState([""]);
+  const [selectedFrom, setSelectedFrom] = useState({});
+  const [selectedTo, setSelectedTo] = useState({});
+  const [selectedSeatClass, setSelectedSeatClass] = useState({});
   const [passenger, setPassenger] = useState(1);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState({ tab1: true, tab2: false });
-  const [airports, setAirpots] = useState([]);
-  const [seatClass, setSeatClass] = useState([]);
   const [selectedDateDepature, setSelectedDateDepature] = useState(
     new Date().toISOString().split("T")[0]
   );
   const [isLoading, setIsLoading] = useState(true);
+
+  const dispatch = useDispatch();
+
+  const { airports } = useSelector((state) => state.airport);
+  const { seatClass } = useSelector((state) => state.seatClass);
+  const { searchAirport } = useSelector((state) => state.airport);
+
+  useEffect(() => {
+    dispatch(getAirportPopular());
+    dispatch(getSeatClassPopular());
+    setTimeout(() => {
+      dispatch(getSearchPopular(query));
+    }, 1000);
+  }, [dispatch, query]);
 
   const redirect = useNavigate();
 
@@ -33,12 +51,10 @@ function SearchCard() {
       const res = await axios.get(
         "https://angkasa-api-staging.km3ggwp.com/api/airports/popular"
       );
-      setAirpots(res.data.data.airports);
       setSelectedFrom(res.data.data.airports[0]);
       setSelectedTo(res.data.data.airports[1]);
       setIsLoading(false);
     };
-
     fetchAirports();
   }, []);
 
@@ -47,25 +63,11 @@ function SearchCard() {
       const res = await axios.get(
         "https://angkasa-api-staging.km3ggwp.com/api/seat-class"
       );
-      setSeatClass(res.data.data.seatClass);
       setSelectedSeatClass(res.data.data.seatClass[0]);
       setIsLoading(false);
     };
 
     fetchSeatClass();
-  }, []);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await axios.get(
-        "https://angkasa-api-staging.km3ggwp.com/api/airports/popular"
-      );
-      setAirpots(res.data.data.airports);
-      setSelectedFrom(res.data.data.airports[0]);
-      setSelectedTo(res.data.data.airports[1]);
-    };
-
-    fetchPosts();
   }, []);
 
   const dec = () => {
@@ -89,7 +91,6 @@ function SearchCard() {
     setChangeLFlight(e);
   };
 
-  // console.log(changeLFlight);
   let filteredAirports =
     query === ""
       ? airports
@@ -123,30 +124,6 @@ function SearchCard() {
       `/search?departure=${selectedFrom.iata}&arrival=${selectedTo.iata}&date=${selectedDateDepature}&class=${selectedSeatClass.type}`
     );
   };
-
-  const [data, setData] = useState(null);
-  const handleSearch = async () => {
-    try {
-      const data = await (
-        await fetch(
-          `https://angkasa-api-staging.km3ggwp.com/api/airports/search?airport=${query}`
-        )
-      ).json();
-      setData(data);
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
-  useEffect(() => {
-    if (query !== "") {
-      setTimeout(() => {
-        if (filteredAirports.length === 0) {
-          handleSearch();
-        }
-      }, 1000);
-    }
-  }, [query]);
 
   const disablePastDate = () => {
     const today = new Date();
@@ -209,59 +186,61 @@ function SearchCard() {
                     <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                       {filteredAirports.length === 0 && query !== "" ? (
                         <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
-                          {data === null ? (
+                          {searchAirport === null ? (
                             <p>Loading...</p>
                           ) : (
                             <>
-                              {data.data.airports.length === 0 ? (
+                              {searchAirport.data.airports.length === 0 ? (
                                 <p>Nothing found.</p>
                               ) : (
                                 <>
                                   {" "}
-                                  {data.data.airports.map((airport) => {
-                                    return (
-                                      <Combobox.Option
-                                        key={airport.id}
-                                        className={({ active }) =>
-                                          `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                            active
-                                              ? "bg-blue-600 text-white"
-                                              : "text-gray-900"
-                                          }`
-                                        }
-                                        value={airport}
-                                      >
-                                        {({ selected, active }) => (
-                                          <>
-                                            <span
-                                              className={`block truncate ${
-                                                selected
-                                                  ? "font-medium"
-                                                  : "font-normal"
-                                              }`}
-                                            >
-                                              {airport.municipality} (
-                                              {airport.iata})
-                                            </span>
-                                            {selected ? (
+                                  {searchAirport.data.airports.map(
+                                    (airport) => {
+                                      return (
+                                        <Combobox.Option
+                                          key={airport.id}
+                                          className={({ active }) =>
+                                            `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                              active
+                                                ? "bg-blue-600 text-white"
+                                                : "text-gray-900"
+                                            }`
+                                          }
+                                          value={airport}
+                                        >
+                                          {({ selected, active }) => (
+                                            <>
                                               <span
-                                                className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                                  active
-                                                    ? "text-white"
-                                                    : "text-blue-600"
+                                                className={`block truncate ${
+                                                  selected
+                                                    ? "font-medium"
+                                                    : "font-normal"
                                                 }`}
                                               >
-                                                <CheckIcon
-                                                  className="h-5 w-5"
-                                                  aria-hidden="true"
-                                                />
+                                                {airport.municipality} (
+                                                {airport.iata})
                                               </span>
-                                            ) : null}
-                                          </>
-                                        )}
-                                      </Combobox.Option>
-                                    );
-                                  })}
+                                              {selected ? (
+                                                <span
+                                                  className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                                                    active
+                                                      ? "text-white"
+                                                      : "text-blue-600"
+                                                  }`}
+                                                >
+                                                  <CheckIcon
+                                                    className="h-5 w-5"
+                                                    aria-hidden="true"
+                                                  />
+                                                </span>
+                                              ) : null}
+                                            </>
+                                          )}
+                                        </Combobox.Option>
+                                      );
+                                    }
+                                  )}
                                 </>
                               )}
                             </>
@@ -342,59 +321,61 @@ function SearchCard() {
                     <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                       {filteredAirports.length === 0 && query !== "" ? (
                         <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
-                          {data === null ? (
+                          {searchAirport === null ? (
                             <p>Loading...</p>
                           ) : (
                             <>
-                              {data.data.airports.length === 0 ? (
+                              {searchAirport.data.airports.length === 0 ? (
                                 <p>Nothing found.</p>
                               ) : (
                                 <>
                                   {" "}
-                                  {data.data.airports.map((airport) => {
-                                    return (
-                                      <Combobox.Option
-                                        key={airport.id}
-                                        className={({ active }) =>
-                                          `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                            active
-                                              ? "bg-blue-600 text-white"
-                                              : "text-gray-900"
-                                          }`
-                                        }
-                                        value={airport}
-                                      >
-                                        {({ selected, active }) => (
-                                          <>
-                                            <span
-                                              className={`block truncate ${
-                                                selected
-                                                  ? "font-medium"
-                                                  : "font-normal"
-                                              }`}
-                                            >
-                                              {airport.municipality} (
-                                              {airport.iata})
-                                            </span>
-                                            {selected ? (
+                                  {searchAirport.data.airports.map(
+                                    (airport) => {
+                                      return (
+                                        <Combobox.Option
+                                          key={airport.id}
+                                          className={({ active }) =>
+                                            `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                              active
+                                                ? "bg-blue-600 text-white"
+                                                : "text-gray-900"
+                                            }`
+                                          }
+                                          value={airport}
+                                        >
+                                          {({ selected, active }) => (
+                                            <>
                                               <span
-                                                className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                                  active
-                                                    ? "text-white"
-                                                    : "text-blue-600"
+                                                className={`block truncate ${
+                                                  selected
+                                                    ? "font-medium"
+                                                    : "font-normal"
                                                 }`}
                                               >
-                                                <CheckIcon
-                                                  className="h-5 w-5"
-                                                  aria-hidden="true"
-                                                />
+                                                {airport.municipality} (
+                                                {airport.iata})
                                               </span>
-                                            ) : null}
-                                          </>
-                                        )}
-                                      </Combobox.Option>
-                                    );
-                                  })}
+                                              {selected ? (
+                                                <span
+                                                  className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                                                    active
+                                                      ? "text-white"
+                                                      : "text-blue-600"
+                                                  }`}
+                                                >
+                                                  <CheckIcon
+                                                    className="h-5 w-5"
+                                                    aria-hidden="true"
+                                                  />
+                                                </span>
+                                              ) : null}
+                                            </>
+                                          )}
+                                        </Combobox.Option>
+                                      );
+                                    }
+                                  )}
                                 </>
                               )}
                             </>
