@@ -27,7 +27,8 @@ const Login = ({token, setToken}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+  
     try {
       const response = await axios.post(LOGIN_URL,
         {
@@ -57,10 +58,22 @@ const Login = ({token, setToken}) => {
     }
   };
 
+  const handleLogout =()=>{
+    localStorage.removeItem("token");
+    setToken(null);
+  };
+
   return (
     <>
           {success ? (
+              <section>
               <Home/>
+              <button className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold" onClick={handleLogout}>
+                  Log out
+              </button>
+
+              </section>
+              
           ) : (
             <section>
               <Navbar />
