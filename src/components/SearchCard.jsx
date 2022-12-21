@@ -121,7 +121,7 @@ function SearchCard() {
   const handleSubmit = (e) => {
     e.preventDefault();
     redirect(
-      `/search?departure=${selectedFrom.iata}&arrival=${selectedTo.iata}&date=${selectedDateDepature}&class=${selectedSeatClass.type}`
+      `/search?departure=${selectedFrom.iata}&arrival=${selectedTo.iata}&date=${selectedDateDepature}&class=${selectedSeatClass.type}&passenger=${passenger}`
     );
   };
 
