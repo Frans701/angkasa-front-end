@@ -17,8 +17,6 @@ export default function App() {
   const tokenLocalStorage = localStorage.getItem("token");
   const [token, setToken] = useState(tokenLocalStorage);
 
-  console.log(token);
-
   return (
     <>
       <Provider store={store}>

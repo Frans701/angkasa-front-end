@@ -136,7 +136,11 @@ function FormChart({ token }) {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+<<<<<<< HEAD
   console.log(selectedOption.value);
+=======
+  // console.log(selectedOption);
+>>>>>>> a6eab32b99f719c6e4e87abd82d68a7a13f0ebfe
   // console.log(seatClass);
   // console.log(passenger);
   // console.log(flightId);
@@ -148,7 +152,11 @@ function FormChart({ token }) {
       "https://angkasa-api-staging.km3ggwp.com/api/orders",
       {
         flightId: [flightId],
+<<<<<<< HEAD
         totalPassengers: parseInt(passenger),
+=======
+        totalPassengers: passenger,
+>>>>>>> a6eab32b99f719c6e4e87abd82d68a7a13f0ebfe
         contact: {
           fullName: values.fullName,
           email: values.email,
@@ -161,6 +169,7 @@ function FormChart({ token }) {
             number: values.number,
           },
         ],
+<<<<<<< HEAD
         paymentMethod: selectedOption.value,
         class: seatClass,
       },
@@ -169,6 +178,13 @@ function FormChart({ token }) {
       }
     );
     setData(result.data.data);
+=======
+        paymentMethod: selectedOption,
+        class: seatClass,
+      }
+    );
+    setData(result.data);
+>>>>>>> a6eab32b99f719c6e4e87abd82d68a7a13f0ebfe
   };
 
   console.log(data);
