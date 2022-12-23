@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   searchFlight: [],
   flight: [],
+  price: "",
   isFetching: true,
 };
 
@@ -15,7 +16,9 @@ const searchFlightSlicer = createSlice({
       state.isFetching = false;
     },
     getFlightReducer: (state, action) => {
-      state.flight = action.payload;
+      const { price, flight } = action.payload;
+      state.flight = flight;
+      state.price = price;
     },
   },
 });

@@ -7,14 +7,15 @@ import { getFlight } from "../redux/actions/FlightAction";
 import { useSearchParams, Link } from "react-router-dom";
 import Select from "react-select";
 import axios from "./axios";
+import { PlusSmallIcon } from "@heroicons/react/24/solid";
 
-function FormChart() {
+function FormChart({ token }) {
   let [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   let flightId = searchParams.get("flightId");
   let passenger = searchParams.get("passenger");
   let seatClass = searchParams.get("class");
-  const { flight } = useSelector((state) => state.flight);
+  const { flight, price } = useSelector((state) => state.flight);
   const [filteredItems, setFilteredItems] = useState(null);
   const [data, setData] = useState(null);
 
@@ -25,12 +26,10 @@ function FormChart() {
   };
 
   useEffect(() => {
-    dispatch(getFlight(flightId));
-    // const filteredArray = flight.class.filter(
-    //   (flight) => flight.type === `${seatClass}`
-    // );
-    // setFilteredItems(filteredArray);
+    dispatch(getFlight(flightId, seatClass));
   }, [dispatch]);
+
+  console.log(data);
 
   const [values, setValues] = useState({
     username: "",
@@ -75,7 +74,6 @@ function FormChart() {
       placeholder: "Example: Kurt Cobain",
       errorMsg: "Name 3-16 and and shouldn't include any special character",
       label: "Full Name",
-      pattern: "^[A-Za-z0-9]{3,16}$",
       required: true,
     },
     {
@@ -106,7 +104,6 @@ function FormChart() {
       placeholder: "Example: Kurt Cobain",
       errorMsg: "Name 3-16 and and shouldn't include any special character",
       label: "Full Name",
-      pattern: "^[A-Za-z0-9]{3,16}$",
       required: true,
     },
     {
@@ -135,19 +132,13 @@ function FormChart() {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  // console.log(selectedOption);
-  // console.log(seatClass);
-  // console.log(passenger);
-  // console.log(flightId);
-  // console.log(values);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const result = await axios.post(
       "https://angkasa-api-staging.km3ggwp.com/api/orders",
       {
         flightId: [flightId],
-        totalPassengers: passenger,
+        totalPassengers: parseInt(passenger),
         contact: {
           fullName: values.fullName,
           email: values.email,
@@ -160,8 +151,11 @@ function FormChart() {
             number: values.number,
           },
         ],
-        paymentMethod: selectedOption,
+        paymentMethod: selectedOption.value,
         class: seatClass,
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
       }
     );
     setData(result.data);
@@ -251,9 +245,7 @@ function FormChart() {
           <div className="flex flex-row justify-between w-full items-center">
             <h5 className="font-semibold xl:text-xl">Total Pembayaran</h5>
             <h5 className="font-semibold xl:text-2xl text-blue-500">
-              {/* {filteredItems.map((item) => (
-                <p key={item.id}>{item.price.formatted}</p>
-              ))} */}
+              {price[0]?.price.formatted}
             </h5>
           </div>
         </div>
