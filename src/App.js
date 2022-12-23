@@ -40,7 +40,7 @@ export default function App() {
               path="/chart"
               element={
                 <Protected token={token} setToken={setToken}>
-                  <Chart />
+                  <Chart token={token} setToken={setToken} />
                 </Protected>
               }
             />

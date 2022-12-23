@@ -7,8 +7,9 @@ import { getFlight } from "../redux/actions/FlightAction";
 import { useSearchParams, Link } from "react-router-dom";
 import Select from "react-select";
 import axios from "./axios";
+import { PlusSmallIcon } from "@heroicons/react/24/solid";
 
-function FormChart() {
+function FormChart({ token }) {
   let [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   let flightId = searchParams.get("flightId");
@@ -135,7 +136,11 @@ function FormChart() {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+<<<<<<< HEAD
+  console.log(selectedOption.value);
+=======
   // console.log(selectedOption);
+>>>>>>> a6eab32b99f719c6e4e87abd82d68a7a13f0ebfe
   // console.log(seatClass);
   // console.log(passenger);
   // console.log(flightId);
@@ -147,7 +152,11 @@ function FormChart() {
       "https://angkasa-api-staging.km3ggwp.com/api/orders",
       {
         flightId: [flightId],
+<<<<<<< HEAD
+        totalPassengers: parseInt(passenger),
+=======
         totalPassengers: passenger,
+>>>>>>> a6eab32b99f719c6e4e87abd82d68a7a13f0ebfe
         contact: {
           fullName: values.fullName,
           email: values.email,
@@ -160,11 +169,22 @@ function FormChart() {
             number: values.number,
           },
         ],
+<<<<<<< HEAD
+        paymentMethod: selectedOption.value,
+        class: seatClass,
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    setData(result.data.data);
+=======
         paymentMethod: selectedOption,
         class: seatClass,
       }
     );
     setData(result.data);
+>>>>>>> a6eab32b99f719c6e4e87abd82d68a7a13f0ebfe
   };
 
   console.log(data);
