@@ -9,7 +9,7 @@ function FormInput(props) {
   };
 
   return (
-    <div className="flex flex-col my-[8px]">
+    <div className="flex flex-col my-[8px] gap-[4px]">
       <label>{label}</label>
       <input
         {...inputProps}
