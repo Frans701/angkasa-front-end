@@ -15,7 +15,7 @@ function FormChart({ token }) {
   let flightId = searchParams.get("flightId");
   let passenger = searchParams.get("passenger");
   let seatClass = searchParams.get("class");
-  const { flight } = useSelector((state) => state.flight);
+  const { flight, price } = useSelector((state) => state.flight);
   const [filteredItems, setFilteredItems] = useState(null);
   const [data, setData] = useState(null);
 
@@ -26,12 +26,10 @@ function FormChart({ token }) {
   };
 
   useEffect(() => {
-    dispatch(getFlight(flightId));
-    // const filteredArray = flight.class.filter(
-    //   (flight) => flight.type === `${seatClass}`
-    // );
-    // setFilteredItems(filteredArray);
+    dispatch(getFlight(flightId, seatClass));
   }, [dispatch]);
+
+  console.log(data);
 
   const [values, setValues] = useState({
     username: "",
@@ -76,7 +74,6 @@ function FormChart({ token }) {
       placeholder: "Example: Kurt Cobain",
       errorMsg: "Name 3-16 and and shouldn't include any special character",
       label: "Full Name",
-      pattern: "^[A-Za-z0-9]{3,16}$",
       required: true,
     },
     {
@@ -107,7 +104,6 @@ function FormChart({ token }) {
       placeholder: "Example: Kurt Cobain",
       errorMsg: "Name 3-16 and and shouldn't include any special character",
       label: "Full Name",
-      pattern: "^[A-Za-z0-9]{3,16}$",
       required: true,
     },
     {
@@ -136,27 +132,13 @@ function FormChart({ token }) {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-<<<<<<< HEAD
-  console.log(selectedOption.value);
-=======
-  // console.log(selectedOption);
->>>>>>> a6eab32b99f719c6e4e87abd82d68a7a13f0ebfe
-  // console.log(seatClass);
-  // console.log(passenger);
-  // console.log(flightId);
-  // console.log(values);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const result = await axios.post(
       "https://angkasa-api-staging.km3ggwp.com/api/orders",
       {
         flightId: [flightId],
-<<<<<<< HEAD
         totalPassengers: parseInt(passenger),
-=======
-        totalPassengers: passenger,
->>>>>>> a6eab32b99f719c6e4e87abd82d68a7a13f0ebfe
         contact: {
           fullName: values.fullName,
           email: values.email,
@@ -169,7 +151,6 @@ function FormChart({ token }) {
             number: values.number,
           },
         ],
-<<<<<<< HEAD
         paymentMethod: selectedOption.value,
         class: seatClass,
       },
@@ -177,14 +158,7 @@ function FormChart({ token }) {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    setData(result.data.data);
-=======
-        paymentMethod: selectedOption,
-        class: seatClass,
-      }
-    );
     setData(result.data);
->>>>>>> a6eab32b99f719c6e4e87abd82d68a7a13f0ebfe
   };
 
   console.log(data);
@@ -271,9 +245,7 @@ function FormChart({ token }) {
           <div className="flex flex-row justify-between w-full items-center">
             <h5 className="font-semibold xl:text-xl">Total Pembayaran</h5>
             <h5 className="font-semibold xl:text-2xl text-blue-500">
-              {/* {filteredItems.map((item) => (
-                <p key={item.id}>{item.price.formatted}</p>
-              ))} */}
+              {price[0]?.price.formatted}
             </h5>
           </div>
         </div>
