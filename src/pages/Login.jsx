@@ -4,8 +4,8 @@ import axios from "../components/axios";
 import { useState, useRef, useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import Home from "./Home";
-import AuthContext from "../components/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../components/AuthProvider";
 
 const LOGIN_URL = "/api/login";
 const Login = ({ setToken }) => {
@@ -13,6 +13,7 @@ const Login = ({ setToken }) => {
   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,8 +30,6 @@ const Login = ({ setToken }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-  
     try {
       const response = await axios.post(LOGIN_URL, {
         email,
@@ -62,28 +61,25 @@ const Login = ({ setToken }) => {
       errRef.current.focus();
     }
   };
+  const handleNotif=()=>{
+    !success?(console.log("Sukses")):(console.log("Gagal"))
+  }
 
   return (
     <>
-      {success ? (
-        <section>
-          <Home />
-        </section>
-      ) : (
-        <section>
-          <Navbar />
-          <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
-            <div className="hidden sm:block">
-              <img
-                className="w-full h-full object-cover"
-                src={loginIMG}
-                alt=""
-              />
-            </div>
-            <div className="bg-gray-100 flex flex-col justify-center">
-              <div className="flex flex-col gap-[16px] items-center py-5">
-                <img className="w-[140px]" src={angkasaLogo} alt="" />
+          {success ? (
+          <Home/>
+          ) : (
+            <section>
+              <Navbar />
+            <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
+              <div className="hidden sm:block">
+                <img className="w-full h-full object-cover" src={loginIMG} alt="" />
               </div>
+              <div className="bg-gray-100 flex flex-col justify-center">
+                <div className="flex flex-col gap-[16px] items-center py-5">
+                  <img className="w-[140px]" src={angkasaLogo} alt="" />
+                </div>
               <p
                 ref={errRef}
                 className={errMsg ? "errmsg" : "offscreen"}
@@ -123,7 +119,7 @@ const Login = ({ setToken }) => {
                     required
                   />
                 </label>
-                <button className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold">
+                <button className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold" onClick={handleNotif}>
                   Masuk
                 </button>
                 <p className="flex flex-col items-center text-sm mb-3">

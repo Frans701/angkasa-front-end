@@ -3,6 +3,7 @@ import { Transition } from "@headlessui/react";
 import angkasaLogo from "../assets/angkasaLogo.svg";
 import { Link } from "react-router-dom";
 import Buttom from "./Buttom";
+import Notif from "./Notif";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,6 +55,7 @@ function Nav() {
                 <Link to="/register">
                   <Buttom>Register</Buttom>
                 </Link>
+                <Notif/>
               </div>
             </div>
           </div>

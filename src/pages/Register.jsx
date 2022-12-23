@@ -1,18 +1,19 @@
 import loginIMG from "../assets/loginIMG.png";
 import angkasaLogo from "../assets/angkasaLogo.svg";
 import axios from "../components/axios";
-import {
-  faCheck,
-  faTimes,
-  faInfoCircle,
-  faL,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import {
+//   faCheck,
+//   faTimes,
+//   faInfoCircle,
+//   faL,
+// } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Home from "./Home";
+import { useNavigate } from "react-router-dom";
 
 const NAME_REGEX = /^[a-z ,.'-]+$/i;
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -25,6 +26,7 @@ const REGISTER_URL = "/api/register";
 const Register = () => {
   const userRef = useRef();
   const errRef = useRef();
+  const navigate = useNavigate();
 
   //Fullname
   const [fullname, setFullname] = useState("");
@@ -104,6 +106,8 @@ const Register = () => {
         password,
         passwordConfirmation
       });
+      const token = response.data.data.token;
+      localStorage.setItem("token", response.data.data.token);
       console.log(JSON.stringify(response?.data));
       setSuccess(true);
       setFullname("");
@@ -111,6 +115,7 @@ const Register = () => {
       setEmail("");
       setPassword("");
       setPasswordConfirmation("");
+      navigate("/");
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
@@ -119,6 +124,9 @@ const Register = () => {
       }
     }
   };
+  const handleNotif=()=>{
+    success?(console.log("Sukses")):(console.log("Gagal"))
+  }
 
   return (
     <>
@@ -252,7 +260,7 @@ const Register = () => {
                     onBlur={() => setPasswordFocus(false)}
                   />
                 </label>
-                <button className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold">
+                <button className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold" onClick={handleNotif}>
                   Buat Akun
                 </button>
                 <p className="flex flex-col items-center text-sm mb-3">
