@@ -34,5 +34,3 @@ function Protected({ children, token, setToken }) {
 }
 
 export default Protected;
-
-export default Protected;

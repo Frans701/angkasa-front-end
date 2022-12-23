@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import angkasaLogo from "../assets/angkasaLogo.svg";
 import Buttom from "./Buttom";
 
-function Footer() {
+function Footer(token, setToken) {
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setToken(null);
+  };
   return (
     <>
       <footer class="lg:text-left bg-white ">
@@ -51,6 +55,12 @@ function Footer() {
               <Link to="/">
                 <Buttom>Contact Us</Buttom>
               </Link>
+              <button
+                className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold"
+                onClick={handleLogout}
+              >
+                Log out
+              </button>
             </div>
           </div>
         </div>
