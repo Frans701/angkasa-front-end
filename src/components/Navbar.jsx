@@ -7,8 +7,6 @@ import Notif from "./Notif";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
-
-  // console.log(isOpen);
   return (
     <div>
       <nav className="bg-white">
@@ -21,7 +19,7 @@ function Nav() {
                   className="h-[40px]"
                   src={angkasaLogo}
                   alt="Angkasa Logo"
-                />
+                  />
               </Link>
             </div>
             <div className="hidden md:block">
@@ -29,23 +27,22 @@ function Nav() {
                 <a
                   href="#"
                   className="px-3 py-2 rounded-md text-sm font-medium"
-                >
+                  >
                   Flight
                 </a>
                 <a
                   href="#"
                   className="px-3 py-2 rounded-md text-sm font-medium"
-                >
+                  >
                   Check Order
                 </a>
-                {/* TESTING PROFILE */}
                 <a
                   href="/profile"
                   className="px-3 py-2 rounded-md text-sm font-medium"
-                >
+                  >
                   Profile
                 </a>
-                {/* END OF TESTING PROFILE */}
+                <Notif/>
                 <a
                   href="/login"
                   className="px-3 py-2 rounded-md text-sm font-medium"
@@ -55,7 +52,6 @@ function Nav() {
                 <Link to="/register">
                   <Buttom>Register</Buttom>
                 </Link>
-                <Notif/>
               </div>
             </div>
           </div>
