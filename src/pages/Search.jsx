@@ -3,7 +3,6 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import React, { useState, useEffect } from "react";
 import Pagination from "../Pagination";
-import axios from "axios";
 import CardSkeleton from "../components/CardSkeleton";
 import { useSearchParams, Link } from "react-router-dom";
 import noData from "../assets/noData.webp";
@@ -19,6 +18,7 @@ function Search() {
   let arrival = searchParams.get("arrival");
   let date = searchParams.get("date");
   let seatClass = searchParams.get("class");
+  let passenger = searchParams.get("passenger");
 
   const dispatch = useDispatch();
 
@@ -49,7 +49,7 @@ function Search() {
           {isFetching && <CardSkeleton cards={10} />}
 
           {searchFlight.length !== 0 ? (
-            <Cards fligts={currentFlights} />
+            <Cards fligts={currentFlights} passenger={passenger} />
           ) : (
             <div className="flex flex-col items-center justify-center">
               <img className="w-[240px]" src={noData} alt="" />

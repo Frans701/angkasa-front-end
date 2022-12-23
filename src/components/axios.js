@@ -1,5 +1,5 @@
-import axios from 'axios';
+import axios from "axios";
 
 export default axios.create({
-    baseURL: 'https://angkasa-api-staging.km3ggwp.com'
+  baseURL: "https://angkasa-api-staging.km3ggwp.com",
 });

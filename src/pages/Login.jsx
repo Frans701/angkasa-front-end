@@ -5,9 +5,11 @@ import { useState, useRef, useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import Home from "./Home";
 import AuthContext from "../components/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
-const LOGIN_URL="/api/login";
-const Login = ({token, setToken}) => {
+const LOGIN_URL = "/api/login";
+const Login = ({ setToken }) => {
+  const redirect = useNavigate();
   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
@@ -30,26 +32,29 @@ const Login = ({token, setToken}) => {
   
   
     try {
-      const response = await axios.post(LOGIN_URL,
-        {
-          email,
-          password,
-        });
-        const token = response?.data?.data.token;
+      const response = await axios.post(LOGIN_URL, {
+        email,
+        password,
+      });
+      if (response.data.data.token) {
+        const token = response.data.data.token;
         console.log(response);
-        localStorage.setItem("token", response?.data?.data.token);
-        console.log(JSON.stringify(response?.data));
-        const roles = response?.data?.data.roles;
+        localStorage.setItem("token", response.data.data.token);
+        console.log(JSON.stringify(response.data));
+        const roles = response.data.data.roles;
         setAuth({ email, password, roles, token });
         setEmail("");
         setPassword("");
+        setToken(token);
+        redirect("/");
         setSuccess(true);
-      } catch (err) {
-      if (!err?.response) {
+      }
+    } catch (err) {
+      if (!err.response) {
         setErrMsg("No Server Response");
-      } else if (err.response?.status === 400) {
+      } else if (err.response.status === 400) {
         setErrMsg("Missing Email or Password");
-      } else if (err.response?.status === 401) {
+      } else if (err.response.status === 401) {
         setErrMsg("Unauthorized");
       } else {
         setErrMsg("Login Failed");
@@ -58,33 +63,38 @@ const Login = ({token, setToken}) => {
     }
   };
 
-  const handleLogout =()=>{
+  const handleLogout = () => {
     localStorage.removeItem("token");
     setToken(null);
   };
 
   return (
     <>
-          {success ? (
-              <section>
-              <Home/>
-              <button className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold" onClick={handleLogout}>
-                  Log out
-              </button>
-
-              </section>
-              
-          ) : (
-            <section>
-              <Navbar />
-            <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
-              <div className="hidden sm:block">
-                <img className="w-full h-full object-cover" src={loginIMG} alt="" />
+      {success ? (
+        <section>
+          <Home />
+          <button
+            className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold"
+            onClick={handleLogout}
+          >
+            Log out
+          </button>
+        </section>
+      ) : (
+        <section>
+          <Navbar />
+          <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
+            <div className="hidden sm:block">
+              <img
+                className="w-full h-full object-cover"
+                src={loginIMG}
+                alt=""
+              />
+            </div>
+            <div className="bg-gray-100 flex flex-col justify-center">
+              <div className="flex flex-col gap-[16px] items-center py-5">
+                <img className="w-[140px]" src={angkasaLogo} alt="" />
               </div>
-              <div className="bg-gray-100 flex flex-col justify-center">
-                <div className="flex flex-col gap-[16px] items-center py-5">
-                  <img className="w-[140px]" src={angkasaLogo} alt="" />
-                </div>
               <p
                 ref={errRef}
                 className={errMsg ? "errmsg" : "offscreen"}
@@ -145,10 +155,10 @@ const Login = ({token, setToken}) => {
                   </label>
                 </fieldset>
               </form>
-              </div>
             </div>
-            </section>
-          )}
+          </div>
+        </section>
+      )}
     </>
   );
 };
