@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
-const LOGIN_URL="/api/login";
+const LOGIN_URL = "/api/login";
 
 function Protected({ children, token, setToken }) {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ function Protected({ children, token, setToken }) {
     (async () => {
       if (token) {
         try {
-          await axios.get(LOGIN_URL, {
+          await axios.get("https://angkasa-api-staging.km3ggwp.com/api/me", {
             headers: {
               Authorization: `Bearer ${token}`,
             },

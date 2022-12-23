@@ -103,7 +103,7 @@ const Cards = ({ fligts, loading, passenger }) => {
                       onPress={(e) => {
                         e.preventDefault();
                         redirect(
-                          `/chart?passenger=${passenger}&flightId=${flight.id}`
+                          `/chart?passenger=${passenger}&flightId=${flight.id}&class=${flight.class.type}`
                         );
                       }}
                       color="yellow"

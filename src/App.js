@@ -16,20 +16,35 @@ import Protected from "./components/Protected";
 export default function App() {
   const tokenLocalStorage = localStorage.getItem("token");
   const [token, setToken] = useState(tokenLocalStorage);
+
   return (
     <>
       <Provider store={store}>
         <SkeletonTheme baseColor="#F5F5F5" highlightColor="#ffffff">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/login"
+              element={<Login token={token} setToken={setToken} />}
+            />
             <Route path="/register" element={<Register />} />
-            <Route path="/search" element={
-            <Protected token={token} setToken={setToken}>
-              <Search />
-            </Protected>
-            }/>
-            <Route path="/chart" element={<Chart />} />
+            <Route
+              path="/search"
+              element={
+                <Protected token={token} setToken={setToken}>
+                  <Search />
+                </Protected>
+              }
+            />
+            <Route
+              path="/chart"
+              element={
+                <Protected token={token} setToken={setToken}>
+                  <Chart />
+                </Protected>
+              }
+            />
+            <Route path="/search" element={<Search />} />
           </Routes>
         </SkeletonTheme>
       </Provider>

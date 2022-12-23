@@ -5,31 +5,76 @@ import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { getFlight } from "../redux/actions/FlightAction";
 import { useSearchParams, Link } from "react-router-dom";
+import Select from "react-select";
+import axios from "./axios";
 
 function FormChart() {
   let [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   let flightId = searchParams.get("flightId");
+  let passenger = searchParams.get("passenger");
+  let seatClass = searchParams.get("class");
   const { flight } = useSelector((state) => state.flight);
+  const [filteredItems, setFilteredItems] = useState(null);
+  const [data, setData] = useState(null);
+
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
+  };
 
   useEffect(() => {
     dispatch(getFlight(flightId));
+    // const filteredArray = flight.class.filter(
+    //   (flight) => flight.type === `${seatClass}`
+    // );
+    // setFilteredItems(filteredArray);
   }, [dispatch]);
 
   const [values, setValues] = useState({
     username: "",
     email: "",
-    fullname: "",
+    fullName: "",
+    email: "",
+    phone: "",
+    fullNamePassenger: "",
+    type: "",
+    number: "",
   });
 
-  const inputs = [
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      padding: "4px 16px",
+    }),
+    control: (provided, state) => ({
+      ...provided,
+      padding: "4px 16px",
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = "opacity 300ms";
+
+      return { ...provided, opacity, transition };
+    },
+  };
+
+  const options = [
+    { value: "BCA", label: "BCA" },
+    { value: "Mandiri", label: "Mandiri" },
+  ];
+
+  // console.log(options);
+
+  const contacts = [
     {
       id: 1,
-      name: "username",
+      name: "fullName",
       type: "text",
-      placeholder: "Username",
-      errorMsg: "Username 3-16 and and shouldn't include any special character",
-      label: "Username",
+      placeholder: "Example: Kurt Cobain",
+      errorMsg: "Name 3-16 and and shouldn't include any special character",
+      label: "Full Name",
       pattern: "^[A-Za-z0-9]{3,16}$",
       required: true,
     },
@@ -37,47 +82,137 @@ function FormChart() {
       id: 2,
       name: "email",
       type: "text",
-      placeholder: "Email",
+      placeholder: "Example: kurt@gmail.com",
       errorMsg: "It should be valid email address",
       label: "Email",
+      required: true,
+    },
+    {
+      id: 3,
+      name: "phone",
+      type: "tel",
+      placeholder: "Example: 082172xxxx",
+      errorMsg: "It should be valid Phone",
+      label: "Phone",
+      required: true,
+    },
+  ];
+
+  const passengers = [
+    {
+      id: 1,
+      name: "fullNamePassenger",
+      type: "text",
+      placeholder: "Example: Kurt Cobain",
+      errorMsg: "Name 3-16 and and shouldn't include any special character",
+      label: "Full Name",
+      pattern: "^[A-Za-z0-9]{3,16}$",
+      required: true,
+    },
+    {
+      id: 2,
+      name: "type",
+      type: "text",
+      placeholder: "Example: 0837283909xxxxxx",
+      errorMsg: "It should be valid ID",
+      label: "ID",
+      required: true,
+    },
+    {
+      id: 3,
+      name: "number",
+      type: "text",
+      placeholder: "Example: 082172xxxx",
+      errorMsg: "It should be valid number",
+      label: "number",
       required: true,
     },
   ];
 
   // console.log(username);
-  const handleSubmit = (e) => {
-    // console.log(usernameRef);
-    e.preventDefault();
-  };
 
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+  // console.log(selectedOption);
+  // console.log(seatClass);
+  // console.log(passenger);
+  // console.log(flightId);
+  // console.log(values);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const result = await axios.post(
+      "https://angkasa-api-staging.km3ggwp.com/api/orders",
+      {
+        flightId: [flightId],
+        totalPassengers: passenger,
+        contact: {
+          fullName: values.fullName,
+          email: values.email,
+          phone: values.phone,
+        },
+        passengers: [
+          {
+            fullName: values.fullNamePassenger,
+            type: values.type,
+            number: values.number,
+          },
+        ],
+        paymentMethod: selectedOption,
+        class: seatClass,
+      }
+    );
+    setData(result.data);
+  };
+
+  console.log(data);
+
   return (
     <>
-      <div className="flex xl:flex-row flex-col gap-[16px] mt-[32px] items-start">
-        <div className="w-full flex flex-col gap-[16px] items-end">
-          <div className="flex flex-col items-start gap-[16px] px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full">
-            <h2 className="text-xl font-semibold">Detail Pemesan</h2>
-            <form className="w-full" onSubmit={handleSubmit}>
-              {inputs.map((input) => {
-                return (
+      <div className="flex xl:flex-row flex-col gap-[24px] mt-[32px] items-start">
+        <form
+          className="w-full flex-col gap-[24px] flex"
+          onSubmit={handleSubmit}
+        >
+          <div className="flex flex-col px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px]">
+            <h3 className="text-2xl font-semibold">Orderer Details</h3>
+            {contacts.map((input) => {
+              return (
+                <FormInput
+                  key={input.id}
+                  {...input}
+                  value={values[input.name]}
+                  onChange={onChange}
+                />
+              );
+            })}
+          </div>
+
+          <div className="flex flex-col px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px]">
+            <h3 className="text-2xl font-semibold">Passenger Details</h3>
+            {passengers.map((input) => {
+              return (
+                <>
                   <FormInput
                     key={input.id}
                     {...input}
                     value={values[input.name]}
                     onChange={onChange}
                   />
-                );
-              })}
-              <Buttom>Submit</Buttom>
-            </form>
+                </>
+              );
+            })}
+            <h4>Payment Method</h4>
+            <Select
+              styles={customStyles}
+              options={options}
+              onChange={handleChange}
+            />
           </div>
-          <Link to="/chart">
-            <Buttom color="yellow">Lanjutkan Ke Pembayaran</Buttom>
-          </Link>
-        </div>
+          <Buttom>Submit</Buttom>
+        </form>
         <div className="flex flex-col items-start gap-[16px] xl:px-[40px] px-[24px] py-[24px] rounded-lg drop-shadow-lg bg-white xl:w-[800px] ">
           <h1 className="text-2xl font-semibold">Penerbangan</h1>
 
@@ -116,9 +251,9 @@ function FormChart() {
           <div className="flex flex-row justify-between w-full items-center">
             <h5 className="font-semibold xl:text-xl">Total Pembayaran</h5>
             <h5 className="font-semibold xl:text-2xl text-blue-500">
-              {flight?.class?.map((price) => {
-                return price?.price?.formatted;
-              })}
+              {/* {filteredItems.map((item) => (
+                <p key={item.id}>{item.price.formatted}</p>
+              ))} */}
             </h5>
           </div>
         </div>
