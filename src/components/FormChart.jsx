@@ -8,7 +8,7 @@ import { useSearchParams, Link } from "react-router-dom";
 import Select from "react-select";
 import axios from "./axios";
 
-function FormChart() {
+function FormChart({ token }) {
   let [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   let flightId = searchParams.get("flightId");
@@ -135,7 +135,7 @@ function FormChart() {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  // console.log(selectedOption);
+  console.log(selectedOption.value);
   // console.log(seatClass);
   // console.log(passenger);
   // console.log(flightId);
@@ -147,7 +147,7 @@ function FormChart() {
       "https://angkasa-api-staging.km3ggwp.com/api/orders",
       {
         flightId: [flightId],
-        totalPassengers: passenger,
+        totalPassengers: parseInt(passenger),
         contact: {
           fullName: values.fullName,
           email: values.email,
@@ -160,11 +160,14 @@ function FormChart() {
             number: values.number,
           },
         ],
-        paymentMethod: selectedOption,
+        paymentMethod: selectedOption.value,
         class: seatClass,
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
       }
     );
-    setData(result.data);
+    setData(result.data.data);
   };
 
   console.log(data);
