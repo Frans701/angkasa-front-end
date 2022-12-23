@@ -8,7 +8,7 @@ import AuthContext from "../components/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 const LOGIN_URL = "/api/login";
-const Login = ({ token, setToken }) => {
+const Login = ({ setToken }) => {
   const redirect = useNavigate();
   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
@@ -44,9 +44,9 @@ const Login = ({ token, setToken }) => {
         setAuth({ email, password, roles, token });
         setEmail("");
         setPassword("");
-        setSuccess(true);
         setToken(token);
         redirect("/");
+        setSuccess(true);
       }
     } catch (err) {
       if (!err.response) {
