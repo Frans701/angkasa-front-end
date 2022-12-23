@@ -7,6 +7,7 @@ import { getFlight } from "../redux/actions/FlightAction";
 import { useSearchParams, Link } from "react-router-dom";
 import Select from "react-select";
 import axios from "./axios";
+import { PlusSmallIcon } from "@heroicons/react/24/solid";
 
 function FormChart({ token }) {
   let [searchParams, setSearchParams] = useSearchParams();
