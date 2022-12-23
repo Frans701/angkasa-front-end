@@ -1,6 +1,4 @@
-import { faDiagramPredecessor } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { set } from "immer/dist/internal";
 import { setToken, setUser } from "../reducers/authReducer";
 
 export const login = (data)=>async (dispatch)=>{
@@ -12,8 +10,8 @@ export const login = (data)=>async (dispatch)=>{
             localStorage.setItem("token", response.data.data.token);
             dispatch(setToken(response.data.data.token));
         }
-    } catch (err){
-        console.log(err.response.data.message)
+    } catch (error){
+        console.log(error.response.data.message)
     }
 };
 
@@ -26,8 +24,8 @@ export const resgiter = (data)=>async (dispatch)=>{
             localStorage.setItem("token", response.data.data.token);
             dispatch(setToken(response.data.data.token));
         }
-    } catch (err){
-        console.log(err.response.data.message)
+    } catch (error){
+        console.log(error.response.data.message)
     }
 };
 
@@ -42,11 +40,12 @@ export const getMe = (callback) => async (dispatch, getState)=>{
             }
         );
         dispatch(setUser(response.data.data));
-    } catch (err){
-        if(err.response.status = 401){
+    } catch (error){
+        // eslint-disable-next-line
+        if(error.response.status = 401){
             localStorage.removeItem("token");
             dispatch(setToken(null));
-            callback(err.response.status)
+            callback(error.response.status)
         }
     }
 };
