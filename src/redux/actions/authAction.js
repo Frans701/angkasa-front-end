@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useState } from "react";
 import { setToken, setUser } from "../reducers/authReducer";
 
 export const login = (data)=>async (dispatch)=>{
@@ -15,7 +16,7 @@ export const login = (data)=>async (dispatch)=>{
     }
 };
 
-export const resgiter = (data)=>async (dispatch)=>{
+export const register = (data)=>async (dispatch)=>{
     try{
         const response = await axios.post(
             "https://angkasa-api-staging.km3ggwp.com/api/register", data

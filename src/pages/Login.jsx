@@ -3,11 +3,14 @@ import angkasaLogo from "../assets/angkasaLogo.svg";
 import { useState} from "react";
 import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "../redux/actions/authAction";
+import { login, admin } from "../redux/actions/authAction";
+import { useNavigate } from "react-router-dom";
+import Home from "./Home";
   
 const Login = () => {
   const dispatch = useDispatch();
-  const { token } = useSelector((state)=>state.auth)
+  const { token } = useSelector((state)=>state.auth);
+  const redirect = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,11 +30,15 @@ const Login = () => {
         password,
       }
       dispatch(login(data));
+      redirect("/")
     }
-  };
-
-  const handleLogout = () => {
-    dispatch(logout());
+    if (email === "admin@email.com" && password === "admin1" ){
+      const data={
+        email, password
+      }
+      dispatch(login(data));
+      redirect("/admin")
+    }
   };
 
   return (
@@ -102,7 +109,7 @@ const Login = () => {
             </div>
           </section>
           ) : (
-          <p>HAI</p>
+          <Home/>
       )}
     </>
   );

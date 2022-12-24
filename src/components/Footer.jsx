@@ -2,11 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import angkasaLogo from "../assets/angkasaLogo.svg";
 import Buttom from "./Buttom";
+import { logout } from "../redux/actions/authAction";
+import { useDispatch } from "react-redux";
 
-function Footer(token, setToken) {
+function Footer() {
+  const dispatch = useDispatch();
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    setToken(null);
+    dispatch(logout());
   };
   return (
     <>
