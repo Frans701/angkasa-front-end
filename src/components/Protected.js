@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
-const LOGIN_URL = "/api/login";
 
 function Protected({ children, token, setToken }) {
   const navigate = useNavigate();

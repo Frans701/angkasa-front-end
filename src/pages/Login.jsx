@@ -36,8 +36,8 @@ const Login = () => {
       const data={
         email, password
       }
-      dispatch(login(data));
-      redirect("/admin")
+      dispatch(admin(data));
+      redirect("/admin");
     }
   };
 
