@@ -2,8 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import angkasaLogo from "../assets/angkasaLogo.svg";
 import Buttom from "./Buttom";
+import { logout } from "../redux/actions/authAction";
+import { useDispatch } from "react-redux";
 
 function Footer() {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   return (
     <>
       <footer class="lg:text-left bg-white ">
@@ -51,6 +57,12 @@ function Footer() {
               <Link to="/">
                 <Buttom>Contact Us</Buttom>
               </Link>
+              <button
+                className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold"
+                onClick={handleLogout}
+              >
+                Log out
+              </button>
             </div>
           </div>
         </div>

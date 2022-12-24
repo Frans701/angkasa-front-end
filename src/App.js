@@ -12,6 +12,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import Protected from "./components/Protected";
+import AdminPage from "./pages/AdminPage";
 import Checkourder from "./pages/CheckOrder";
 
 export default function App() {
@@ -54,6 +55,7 @@ export default function App() {
               }
             />
             <Route path="/search" element={<Search />} />
+            <Route path="/admin" element={<AdminPage />} />
           </Routes>
         </SkeletonTheme>
       </Provider>
