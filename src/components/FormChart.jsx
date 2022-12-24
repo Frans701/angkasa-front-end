@@ -19,11 +19,8 @@ function FormChart({ token }) {
   const [filteredItems, setFilteredItems] = useState(null);
   const [data, setData] = useState(null);
 
-  const [selectedOption, setSelectedOption] = useState(null);
-
-  const handleChange = (selectedOption) => {
-    setSelectedOption(selectedOption);
-  };
+  const [selectedOptionBank, setSelectedOptionBank] = useState(null);
+  const [selectedOptionType, setSelectedOptionType] = useState(null);
 
   useEffect(() => {
     dispatch(getFlight(flightId, seatClass));
@@ -32,15 +29,18 @@ function FormChart({ token }) {
   console.log(data);
 
   const [values, setValues] = useState({
-    username: "",
     email: "",
     fullName: "",
     email: "",
     phone: "",
     fullNamePassenger: "",
-    type: "",
     number: "",
+    typeID: "",
   });
+
+  console.log(values);
+  console.log(selectedOptionType);
+  console.log(selectedOptionBank);
 
   const customStyles = {
     option: (provided, state) => ({
@@ -59,9 +59,40 @@ function FormChart({ token }) {
     },
   };
 
-  const options = [
-    { value: "BCA", label: "BCA" },
-    { value: "Mandiri", label: "Mandiri" },
+  const paymentMethod = [
+    { value: "Bank Indonesia (BI)", label: "Bank Indonesia (BI)" },
+    {
+      value: "Bank Negara Indonesia (BNI)",
+      label: "Bank Negara Indonesia (BNI)",
+    },
+    {
+      value: "Bank Rakyat Indonesia (BRI)",
+      label: "Bank Rakyat Indonesia (BRI)",
+    },
+    {
+      value: "Bank Tabungan Negara (BTN)",
+      label: "Bank Tabungan Negara (BTN)",
+    },
+    {
+      value: "Bank Mandiri",
+      label: "Bank Mandiri",
+    },
+    {
+      value: "Bank Central Asia (BCA)",
+      label: "Bank Central Asia (BCA)",
+    },
+    {
+      value: "Bank CIMB Niaga",
+      label: "Bank CIMB Niaga",
+    },
+  ];
+
+  const type = [
+    { value: "KTP", label: "KTP" },
+    {
+      value: "Passport",
+      label: "Passport",
+    },
   ];
 
   // console.log(options);
@@ -72,8 +103,9 @@ function FormChart({ token }) {
       name: "fullName",
       type: "text",
       placeholder: "Example: Kurt Cobain",
-      errorMsg: "Name 3-16 and and shouldn't include any special character",
+      errorMsg: "Please enter a valid full name",
       label: "Full Name",
+      pattern: "^[A-Za-z]+ [A-Za-z]+$",
       required: true,
     },
     {
@@ -82,13 +114,15 @@ function FormChart({ token }) {
       type: "text",
       placeholder: "Example: kurt@gmail.com",
       errorMsg: "It should be valid email address",
+      pattern:
+        "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
       label: "Email",
       required: true,
     },
     {
       id: 3,
       name: "phone",
-      type: "tel",
+      type: "text",
       placeholder: "Example: 082172xxxx",
       errorMsg: "It should be valid Phone",
       label: "Phone",
@@ -102,29 +136,31 @@ function FormChart({ token }) {
       name: "fullNamePassenger",
       type: "text",
       placeholder: "Example: Kurt Cobain",
-      errorMsg: "Name 3-16 and and shouldn't include any special character",
+      errorMsg: "Please enter a valid full name",
       label: "Full Name",
       required: true,
+      pattern: "^[A-Za-z]+ [A-Za-z]+$",
     },
     {
       id: 2,
-      name: "type",
-      type: "text",
-      placeholder: "Example: 0837283909xxxxxx",
-      errorMsg: "It should be valid ID",
-      label: "ID",
-      required: true,
-    },
-    {
-      id: 3,
       name: "number",
       type: "text",
       placeholder: "Example: 082172xxxx",
       errorMsg: "It should be valid number",
-      label: "number",
+      label: "Number",
       required: true,
     },
   ];
+
+  const typeID = {
+    id: 1,
+    name: "typeID",
+    type: "text",
+    placeholder: "Enter your identity",
+    errorMsg: "It should be valid",
+    label: "",
+    required: true,
+  };
 
   // console.log(username);
 
@@ -147,11 +183,11 @@ function FormChart({ token }) {
         passengers: [
           {
             fullName: values.fullNamePassenger,
-            type: values.type,
+            type: selectedOptionType.value,
             number: values.number,
           },
         ],
-        paymentMethod: selectedOption.value,
+        paymentMethod: selectedOptionBank.value,
         class: seatClass,
       },
       {
@@ -184,7 +220,7 @@ function FormChart({ token }) {
             })}
           </div>
 
-          <div className="flex flex-col px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px]">
+          <div className="flex flex-col px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px] relative z-10">
             <h3 className="text-2xl font-semibold">Passenger Details</h3>
             {passengers.map((input) => {
               return (
@@ -198,16 +234,40 @@ function FormChart({ token }) {
                 </>
               );
             })}
-            <h4>Payment Method</h4>
-            <Select
-              styles={customStyles}
-              options={options}
-              onChange={handleChange}
-            />
+            <div className="flex flex-col my-[8px] gap-[4px]">
+              <h4>KTP/Passport</h4>
+              <Select
+                styles={customStyles}
+                options={type}
+                onChange={(selectedOptionType) => {
+                  setSelectedOptionType(selectedOptionType);
+                }}
+              />
+              <FormInput
+                key={typeID.id}
+                {...typeID}
+                value={values[typeID.name]}
+                onChange={onChange}
+              />
+            </div>
+
+            <div className="flex flex-col my-[8px] gap-[4px]">
+              <h4>Payment Method</h4>
+              <Select
+                styles={customStyles}
+                options={paymentMethod}
+                onChange={(selectedOptionBank) => {
+                  setSelectedOptionBank(selectedOptionBank);
+                }}
+              />
+            </div>
           </div>
-          <Buttom>Submit</Buttom>
+
+          <div className="flex flex-col px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px]">
+            <Buttom>Submit</Buttom>
+          </div>
         </form>
-        <div className="flex flex-col items-start gap-[16px] xl:px-[40px] px-[24px] py-[24px] rounded-lg drop-shadow-lg bg-white xl:w-[800px] ">
+        <div className="flex flex-col items-start gap-[16px] xl:px-[40px] px-[24px] py-[24px] rounded-lg drop-shadow-lg bg-white xl:w-[800px] w-full">
           <h1 className="text-2xl font-semibold">Penerbangan</h1>
 
           <div>{flight?.airplane?.airline?.name}</div>
