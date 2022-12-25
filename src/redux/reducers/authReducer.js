@@ -23,6 +23,3 @@ const authSlicer = createSlice({
 
 export const { setToken, setUser, setRole } = authSlicer.actions;
 export default authSlicer.reducer;
-
-export const {setToken, setUser}=authSlicer.actions;
-export default authSlicer.reducer;
