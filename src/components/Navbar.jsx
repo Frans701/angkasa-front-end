@@ -3,11 +3,10 @@ import { Transition } from "@headlessui/react";
 import angkasaLogo from "../assets/angkasaLogo.svg";
 import { Link } from "react-router-dom";
 import Buttom from "./Buttom";
+import Notif from "./Notif";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
-
-  // console.log(isOpen);
   return (
     <div>
       <nav className="bg-white">

@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
-const LOGIN_URL = "/api/login";
+import { useSelector } from "react-redux";
 
-function Protected({ children, token, setToken }) {
+function Protected({ children, setToken }) {
+  const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
   useEffect(() => {

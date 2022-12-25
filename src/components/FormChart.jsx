@@ -4,12 +4,13 @@ import FormInput from "./FormInput";
 import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { getFlight } from "../redux/actions/FlightAction";
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import axios from "./axios";
 import { PlusSmallIcon } from "@heroicons/react/24/solid";
 
-function FormChart({ token }) {
+function FormChart() {
+  const { token } = useSelector((state) => state.auth);
   let [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   let flightId = searchParams.get("flightId");
@@ -18,6 +19,8 @@ function FormChart({ token }) {
   const { flight, price } = useSelector((state) => state.flight);
   const [filteredItems, setFilteredItems] = useState(null);
   const [data, setData] = useState(null);
+  const redirect = useNavigate();
+  const [dataPassenger, setDataPassenger] = useState([]);
 
   const [selectedOptionBank, setSelectedOptionBank] = useState(null);
   const [selectedOptionType, setSelectedOptionType] = useState(null);
@@ -26,7 +29,7 @@ function FormChart({ token }) {
     dispatch(getFlight(flightId, seatClass));
   }, [dispatch]);
 
-  console.log(data);
+  // console.log(data);
 
   const [values, setValues] = useState({
     email: "",
@@ -34,13 +37,12 @@ function FormChart({ token }) {
     email: "",
     phone: "",
     fullNamePassenger: "",
-    number: "",
     typeID: "",
   });
 
-  console.log(values);
-  console.log(selectedOptionType);
-  console.log(selectedOptionBank);
+  // console.log(values);
+  // console.log(selectedOptionType);
+  // console.log(selectedOptionBank);
 
   const customStyles = {
     option: (provided, state) => ({
@@ -130,31 +132,20 @@ function FormChart({ token }) {
     },
   ];
 
-  const passengers = [
-    {
-      id: 1,
-      name: "fullNamePassenger",
-      type: "text",
-      placeholder: "Example: Kurt Cobain",
-      errorMsg: "Please enter a valid full name",
-      label: "Full Name",
-      required: true,
-      pattern: "^[A-Za-z]+ [A-Za-z]+$",
-    },
-    {
-      id: 2,
-      name: "number",
-      type: "text",
-      placeholder: "Example: 082172xxxx",
-      errorMsg: "It should be valid number",
-      label: "Number",
-      required: true,
-    },
-  ];
-
-  const typeID = {
+  const passengers = {
     id: 1,
-    name: "typeID",
+    name: "fullName",
+    type: "text",
+    placeholder: "Example: Kurt Cobain",
+    errorMsg: "Please enter a valid full name",
+    label: "Full Name",
+    required: true,
+    pattern: "^[A-Za-z]+ [A-Za-z]+$",
+  };
+
+  const numberID = {
+    id: 1,
+    name: "number",
     type: "text",
     placeholder: "Enter your identity",
     errorMsg: "It should be valid",
@@ -164,8 +155,18 @@ function FormChart({ token }) {
 
   // console.log(username);
 
-  const onChange = (e) => {
+  const onChangeOrder = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const onChange = (index, name, value) => {
+    const newData = dataPassenger?.map((d, i) => {
+      if (index === i) {
+        return { ...d, [name]: value };
+      }
+      return d;
+    });
+    setDataPassenger(newData);
   };
 
   const handleSubmit = async (event) => {
@@ -173,20 +174,14 @@ function FormChart({ token }) {
     const result = await axios.post(
       "https://angkasa-api-staging.km3ggwp.com/api/orders",
       {
-        flightId: [flightId],
-        totalPassengers: parseInt(passenger),
+        flightId: [Number(flightId)],
+        totalPassengers: Number(passenger),
         contact: {
           fullName: values.fullName,
           email: values.email,
           phone: values.phone,
         },
-        passengers: [
-          {
-            fullName: values.fullNamePassenger,
-            type: selectedOptionType.value,
-            number: values.number,
-          },
-        ],
+        passengers: dataPassenger,
         paymentMethod: selectedOptionBank.value,
         class: seatClass,
       },
@@ -195,9 +190,25 @@ function FormChart({ token }) {
       }
     );
     setData(result.data);
+    redirect("/check-order");
   };
 
-  console.log(data);
+  useEffect(() => {
+    if (Number(passenger) > 0) {
+      const passengerData = {
+        fullName: "",
+        type: "",
+        number: "",
+      };
+      const passengersData = [];
+      Array.from({ length: passenger }, () => {
+        passengersData.push(passengerData);
+      });
+      setDataPassenger(passengersData);
+    }
+  }, [passenger]);
+
+  console.log(dataPassenger);
 
   return (
     <>
@@ -214,43 +225,68 @@ function FormChart({ token }) {
                   key={input.id}
                   {...input}
                   value={values[input.name]}
-                  onChange={onChange}
+                  onChange={onChangeOrder}
                 />
               );
             })}
           </div>
 
-          <div className="flex flex-col px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px] relative z-10">
-            <h3 className="text-2xl font-semibold">Passenger Details</h3>
-            {passengers.map((input) => {
-              return (
-                <>
-                  <FormInput
-                    key={input.id}
-                    {...input}
-                    value={values[input.name]}
-                    onChange={onChange}
-                  />
-                </>
-              );
-            })}
-            <div className="flex flex-col my-[8px] gap-[4px]">
-              <h4>KTP/Passport</h4>
-              <Select
-                styles={customStyles}
-                options={type}
-                onChange={(selectedOptionType) => {
-                  setSelectedOptionType(selectedOptionType);
-                }}
-              />
-              <FormInput
-                key={typeID.id}
-                {...typeID}
-                value={values[typeID.name]}
-                onChange={onChange}
-              />
-            </div>
+          {dataPassenger.map((_, i) => {
+            return (
+              <>
+                <div className="flex flex-col px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px] relative z-10">
+                  <h3 className="text-2xl font-semibold">Passenger Details</h3>
+                  <>
+                    <FormInput
+                      key={passengers.id}
+                      {...passengers}
+                      value={dataPassenger[i].fullName}
+                      onChange={(e) => {
+                        onChange(i, e.target.name, e.target.value);
+                      }}
+                    />
+                  </>
 
+                  <div className="flex flex-col my-[8px] gap-[4px]">
+                    <h4>KTP/Passport</h4>
+                    <label htmlFor="">
+                      <select
+                        name={"type"}
+                        id=""
+                        value={dataPassenger[i].type}
+                        onChange={(e) => {
+                          onChange(i, e.target.name, e.target.value);
+                        }}
+                      >
+                        <option value="">Select</option>
+                        <option value="KTP">KTP</option>
+                        <option value="Passport">Passport</option>
+                      </select>
+                    </label>
+                    {/* <Select
+                      styles={customStyles}
+                      name={"type"}
+                      options={type}
+                      value={dataPassenger[i].type}
+                      onChange={(e) => {
+                        onChange(i, e.target.name, e.target.value);
+                      }}
+                    /> */}
+                    <FormInput
+                      key={numberID.id}
+                      {...numberID}
+                      value={dataPassenger[i].number}
+                      onChange={(e) => {
+                        onChange(i, e.target.name, e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+              </>
+            );
+          })}
+
+          <div className="flex flex-col px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px]">
             <div className="flex flex-col my-[8px] gap-[4px]">
               <h4>Payment Method</h4>
               <Select
@@ -261,9 +297,6 @@ function FormChart({ token }) {
                 }}
               />
             </div>
-          </div>
-
-          <div className="flex flex-col px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px]">
             <Buttom>Submit</Buttom>
           </div>
         </form>
