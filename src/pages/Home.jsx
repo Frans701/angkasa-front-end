@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import SearchCard from "../components/SearchCard";
+import { useSelector, useDispatch } from "react-redux";
+import { getMe } from "../redux/actions/authAction";
 
 function Home() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getMe());
+  }, [dispatch]);
+
   return (
     <>
       <Navbar />
