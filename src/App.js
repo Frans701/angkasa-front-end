@@ -14,6 +14,7 @@ import store from "./redux/store";
 import Protected from "./components/Protected";
 import AdminPage from "./pages/AdminPage";
 import Checkourder from "./pages/CheckOrder";
+import Orders from "./pages/admin/Orders";
 
 export default function App() {
   const tokenLocalStorage = localStorage.getItem("token");
@@ -25,15 +26,12 @@ export default function App() {
         <SkeletonTheme baseColor="#F5F5F5" highlightColor="#ffffff">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route
-              path="/login"
-              element={<Login />}
-            />
+            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route
               path="/search"
               element={
-                <Protected token={token} setToken={setToken}>
+                <Protected setToken={setToken} token={token}>
                   <Search />
                 </Protected>
               }
@@ -42,7 +40,7 @@ export default function App() {
               path="/chart"
               element={
                 <Protected token={token} setToken={setToken}>
-                  <Chart token={token} setToken={setToken} />
+                  <Chart />
                 </Protected>
               }
             />
@@ -50,12 +48,12 @@ export default function App() {
               path="/check-order"
               element={
                 <Protected token={token} setToken={setToken}>
-                  <Checkourder token={token} setToken={setToken} />
+                  <Checkourder />
                 </Protected>
               }
             />
             <Route path="/search" element={<Search />} />
-            <Route path="/admin" element={<AdminPage/>}/>
+            <Route path="/admin/orders" element={<Orders />} />
           </Routes>
         </SkeletonTheme>
       </Provider>

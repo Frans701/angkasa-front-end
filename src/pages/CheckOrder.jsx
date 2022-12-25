@@ -1,14 +1,13 @@
 import Navbar from "../components/Navbar";
-import Cards from "../components/Cards";
 import Footer from "../components/Footer";
 import OrderCards from "../components/OrderCards";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
-function Checkourder({ token, setToken }) {
+function Checkourder() {
+  const { token } = useSelector((state) => state.auth);
   const [ordersHistory, setOrdersHistory] = useState([]);
-
-  console.log(token);
 
   useEffect(() => {
     const fetchAirports = async () => {
@@ -28,7 +27,7 @@ function Checkourder({ token, setToken }) {
       <Navbar />
       <div className="px-[24px] xl:px-[80px]">
         <p className="mt-[32px] mb-[16px]">
-          Displays the best 5 flights at the best prices.
+          Displays the best {ordersHistory.length} flights at the best prices.
         </p>
         <div className="flex flex-col gap-[16px]">
           <OrderCards ordersHistory={ordersHistory} />

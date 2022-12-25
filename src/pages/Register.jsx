@@ -11,6 +11,9 @@ const Register = () => {
   const dispatch = useDispatch();
   const redirect = useNavigate();
   const { token } = useSelector ((state) => state.auth);
+  const dispatch = useDispatch();
+  const redirect = useNavigate();
+  const { token } = useSelector ((state) => state.auth);
   const [fullname, setFullname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -26,7 +29,14 @@ const Register = () => {
     }
     if (password !== passwordConfirmation){
       alert("Please enter the same password");
+    if (fullname === "" || username === "" || email ==="" || password === "" || passwordConfirmation===""){
+      alert("Please fill the blank field");
     }
+    if (password !== passwordConfirmation){
+      alert("Please enter the same password");
+    }
+    if (fullname !== "" && username !== "" && email !=="" && password === passwordConfirmation){
+      const data= {
     if (fullname !== "" && username !== "" && email !=="" && password === passwordConfirmation){
       const data= {
         fullname,
@@ -48,6 +58,7 @@ const Register = () => {
       dispatch(register(data));
       redirect('/login');
     }
+  }
   }
 
   return (

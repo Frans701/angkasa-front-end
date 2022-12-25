@@ -4,7 +4,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 function Protected({ children, setToken }) {
-  const { token } = useSelector((state)=>state.auth);
+  const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   useEffect(() => {
     (async () => {
