@@ -58,7 +58,7 @@ export const getMe = (callback) => async (dispatch, getState)=>{
         );
         dispatch(setUser(response.data.data));
     } catch (error){
-        // eslint-disable-next-line
+        
         if(error.response.status = 401){
             localStorage.removeItem("token");
             dispatch(setToken(null));

@@ -1,10 +1,10 @@
 import loginIMG from "../assets/loginIMG.png";
 import angkasaLogo from "../assets/angkasaLogo.svg";
-import { useState} from "react";
+import { useEffect, useState} from "react";
 import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import { login, admin } from "../redux/actions/authAction";
-import { useNavigate } from "react-router-dom";
+import { login, admin, getMe } from "../redux/actions/authAction";
+import { Navigate, useNavigate } from "react-router-dom";
 import Home from "./Home";
   
 const Login = () => {
@@ -30,16 +30,23 @@ const Login = () => {
         password,
       }
       dispatch(login(data));
-      redirect("/")
+      dispatch(getMe(data));
     }
     if (email === "admin@email.com" && password === "admin1" ){
       const data={
         email, password
       }
       dispatch(admin(data));
-      redirect("/admin");
     }
   };
+
+  useEffect(()=>{
+    if(token){
+     redirect("/") 
+    } 
+  }, [token])
+
+
 
   return (
     <>
@@ -109,7 +116,7 @@ const Login = () => {
             </div>
           </section>
           ) : (
-          <Home/>
+            <Home/>
       )}
     </>
   );

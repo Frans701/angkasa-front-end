@@ -2,10 +2,10 @@ import loginIMG from "../assets/loginIMG.png";
 import angkasaLogo from "../assets/angkasaLogo.svg";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
-import Home from "./Home";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../redux/actions/authAction";
+import Login from "./Login";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -16,6 +16,8 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [errorMessage, setErrorMessage] = useState({username:'', password:''});
+
 
   const handleSubmit = async (e)=>{
     e.preventDefault();
@@ -33,15 +35,25 @@ const Register = () => {
         password,
         passwordConfirmation,
       };
+      const usernameRegex = /^[a-zA-Z0-9]{5,}$/; 
+      if (!usernameRegex.test(username)) { 
+        setErrorMessage({...errorMessage,username:'test'});
+        return; 
+      }
+      const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()_+-=,./<>?;':"\|\[\]{}]{8,}$/
+      if (!passwordRegex.test(password)) { 
+        setErrorMessage({...errorMessage, password:'pasword'});
+        return; 
+      }
       dispatch(register(data));
-      redirect("/");
+      redirect('/login');
     }
   }
 
   return (
     <>
           {token ? (
-            <Home/>
+            <Login/>
           ) : (
             <section>
               <Navbar />
@@ -77,7 +89,7 @@ const Register = () => {
                     Username
                   </span>
                   <input
-                    type="text"
+                    type="name"
                     id="username"
                     className="peer ... border p-2"
                     autoComplete="off"
@@ -86,6 +98,7 @@ const Register = () => {
                     value={username}
                     required
                   />
+                  {errorMessage && <p>{errorMessage.username}</p>}
                 </label>
 
                 {/*EMAIL*/}
@@ -94,7 +107,7 @@ const Register = () => {
                     Email
                   </span>
                   <input
-                    type="email"
+                    type="text"
                     id="email"
                     className="peer ... border p-2"
                     autoComplete="off"
@@ -120,6 +133,7 @@ const Register = () => {
                     value={password}
                     required
                   />
+                  {errorMessage && <p>{errorMessage.password}</p>}
                 </label>
 
                 {/*CONFIRM PASSWORD*/}

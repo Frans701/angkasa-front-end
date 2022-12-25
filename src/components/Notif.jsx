@@ -2,7 +2,15 @@ import { useEffect, useState} from "react";
 import "./Notif.css";
 import { useDispatch } from "react-redux";
 import { getAllNotifications } from "../redux/actions/notifAction";
+import axios from "./axios";
 const Notif =() =>{
+    const [notifList, setNotifList] = useState([]);
+    const dispatch = useDispatch();
+    const [open, setOpen] = useState(false);
+    useEffect(()=>{
+        getAllNotifications();
+    },[]);
+
     // const menuNotif = async (e)=>{
     //     e.preventDefault();
     //     try{
@@ -12,14 +20,9 @@ const Notif =() =>{
     //         alert('Nothing Found Here');
     //     }
     // }
-    // useEffect(()=>{
-    //     getAllNotifications();
-    // },[]);
 
-    const [open, setOpen] = useState(false);
-    const List=["Registration success","Profile updated", "Transaction completed"];
-    // const [notifList, setNotifList] = useState([]);
-    // const dispatch = useDispatch();
+    // const List=["Registration success","Profile updated", "Transaction completed"];
+
     return (
         <div className="flex justify-center">
             <div className="relative">
@@ -31,7 +34,7 @@ const Notif =() =>{
                 <div className="notif flex flex-col bg-gray-100 p-4 w-72 shadow-lg absolute top-12">
                     <div>
                         <ul>
-                                {List.map((list)=>(
+                                {notifList.map((list)=>(
                                     <li 
                                     onClick={()=>setOpen(false)}
                                     className="p-2 text-md cursor-pointer rounded hover:bg-blue-200"

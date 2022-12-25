@@ -27,7 +27,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route
               path="/login"
-              element={<Login token={token} setToken={setToken} />}
+              element={<Login />}
             />
             <Route path="/register" element={<Register />} />
             <Route

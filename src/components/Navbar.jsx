@@ -35,7 +35,7 @@ function Nav() {
                   className="px-3 py-2 rounded-md text-sm font-medium"
                   >
                   Check Order
-                </a>
+                </Link>
                 <a
                   href="/profile"
                   className="px-3 py-2 rounded-md text-sm font-medium"
