@@ -27,7 +27,6 @@ const Notif =() =>{
                                     onClick={()=>setOpen(false)}
                                     className="p-2 text-md cursor-pointer rounded hover:bg-blue-200"
                                     key={data}>{data}
-                                    key={data}>{data}
                                     </li>
                                 ))
                                 }
