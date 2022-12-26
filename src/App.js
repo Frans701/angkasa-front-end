@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Chart from "./pages/Chart";
 import Profile from "./pages/Profile";
+import Profile from "./pages/Profile";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Provider } from "react-redux";
@@ -16,6 +17,8 @@ import Protected from "./components/Protected";
 import Admin from "./pages/admin/Admin";
 import Checkourder from "./pages/CheckOrder";
 import Orders from "./pages/admin/Orders";
+import ProtectedAdmin from "./components/ProtectedAdmin";
+import ProtectedUsers from "./components/ProtectedUsers";
 import ProtectedAdmin from "./components/ProtectedAdmin";
 import ProtectedUsers from "./components/ProtectedUsers";
 
@@ -38,7 +41,6 @@ export default function App() {
                   <Protected setToken={setToken} token={token}>
                     <Search />
                   </Protected>
-
                 }/>
               <Route
                 path="/chart"
@@ -55,31 +57,10 @@ export default function App() {
                   </Protected>  
                   }/>
               <Route path="/profile" element ={<Profile/>}/>
-
-                }
-              />
-              <Route
-                path="/chart"
-                element={
-                  <Protected token={token} setToken={setToken}>
-                    <Chart />
-                  </Protected>
-                }
-              />
-              <Route
-                path="/check-order"
-                element={
-                  <Protected token={token} setToken={setToken}>
-                    <Checkourder />
-                  </Protected>
-                }
-              />
-
             </Route>
 
             <Route path ="/" element={<ProtectedAdmin/>}>
               <Route path="/admin/orders" element={<Orders />} />
-
               <Route
                 path="/search"
                 element={
@@ -88,11 +69,6 @@ export default function App() {
                   </Protected>
                 }/>
             </Route>
-
-
-            </Route>
-            
-
           </Routes>
         </SkeletonTheme>
       </Provider>
