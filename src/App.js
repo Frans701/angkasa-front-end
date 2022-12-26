@@ -65,7 +65,6 @@ export default function App() {
                   </Protected>
                 }/>
             </Route>
-
           </Routes>
         </SkeletonTheme>
       </Provider>
