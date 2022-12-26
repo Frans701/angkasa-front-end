@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Chart from "./pages/Chart";
+import Profile from "./pages/Profile";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Provider } from "react-redux";
@@ -37,6 +38,24 @@ export default function App() {
                   <Protected setToken={setToken} token={token}>
                     <Search />
                   </Protected>
+
+                }/>
+              <Route
+                path="/chart"
+                element={
+                  <Protected setToken={setToken} token={token}>
+                    <Chart />
+                  </Protected>
+                }/>
+              <Route
+                path="/check-order"
+                element={
+                  <Protected setToken={setToken} token={token}>
+                    <Checkourder />
+                  </Protected>  
+                  }/>
+              <Route path="/profile" element ={<Profile/>}/>
+
                 }
               />
               <Route
@@ -55,12 +74,25 @@ export default function App() {
                   </Protected>
                 }
               />
+
             </Route>
 
             <Route path ="/" element={<ProtectedAdmin/>}>
               <Route path="/admin/orders" element={<Orders />} />
+
+              <Route
+                path="/search"
+                element={
+                  <Protected setToken={setToken} token={token}>
+                    <Search />
+                  </Protected>
+                }/>
+            </Route>
+
+
             </Route>
             
+
           </Routes>
         </SkeletonTheme>
       </Provider>

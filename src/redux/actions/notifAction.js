@@ -7,7 +7,7 @@ export const getAllNotifications = () => async (dispatch) =>{
         const {data} = await axios.get(
             "https://angkasa-api-staging.km3ggwp.com/api/notifications/all"
         )
-        dispatch(getNotifReducer(data.notifications))
+        dispatch(getNotifReducer(data))
     }catch (error){
         throw error;
     }

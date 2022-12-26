@@ -3,7 +3,7 @@ import angkasaLogo from "../assets/angkasaLogo.svg";
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import { login, admin, getMe } from "../redux/actions/authAction";
+import { login } from "../redux/actions/authAction";
 import { useNavigate } from "react-router-dom";
 // import Home from "./Home";
 // import Orders from "./admin/Orders";
