@@ -1,9 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import angkasaLogo from "../assets/angkasaLogo.svg";
 import Buttom from "./Buttom";
 
+
 function Footer() {
+
+import { logout } from "../redux/actions/authAction";
+import { useDispatch, useSelector } from "react-redux";
+
+function Footer() {
+  const dispatch = useDispatch();
+  const redirect = useNavigate();
+  const { token } = useSelector((state) => state.auth);
+  const handleLogout = () => {
+    dispatch(logout());
+    redirect("/login")
+  };
+
 
   return (
     <>
