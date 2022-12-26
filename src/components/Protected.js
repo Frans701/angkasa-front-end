@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 function Protected({ children, setToken }) {
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-
   useEffect(() => {
     (async () => {
       if (token) {

@@ -12,13 +12,15 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import Protected from "./components/Protected";
+import Admin from "./pages/admin/Admin";
 import Checkourder from "./pages/CheckOrder";
 import Orders from "./pages/admin/Orders";
+import ProtectedAdmin from "./components/ProtectedAdmin";
+import ProtectedUsers from "./components/ProtectedUsers";
 
 export default function App() {
   const tokenLocalStorage = localStorage.getItem("token");
   const [token, setToken] = useState(tokenLocalStorage);
-
   return (
     <>
       <Provider store={store}>
@@ -27,32 +29,38 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route
-              path="/search"
-              element={
-                <Protected setToken={setToken} token={token}>
-                  <Search />
-                </Protected>
-              }
-            />
-            <Route
-              path="/chart"
-              element={
-                <Protected token={token} setToken={setToken}>
-                  <Chart />
-                </Protected>
-              }
-            />
-            <Route
-              path="/check-order"
-              element={
-                <Protected token={token} setToken={setToken}>
-                  <Checkourder />
-                </Protected>
-              }
-            />
-            <Route path="/search" element={<Search />} />
-            <Route path="/admin/orders" element={<Orders />} />
+
+            <Route path ="/" element={<ProtectedUsers/>}>
+              <Route
+                path="/search"
+                element={
+                  <Protected setToken={setToken} token={token}>
+                    <Search />
+                  </Protected>
+                }
+              />
+              <Route
+                path="/chart"
+                element={
+                  <Protected token={token} setToken={setToken}>
+                    <Chart />
+                  </Protected>
+                }
+              />
+              <Route
+                path="/check-order"
+                element={
+                  <Protected token={token} setToken={setToken}>
+                    <Checkourder />
+                  </Protected>
+                }
+              />
+            </Route>
+
+            <Route path ="/" element={<ProtectedAdmin/>}>
+              <Route path="/admin/orders" element={<Orders />} />
+            </Route>
+            
           </Routes>
         </SkeletonTheme>
       </Provider>

@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
 import angkasaLogo from "../assets/angkasaLogo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Buttom from "./Buttom";
 import Notif from "./Notif";
+import { useSelector,useDispatch } from "react-redux";
+import { logout } from "../redux/actions/authAction";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
+  const { token, user } = useSelector((state) => state.auth); 
+  const dispatch = useDispatch();
+  const redirect = useNavigate();
+  const handleLogout = () => {
+    dispatch(logout());
+    redirect("/login")
+  };
   return (
     <div>
       <nav className="bg-white">
@@ -19,7 +28,7 @@ function Nav() {
                   className="h-[40px]"
                   src={angkasaLogo}
                   alt="Angkasa Logo"
-                />
+                  />
               </Link>
             </div>
             <div className="hidden md:block">
@@ -33,28 +42,45 @@ function Nav() {
                 <Link
                   to="/check-order"
                   className="px-3 py-2 rounded-md text-sm font-medium"
-                >
+                  >
                   Check Order
                 </Link>
-                {/* TESTING PROFILE */}
                 <Link
                   to="/profile"
                   className="px-3 py-2 rounded-md text-sm font-medium"
-                >
+                  >
                   Profile
                 </Link>
-                {/* END OF TESTING PROFILE */}
-                <div className="flex flex-row gap-[8px] items-center">
+                {user?.role ==="ADMIN"&&(
+                  <>
+                    <Link
+                      to="/admin/orders"
+                      className="px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                      Admin
+                    </Link>
+                  </>
+                )}
+                <Notif/>
+                {!token&&(
+                <>
                   <Link
                     to="/login"
-                    className="hover:bg-blue-700 hover:text-white focus:ring-4 border-blue-700 border-2 border-solid font-medium rounded-lg text-sm px-[24px] py-2 focus:outline-none focus:ring-blue-800"
-                  >
+                    className="px-3 py-2 rounded-md text-sm font-medium"
+                    >
                     Login
                   </Link>
                   <Link to="/register">
                     <Buttom>Register</Buttom>
                   </Link>
-                </div>
+                </>
+                )}
+                {token&&(
+                <button
+                  className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold"
+                  onClick={handleLogout}>Log out
+                </button>
+                )}
               </div>
             </div>
           </div>
@@ -131,14 +157,21 @@ function Nav() {
                 >
                   Check Order
                 </Link>
-                {/* TESTING PROFILE */}
                 <Link
                   to="/profile"
                   className="px-2 py-2 rounded-md text-sm font-medium"
                 >
                   Profile
                 </Link>
-                {/* END OF TESTING PROFILE */}
+                {user?.role ==="ADMIN"&&(
+                  <Link
+                    to="/admin/orders"
+                    className="px-3 py-2 rounded-md text-sm font-medium"
+                    >
+                    Admin
+                  </Link>
+                )}
+                {!token&&(
                 <div className="flex flex-row gap-[8px] items-center">
                   <Link
                     to="/login"
@@ -150,6 +183,13 @@ function Nav() {
                     <Buttom>Register</Buttom>
                   </Link>
                 </div>
+                )}
+                {token&&(
+                <button
+                  className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold"
+                  onClick={handleLogout}>Log out
+                </button>
+                )}
               </div>
             </div>
           )}

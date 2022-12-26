@@ -46,7 +46,7 @@ function Orders() {
 
   return (
     <>
-      {user?.user?.role === "ADMIN" ? (
+      {user?.role === "ADMIN" ? (
         <>
           <Navbar />
           <div className="px-[24px] xl:px-[80px]">

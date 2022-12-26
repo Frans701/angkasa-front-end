@@ -5,7 +5,8 @@ import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { login, admin, getMe } from "../redux/actions/authAction";
 import { useNavigate } from "react-router-dom";
-import Home from "./Home";
+// import Home from "./Home";
+// import Orders from "./admin/Orders";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -32,26 +33,18 @@ const Login = () => {
       };
       dispatch(login(data));
     }
-    if (email === "admin@email.com" && password === "admin1") {
-      const data = {
-        email,
-        password,
-      };
-      dispatch(admin(data));
-    }
   };
 
   useEffect(() => {
     if (token) {
-      redirect("/");
+      redirect("/")
     }
   }, [token]);
 
-  console.log(user);
+  // console.log(user);
 
   return (
     <>
-      {!token ? (
         <section>
           <Navbar />
           <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
@@ -121,77 +114,6 @@ const Login = () => {
             </div>
           </div>
         </section>
-      ) : (
-        <section>
-          <Navbar />
-          <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
-            <div className="hidden sm:block">
-              <img
-                className="w-full h-full object-cover"
-                src={loginIMG}
-                alt=""
-              />
-            </div>
-            <div className="bg-gray-100 flex flex-col justify-center">
-              <div className="flex flex-col gap-[16px] items-center py-5">
-                <img className="w-[140px]" src={angkasaLogo} alt="" />
-              </div>
-              <form
-                className="max-w-[425px] w-full mx-auto bg-white p-4"
-                onSubmit={handleSubmit}
-              >
-                <label className="flex flex-col py-2">
-                  <span className="block text-base font-medium  text-slate-700">
-                    Email
-                  </span>
-                  <input
-                    type="email"
-                    className="peer ... border p-2"
-                    placeholder="Masukkan email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                    required
-                  />
-                </label>
-
-                <label className="flex flex-col py-2">
-                  <span className="block text-base font-medium  text-slate-700">
-                    Password
-                  </span>
-                  <input
-                    type="password"
-                    className="peer ... border p-2"
-                    placeholder="Masukkan password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    value={password}
-                    required
-                  />
-                </label>
-                <button className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold">
-                  Masuk
-                </button>
-                <p className="flex flex-col items-center text-sm mb-3">
-                  Buat akun
-                </p>
-                <fieldset>
-                  <input
-                    id="default-checkbox"
-                    type="checkbox"
-                    value=""
-                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    htmlFor="default-checkbox"
-                    className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-800"
-                  >
-                    Ingat saya
-                  </label>
-                </fieldset>
-              </form>
-            </div>
-          </div>
-        </section>
-      )}
     </>
   );
 };
