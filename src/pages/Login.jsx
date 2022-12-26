@@ -5,7 +5,8 @@ import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { login, admin, getMe } from "../redux/actions/authAction";
 import { useNavigate } from "react-router-dom";
-import Home from "./Home";
+// import Home from "./Home";
+// import Orders from "./admin/Orders";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -32,26 +33,18 @@ const Login = () => {
       };
       dispatch(login(data));
     }
-    if (email === "admin@email.com" && password === "admin1") {
-      const data = {
-        email,
-        password,
-      };
-      dispatch(admin(data));
-    }
   };
 
   useEffect(() => {
     if (token) {
-      redirect("/");
+      redirect("/")
     }
   }, [token]);
 
-  console.log(user);
+  // console.log(user);
 
   return (
     <>
-      {!token ? (
         <section>
           <Navbar />
           <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
@@ -121,9 +114,6 @@ const Login = () => {
             </div>
           </div>
         </section>
-      ) : (
-            <Home/>
-      )}
     </>
   );
 };
