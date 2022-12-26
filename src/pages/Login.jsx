@@ -41,7 +41,7 @@ const Login = () => {
     }
   }, [token]);
 
-  console.log(user);
+  // console.log(user);
 
   return (
     <>
