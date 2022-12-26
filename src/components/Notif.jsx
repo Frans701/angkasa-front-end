@@ -5,23 +5,11 @@ import { getAllNotifications } from "../redux/actions/notifAction";
 import axios from "./axios";
 const Notif =() =>{
     const [notifList, setNotifList] = useState([]);
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
     useEffect(()=>{
         getAllNotifications();
     },[]);
-
-    // const menuNotif = async (e)=>{
-    //     e.preventDefault();
-    //     try{
-    //         const response = await axios.get ("https://angkasa-api-staging.km3ggwp.com/notification/all",{})
-    //         console.log(JSON.stringify(response.message))
-    //     } catch (err){
-    //         alert('Nothing Found Here');
-    //     }
-    // }
-
-    // const List=["Registration success","Profile updated", "Transaction completed"];
 
     return (
         <div className="flex justify-center">
@@ -34,11 +22,11 @@ const Notif =() =>{
                 <div className="notif flex flex-col bg-gray-100 p-4 w-72 shadow-lg absolute top-12">
                     <div>
                         <ul>
-                                {notifList.map((list)=>(
+                                {notifList.map((data)=>(
                                     <li 
                                     onClick={()=>setOpen(false)}
                                     className="p-2 text-md cursor-pointer rounded hover:bg-blue-200"
-                                    key={list}>{list}
+                                    key={data}>{data}
                                     </li>
                                 ))
                                 }

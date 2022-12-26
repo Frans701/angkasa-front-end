@@ -1,18 +1,9 @@
 import React from "react";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import angkasaLogo from "../assets/angkasaLogo.svg";
 import Buttom from "./Buttom";
-import { logout } from "../redux/actions/authAction";
-import { useDispatch, useSelector } from "react-redux";
 
 function Footer() {
-  const dispatch = useDispatch();
-  const redirect = useNavigate();
-  const { token } = useSelector((state) => state.auth);
-  const handleLogout = () => {
-    dispatch(logout());
-    redirect("/login")
-  };
 
   return (
     <>
@@ -61,12 +52,6 @@ function Footer() {
               <Link to="/">
                 <Buttom>Contact Us</Buttom>
               </Link>
-              <button
-                className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold"
-                onClick={handleLogout}
-              >
-                Log out
-              </button>
             </div>
           </div>
         </div>
