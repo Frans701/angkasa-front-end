@@ -8,7 +8,6 @@ import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Chart from "./pages/Chart";
 import Profile from "./pages/Profile";
-import Profile from "./pages/Profile";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Provider } from "react-redux";
