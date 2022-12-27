@@ -18,8 +18,6 @@ import Checkourder from "./pages/CheckOrder";
 import Orders from "./pages/admin/Orders";
 import ProtectedAdmin from "./components/ProtectedAdmin";
 import ProtectedUsers from "./components/ProtectedUsers";
-import ProtectedAdmin from "./components/ProtectedAdmin";
-import ProtectedUsers from "./components/ProtectedUsers";
 
 export default function App() {
   const tokenLocalStorage = localStorage.getItem("token");
