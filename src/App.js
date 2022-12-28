@@ -53,7 +53,11 @@ export default function App() {
                     <Checkourder />
                   </Protected>  
                   }/>
-              <Route path="/profile" element ={<Profile/>}/>
+              <Route path="/profile" element ={
+              <Protected setToken={setToken} token={token}>
+                <Profile/>
+              </Protected>
+              }/>
             </Route>
 
             <Route path ="/" element={<ProtectedAdmin/>}>

@@ -4,18 +4,17 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/actions/authAction";
-import { useNavigate } from "react-router-dom";
-// import Home from "./Home";
-// import Orders from "./admin/Orders";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.auth);
+  const { error } = useSelector((state)=> state.auth);
   const redirect = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (email === "") {
@@ -32,6 +31,7 @@ const Login = () => {
         password,
       };
       dispatch(login(data));
+      console.log(login(data));
     }
   };
 
@@ -40,8 +40,6 @@ const Login = () => {
       redirect("/")
     }
   }, [token]);
-
-  // console.log(user);
 
   return (
     <>
@@ -70,7 +68,7 @@ const Login = () => {
                   <input
                     type="email"
                     className="peer ... border p-2"
-                    placeholder="Masukkan email"
+                    placeholder="Fill the email"
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
                     required
@@ -84,18 +82,22 @@ const Login = () => {
                   <input
                     type="password"
                     className="peer ... border p-2"
-                    placeholder="Masukkan password"
+                    placeholder="Fill the password"
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}
                     required
                   />
                 </label>
+                <p className={error ? "errmsg" : "offscreen" } aria-live="assertive">{error}</p>
                 <button className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold">
-                  Masuk
+                  Login
                 </button>
-                <p className="flex flex-col items-center text-sm mb-3">
-                  Buat akun
-                </p>
+                <Link
+                  to="/register"
+                  className="flex flex-col items-center text-sm font-medium mb-3 px-2 py-2 rounded-md"
+                >
+                  Create Account
+                </Link>
                 <fieldset>
                   <input
                     id="default-checkbox"
@@ -107,7 +109,7 @@ const Login = () => {
                     htmlFor="default-checkbox"
                     className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-800"
                   >
-                    Ingat saya
+                    Remember me
                   </label>
                 </fieldset>
               </form>

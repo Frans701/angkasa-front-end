@@ -1,6 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
-import { setToken, setUser } from "../reducers/authReducer";
+import { setToken, setUser, setError } from "../reducers/authReducer";
 
 export const login = (data) => async (dispatch) => {
   try {
@@ -14,7 +13,7 @@ export const login = (data) => async (dispatch) => {
       dispatch(setToken(response.data.data.token));
     }
   } catch (error) {
-    console.log(error.response.data.message);
+    dispatch(setError(error.response.data.message))
   }
 };
 
@@ -29,7 +28,7 @@ export const register = (data) => async (dispatch) => {
       dispatch(setToken(response.data.data.token));
     }
   } catch (error) {
-    console.log(error.response.data.message);
+    dispatch(setError(error.response.data.errors));
   }
 };
 
@@ -50,7 +49,6 @@ export const getMe = () => async (dispatch, getState) => {
     if ((error.response.status = 401)) {
       localStorage.removeItem("token");
       dispatch(setToken(null));
-      // callback(error.response.status);
     }
   }
 };
@@ -60,5 +58,4 @@ export const logout = () => async (dispatch) => {
   localStorage.removeItem("role");
   dispatch(setToken(null));
   dispatch(setUser(null));
-  // dispatch(setRole(null));
 };
