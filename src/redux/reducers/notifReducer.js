@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   notifications: [],
-  token : localStorage.getItem("token")
+  token: localStorage.getItem("token"),
 };
 
 const notifSlicer = createSlice({

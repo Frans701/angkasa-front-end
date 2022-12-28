@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import Buttom from "./Buttom";
 import { Transition } from "@headlessui/react";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useNavigate } from "react-router-dom";
+import axios from "./axios";
 
 const OrderCards = ({ ordersHistory }) => {
   return (
@@ -76,9 +77,6 @@ const OrderCards = ({ ordersHistory }) => {
                     <div>
                       <h1 className="text-2xl font-bold text-blue-500">
                         {orderHistory.total.formatted}
-                        <span className="text-base text-gray-300 font-medium">
-                          /pax
-                        </span>
                       </h1>
                     </div>
                   </div>
