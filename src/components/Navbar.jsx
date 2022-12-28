@@ -39,18 +39,22 @@ function Nav() {
                 >
                   Flight
                 </Link>
+                {token&&(
                 <Link
                   to="/check-order"
                   className="px-3 py-2 rounded-md text-sm font-medium"
                   >
-                  Check Order
+                  History
                 </Link>
+                )}
+                {token&&(
                 <Link
                   to="/profile"
                   className="px-3 py-2 rounded-md text-sm font-medium"
                   >
                   Profile
                 </Link>
+                )}
                 {user?.role ==="ADMIN"&&(
                   <>
                     <Link
@@ -61,7 +65,9 @@ function Nav() {
                     </Link>
                   </>
                 )}
+                {token&&(
                 <Notif/>
+                )}
                 {!token&&(
                 <>
                   <Link
@@ -76,10 +82,9 @@ function Nav() {
                 </>
                 )}
                 {token&&(
-                <button
-                  className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold"
-                  onClick={handleLogout}>Log out
-                </button>
+                <Buttom
+                  onPress={handleLogout}>Log out
+                </Buttom>
                 )}
               </div>
             </div>
@@ -151,18 +156,25 @@ function Nav() {
                 >
                   Flight
                 </Link>
+                {token&&(
                 <Link
                   to="/check-order"
                   className="px-2 py-2 rounded-md text-sm font-medium"
                 >
-                  Check Order
+                  History
                 </Link>
+                )}
+                {token&&(
                 <Link
                   to="/profile"
                   className="px-2 py-2 rounded-md text-sm font-medium"
                 >
                   Profile
                 </Link>
+                )}
+                {token&&(
+                  <Notif/>
+                )}
                 {user?.role ==="ADMIN"&&(
                   <Link
                     to="/admin/orders"
@@ -185,10 +197,9 @@ function Nav() {
                 </div>
                 )}
                 {token&&(
-                <button
-                  className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold"
-                  onClick={handleLogout}>Log out
-                </button>
+                <Buttom
+                  onPress={handleLogout}>Log out
+                </Buttom>
                 )}
               </div>
             </div>
