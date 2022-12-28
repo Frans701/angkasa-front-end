@@ -7,6 +7,7 @@ import { getFlight } from "../redux/actions/FlightAction";
 import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import axios from "./axios";
+import numeral from "numeral";
 import { PlusSmallIcon } from "@heroicons/react/24/solid";
 
 function FormChart() {
@@ -24,6 +25,8 @@ function FormChart() {
 
   const [selectedOptionBank, setSelectedOptionBank] = useState(null);
   const [selectedOptionType, setSelectedOptionType] = useState(null);
+
+  const [errors, setErrors] = useState(null);
 
   useEffect(() => {
     dispatch(getFlight(flightId, seatClass));
@@ -99,6 +102,33 @@ function FormChart() {
 
   // console.log(options);
 
+  const contactFullName = {
+    name: "fullName",
+    type: "text",
+    placeholder: "Example: Kurt Cobain",
+    errorMsg: "Please enter a valid full name",
+    label: "Full Name",
+    pattern: "^[A-Za-z]+ [A-Za-z]+$",
+  };
+
+  const contactEmail = {
+    name: "email",
+    type: "text",
+    placeholder: "Example: kurt@gmail.com",
+    errorMsg: "It should be valid email address",
+    pattern:
+      "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
+    label: "Email",
+  };
+
+  const contactPhone = {
+    name: "phone",
+    type: "text",
+    placeholder: "Example: 082172xxxx",
+    errorMsg: "It should be valid Phone",
+    label: "Phone",
+  };
+
   const contacts = [
     {
       id: 1,
@@ -108,7 +138,6 @@ function FormChart() {
       errorMsg: "Please enter a valid full name",
       label: "Full Name",
       pattern: "^[A-Za-z]+ [A-Za-z]+$",
-      required: true,
     },
     {
       id: 2,
@@ -119,7 +148,6 @@ function FormChart() {
       pattern:
         "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
       label: "Email",
-      required: true,
     },
     {
       id: 3,
@@ -128,7 +156,6 @@ function FormChart() {
       placeholder: "Example: 082172xxxx",
       errorMsg: "It should be valid Phone",
       label: "Phone",
-      required: true,
     },
   ];
 
@@ -139,7 +166,7 @@ function FormChart() {
     placeholder: "Example: Kurt Cobain",
     errorMsg: "Please enter a valid full name",
     label: "Full Name",
-    required: true,
+
     pattern: "^[A-Za-z]+ [A-Za-z]+$",
   };
 
@@ -150,7 +177,6 @@ function FormChart() {
     placeholder: "Enter your identity",
     errorMsg: "It should be valid",
     label: "",
-    required: true,
   };
 
   // console.log(username);
@@ -171,26 +197,30 @@ function FormChart() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const result = await axios.post(
-      "https://angkasa-api-staging.km3ggwp.com/api/orders",
-      {
-        flightId: [Number(flightId)],
-        totalPassengers: Number(passenger),
-        contact: {
-          fullName: values.fullName,
-          email: values.email,
-          phone: values.phone,
+    try {
+      const result = await axios.post(
+        "https://angkasa-api-staging.km3ggwp.com/api/orders",
+        {
+          flightId: [Number(flightId)],
+          totalPassengers: Number(passenger),
+          contact: {
+            fullName: values.fullName,
+            email: values.email,
+            phone: values.phone,
+          },
+          passengers: dataPassenger,
+          paymentMethod: selectedOptionBank?.value,
+          class: seatClass,
         },
-        passengers: dataPassenger,
-        paymentMethod: selectedOptionBank.value,
-        class: seatClass,
-      },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    setData(result.data);
-    redirect("/check-order");
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setData(result.data);
+      redirect("/check-order");
+    } catch (error) {
+      setErrors(error.response.data.errors);
+    }
   };
 
   useEffect(() => {
@@ -210,6 +240,10 @@ function FormChart() {
 
   console.log(dataPassenger);
 
+  console.log(values);
+
+  console.log(errors);
+
   return (
     <>
       <div className="flex xl:flex-row flex-col gap-[24px] mt-[32px] items-start">
@@ -219,16 +253,38 @@ function FormChart() {
         >
           <div className="flex flex-col px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px]">
             <h3 className="text-2xl font-semibold">Orderer Details</h3>
-            {contacts.map((input) => {
-              return (
-                <FormInput
-                  key={input.id}
-                  {...input}
-                  value={values[input.name]}
-                  onChange={onChangeOrder}
-                />
-              );
-            })}
+            <div>
+              <FormInput
+                {...contactFullName}
+                value={values[contactFullName.name]}
+                onChange={onChangeOrder}
+              />
+              {errors && (
+                <p className="text-red-500">{errors["contact,fullName"]}</p>
+              )}
+            </div>
+
+            <div>
+              <FormInput
+                {...contactEmail}
+                value={values[contactEmail.name]}
+                onChange={onChangeOrder}
+              />
+              {errors && (
+                <p className="text-red-500">{errors["contact,email"]}</p>
+              )}
+            </div>
+
+            <div>
+              <FormInput
+                {...contactPhone}
+                value={values[contactPhone.name]}
+                onChange={onChangeOrder}
+              />
+              {errors && (
+                <p className="text-red-500">{errors["contact,phone"]}</p>
+              )}
+            </div>
           </div>
 
           {dataPassenger.map((_, i) => {
@@ -236,7 +292,7 @@ function FormChart() {
               <>
                 <div className="flex flex-col px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px] relative z-10">
                   <h3 className="text-2xl font-semibold">Passenger Details</h3>
-                  <>
+                  <div>
                     <FormInput
                       key={passengers.id}
                       {...passengers}
@@ -245,12 +301,18 @@ function FormChart() {
                         onChange(i, e.target.name, e.target.value);
                       }}
                     />
-                  </>
+                    {errors && (
+                      <p className="text-red-500">
+                        {errors[`passengers,${i},fullName`]}
+                      </p>
+                    )}
+                  </div>
 
                   <div className="flex flex-col my-[8px] gap-[4px]">
                     <h4>KTP/Passport</h4>
-                    <label htmlFor="">
+                    <div className="">
                       <select
+                        className="px-[24px] py-[8px] border w-full flex flex-col my-[8px] gap-[4px] appearance-none"
                         name={"type"}
                         id=""
                         value={dataPassenger[i].type}
@@ -262,24 +324,28 @@ function FormChart() {
                         <option value="KTP">KTP</option>
                         <option value="Passport">Passport</option>
                       </select>
-                    </label>
-                    {/* <Select
-                      styles={customStyles}
-                      name={"type"}
-                      options={type}
-                      value={dataPassenger[i].type}
-                      onChange={(e) => {
-                        onChange(i, e.target.name, e.target.value);
-                      }}
-                    /> */}
-                    <FormInput
-                      key={numberID.id}
-                      {...numberID}
-                      value={dataPassenger[i].number}
-                      onChange={(e) => {
-                        onChange(i, e.target.name, e.target.value);
-                      }}
-                    />
+                      {errors && (
+                        <p className="text-red-500">
+                          {errors[`passengers,${i},type`]}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <FormInput
+                        key={numberID.id}
+                        {...numberID}
+                        value={dataPassenger[i].number}
+                        onChange={(e) => {
+                          onChange(i, e.target.name, e.target.value);
+                        }}
+                      />
+                      {errors && (
+                        <p className="text-red-500">
+                          {errors[`passengers,${i},number`]}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
               </>
@@ -289,13 +355,18 @@ function FormChart() {
           <div className="flex flex-col px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px]">
             <div className="flex flex-col my-[8px] gap-[4px]">
               <h4>Payment Method</h4>
-              <Select
-                styles={customStyles}
-                options={paymentMethod}
-                onChange={(selectedOptionBank) => {
-                  setSelectedOptionBank(selectedOptionBank);
-                }}
-              />
+              <div className="my-[4px]">
+                <Select
+                  styles={customStyles}
+                  options={paymentMethod}
+                  onChange={(selectedOptionBank) => {
+                    setSelectedOptionBank(selectedOptionBank);
+                  }}
+                />
+              </div>
+              {errors && (
+                <p className="text-red-500">{errors["paymentMethod"]}</p>
+              )}
             </div>
             <Buttom>Submit</Buttom>
           </div>
@@ -338,7 +409,8 @@ function FormChart() {
           <div className="flex flex-row justify-between w-full items-center">
             <h5 className="font-semibold xl:text-xl">Total Pembayaran</h5>
             <h5 className="font-semibold xl:text-2xl text-blue-500">
-              {price[0]?.price.formatted}
+              Rp{" "}
+              {numeral(Number(passenger) * price[0]?.price.raw).format("0,0")}
             </h5>
           </div>
         </div>
