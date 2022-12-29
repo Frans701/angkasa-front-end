@@ -29,7 +29,7 @@ function Nav() {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        setNotif(response);
+        setNotif(response.data.data.notifications);
       };
       fetchData();
     } catch (error) {}
@@ -85,7 +85,7 @@ function Nav() {
                     </Link>
                   </>
                 )}
-                {token && <Notif />}
+                {token && <Notif notif={notif} />}
                 {!token && (
                   <>
                     <Link
