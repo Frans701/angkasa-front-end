@@ -1,21 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Transition } from "@headlessui/react";
 import angkasaLogo from "../assets/angkasaLogo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import Buttom from "./Buttom";
 import Notif from "./Notif";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/actions/authAction";
+import axios from "./axios";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
-  const { token, user } = useSelector((state) => state.auth); 
+  const { token, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const redirect = useNavigate();
   const handleLogout = () => {
     dispatch(logout());
-    redirect("/login")
+    redirect("/login");
   };
+
+  const [notif, setNotif] = useState(null);
+
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await axios.get(
+          "https://angkasa-api-staging.km3ggwp.com/api/notifications/all",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setNotif(response.data.data.notifications);
+      };
+      fetchData();
+    } catch (error) {}
+  }, []);
+
+  console.log(notif);
   return (
     <div>
       <nav className="bg-white">
@@ -28,7 +48,7 @@ function Nav() {
                   className="h-[40px]"
                   src={angkasaLogo}
                   alt="Angkasa Logo"
-                  />
+                />
               </Link>
             </div>
             <div className="hidden md:block">
@@ -39,53 +59,47 @@ function Nav() {
                 >
                   Flight
                 </Link>
-                {token&&(
-                <Link
-                  to="/check-order"
-                  className="px-3 py-2 rounded-md text-sm font-medium"
+                {token && (
+                  <Link
+                    to="/check-order"
+                    className="px-3 py-2 rounded-md text-sm font-medium"
                   >
-                  History
-                </Link>
+                    History
+                  </Link>
                 )}
-                {token&&(
-                <Link
-                  to="/profile"
-                  className="px-3 py-2 rounded-md text-sm font-medium"
+                {token && (
+                  <Link
+                    to="/profile"
+                    className="px-3 py-2 rounded-md text-sm font-medium"
                   >
-                  Profile
-                </Link>
+                    Profile
+                  </Link>
                 )}
-                {user?.role ==="ADMIN"&&(
+                {user?.role === "ADMIN" && (
                   <>
                     <Link
                       to="/admin/orders"
                       className="px-3 py-2 rounded-md text-sm font-medium"
-                      >
+                    >
                       Admin
                     </Link>
                   </>
                 )}
-                {token&&(
-                <Notif/>
-                )}
-                {!token&&(
-                <>
-                  <Link
-                    to="/login"
-                    className="px-3 py-2 rounded-md text-sm font-medium"
+                {token && <Notif notif={notif} />}
+                {!token && (
+                  <>
+                    <Link
+                      to="/login"
+                      className="px-3 py-2 rounded-md text-sm font-medium"
                     >
-                    Login
-                  </Link>
-                  <Link to="/register">
-                    <Buttom>Register</Buttom>
-                  </Link>
-                </>
+                      Login
+                    </Link>
+                    <Link to="/register">
+                      <Buttom>Register</Buttom>
+                    </Link>
+                  </>
                 )}
-                {token&&(
-                <Buttom
-                  onPress={handleLogout}>Log out
-                </Buttom>
-                )}
+                {token && <Buttom onPress={handleLogout}>Log out</Buttom>}
               </div>
             </div>
           </div>
@@ -156,51 +170,45 @@ function Nav() {
                 >
                   Flight
                 </Link>
-                {token&&(
-                <Link
-                  to="/check-order"
-                  className="px-2 py-2 rounded-md text-sm font-medium"
-                >
-                  History
-                </Link>
+                {token && (
+                  <Link
+                    to="/check-order"
+                    className="px-2 py-2 rounded-md text-sm font-medium"
+                  >
+                    History
+                  </Link>
                 )}
-                {token&&(
-                <Link
-                  to="/profile"
-                  className="px-2 py-2 rounded-md text-sm font-medium"
-                >
-                  Profile
-                </Link>
+                {token && (
+                  <Link
+                    to="/profile"
+                    className="px-2 py-2 rounded-md text-sm font-medium"
+                  >
+                    Profile
+                  </Link>
                 )}
-                {token&&(
-                  <Notif/>
-                )}
-                {user?.role ==="ADMIN"&&(
+                {token && <Notif />}
+                {user?.role === "ADMIN" && (
                   <Link
                     to="/admin/orders"
                     className="px-3 py-2 rounded-md text-sm font-medium"
-                    >
+                  >
                     Admin
                   </Link>
                 )}
-                {!token&&(
-                <div className="flex flex-row gap-[8px] items-center">
-                  <Link
-                    to="/login"
-                    className="hover:bg-blue-700 hover:text-white focus:ring-4 border-blue-700 border-2 border-solid font-medium rounded-lg text-sm px-[24px] py-2 focus:outline-none focus:ring-blue-800"
-                  >
-                    Login
-                  </Link>
-                  <Link to="/register">
-                    <Buttom>Register</Buttom>
-                  </Link>
-                </div>
+                {!token && (
+                  <div className="flex flex-row gap-[8px] items-center">
+                    <Link
+                      to="/login"
+                      className="hover:bg-blue-700 hover:text-white focus:ring-4 border-blue-700 border-2 border-solid font-medium rounded-lg text-sm px-[24px] py-2 focus:outline-none focus:ring-blue-800"
+                    >
+                      Login
+                    </Link>
+                    <Link to="/register">
+                      <Buttom>Register</Buttom>
+                    </Link>
+                  </div>
                 )}
-                {token&&(
-                <Buttom
-                  onPress={handleLogout}>Log out
-                </Buttom>
-                )}
+                {token && <Buttom onPress={handleLogout}>Log out</Buttom>}
               </div>
             </div>
           )}
