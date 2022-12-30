@@ -1,19 +1,35 @@
 import Navbar from "../components/Navbar";
 import avatar from "../assets/loginIMG.png"
 import { useDispatch, useSelector } from "react-redux";
-import { getMe } from "../redux/actions/authAction";
+import { getMe, update } from "../redux/actions/authAction";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
-import { setUser } from "../redux/reducers/authReducer";
+import { setToken, setUser } from "../redux/reducers/authReducer";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Buttom from "../components/Buttom";
 import Modal from "../components/Modal";
 
+
 const Profile=()=> {
     const { user } = useSelector((state) => state.auth);
     const [show, setShow] = useState (false)
     const handleClose = () => setShow(false);
+    const dispatch = useDispatch();
+    const [fullname, setFullname] = useState(user.fullname);
+    const [reFetch, setReFetch] = useState(false);
+
+    useEffect(()=>{
+        setReFetch(false);
+        dispatch(getMe());
+    },[reFetch])
+
+    // const handleUpdate=()=>{
+    //     dispatch(update());
+    //     // dispatch(getMe());
+    //     console.log("update",update);
+    // }
+
     return (
         <>
         <Navbar/>

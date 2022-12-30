@@ -7,6 +7,7 @@ import Notif from "./Notif";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/actions/authAction";
 import axios from "./axios";
+import "./Notif.css";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +20,6 @@ function Nav() {
   };
 
   const [notif, setNotif] = useState(null);
-
   useEffect(() => {
     try {
       const fetchData = async () => {

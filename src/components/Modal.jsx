@@ -1,12 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMe, update } from '../redux/actions/authAction';
 import { setUser } from '../redux/reducers/authReducer';
+import axios from './axios';
+
 
 function Modal({visible, onClose}) {
     const { user } = useSelector((state) => state.auth);
     const [fullname, setFullname] = useState(user.fullname);
-    const [username, setUsername] = useState(user. username);
-    const [email, setEmail] = useState (user.email);
+    const [username, setUsername] = useState(user.username);
+    const dispatch = useDispatch();
+    useEffect(()=>{
+        dispatch(getMe())
+    },[])
+
+    const handleUpdate=()=>{
+        const data = { fullname, username }
+        dispatch(update(data))
+        .then(()=>{dispatch(getMe())});
+        // console.log("update", getMe())
+    }
     const handleClose =(e)=>{
         if(e.target.id==="modal"){
             onClose()
@@ -33,8 +46,7 @@ function Modal({visible, onClose}) {
                 id="fullname"
                 className="border border-gray-700 p-2 rounded mb-5"
                 value ={fullname}
-                onChange={(e)=>{
-                    setFullname(e.target.value)}}
+                onChange={(e)=>setFullname(e.target.value)}
             />
             <span className="block text-base font-medium  text-slate-700">Username</span>
             <input
@@ -42,21 +54,12 @@ function Modal({visible, onClose}) {
                 id="username"
                 className="border border-gray-700 p-2 rounded mb-5"
                 value ={username}
-                onChange={(e)=>{
-                    setUsername(e.target.value)}}
-            />
-            <span className="block text-base font-medium  text-slate-700">Email</span>
-            <input
-                type="text"
-                id="email"
-                className="border border-gray-700 p-2 rounded mb-5"
-                value ={email}
-                onChange={(e)=>{
-                    setEmail(e.target.value)}}
+                onChange={(e)=>setUsername(e.target.value)}
             />
             </div>
             <div className="text-center">
-            <button className="px-5 py-2 bg-gray-700 text-white rounded">
+            <button className="px-5 py-2 bg-gray-700 text-white rounded" onClick={handleUpdate}
+            >
                 Update Profile
             </button>
             </div>

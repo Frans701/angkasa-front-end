@@ -5,8 +5,8 @@
     position: relative;
 }
 
-.bell::after{
-    content: "";
+.icon{
+    /* content: ""; */
     position: absolute;
     top:0;
     right :5%;

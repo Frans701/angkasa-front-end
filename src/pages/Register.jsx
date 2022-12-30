@@ -135,7 +135,6 @@ const Register = () => {
                           {error.password}
                         </p>
                   )}
-                  {/* <p className={error ? "errmsg" : "offscreen" } aria-live="assertive">{error?.password}</p> */}
                 </label>
 
                 <label className="flex flex-col py-2">
