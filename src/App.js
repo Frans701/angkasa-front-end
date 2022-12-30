@@ -32,26 +32,59 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
-          <Route path ="/" element={<ProtectedUsers setToken={setToken} token={token}/>}>
+            <Route path="/" element={<ProtectedUsers />}>
               <Route
                 path="/search"
-                element={<Search />}/>
+                element={
+                  <Protected setToken={setToken} token={token}>
+                    <Search />
+                  </Protected>
+                }
+              />
               <Route
                 path="/chart"
-                element={<Chart />}/>
+                element={
+                  <Protected setToken={setToken} token={token}>
+                    <Chart />
+                  </Protected>
+                }
+              />
+              <Route
+                path="/check-order/detail"
+                element={
+                  <Protected setToken={setToken} token={token}>
+                    <DetailHistory />
+                  </Protected>
+                }
+              />
               <Route
                 path="/check-order"
-                element={<Checkourder />}/>
-              <Route 
+                element={
+                  <Protected setToken={setToken} token={token}>
+                    <Checkourder />
+                  </Protected>
+                }
+              />
+              <Route
                 path="/profile"
-                element ={<Profile/>}/>
+                element={
+                  <Protected setToken={setToken} token={token}>
+                    <Profile />
+                  </Protected>
+                }
+              />
             </Route>
 
-            <Route path ="/" element={<ProtectedAdmin setToken={setToken} token={token}/>}>
+            <Route path="/" element={<ProtectedAdmin />}>
               <Route path="/admin/orders" element={<Orders />} />
               <Route
                 path="/search"
-                element={<Search />}/>
+                element={
+                  <Protected setToken={setToken} token={token}>
+                    <Search />
+                  </Protected>
+                }
+              />
             </Route>
           </Routes>
         </SkeletonTheme>
