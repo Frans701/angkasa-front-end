@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Buttom from "./Buttom";
-import { Transition } from "@headlessui/react";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useNavigate } from "react-router-dom";
-import axios from "./axios";
 
 const OrderCards = ({ ordersHistory }) => {
+  const redirect = useNavigate();
   return (
     <>
       <ul>
@@ -82,8 +80,17 @@ const OrderCards = ({ ordersHistory }) => {
                   </div>
                 </div>
                 <div className="w-full flex xl:items-center xl:flex-row flex-col gap-[8px] xl:gap-0 justify-end">
-                  <Link to="/chart">
-                    <Buttom color="yellow" width="w-full">
+                  <Link to="/check-order/detail">
+                    <Buttom
+                      onPress={(e) => {
+                        e.preventDefault();
+                        redirect(
+                          `/check-order/detail?identifier=${orderHistory.identifier}`
+                        );
+                      }}
+                      color="yellow"
+                      width="w-full"
+                    >
                       Details
                     </Buttom>
                   </Link>
