@@ -82,7 +82,7 @@ const OrderCards = ({ ordersHistory }) => {
                   </div>
                 </div>
                 <div className="w-full flex xl:items-center xl:flex-row flex-col gap-[8px] xl:gap-0 justify-end">
-                  <Link to="/chart">
+                  <Link to="/check-order/detail">
                     <Buttom color="yellow" width="w-full">
                       Details
                     </Buttom>
