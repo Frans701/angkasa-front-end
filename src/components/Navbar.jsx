@@ -7,6 +7,7 @@ import Notif from "./Notif";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/actions/authAction";
 import axios from "./axios";
+import "./Notif.css";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +20,6 @@ function Nav() {
   };
 
   const [notif, setNotif] = useState(null);
-
   useEffect(() => {
     try {
       const fetchData = async () => {
@@ -57,20 +57,21 @@ function Nav() {
                   to="/"
                   className="px-2 py-2 rounded-md text-sm font-medium"
                 >
-                  Flight
+                  Dashboard
                 </Link>
-                {token && (
-                  <Link
-                    to="/check-order"
-                    className="px-3 py-2 rounded-md text-sm font-medium"
+                {user?.role ==="USER"&&(
+                <Link
+                  to="/check-order"
+                  className="px-3 py-2 rounded-md text-sm font-medium"
                   >
                     History
                   </Link>
                 )}
-                {token && (
-                  <Link
-                    to="/profile"
-                    className="px-3 py-2 rounded-md text-sm font-medium"
+                {/* {token&&( */}
+                {user?.role ==="USER"&&(
+                <Link
+                  to="/profile"
+                  className="px-3 py-2 rounded-md text-sm font-medium"
                   >
                     Profile
                   </Link>
@@ -80,8 +81,8 @@ function Nav() {
                     <Link
                       to="/admin/orders"
                       className="px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Admin
+                      >
+                      Transactions
                     </Link>
                   </>
                 )}
@@ -168,31 +169,32 @@ function Nav() {
                   to="/"
                   className="px-2 py-2 rounded-md text-sm font-medium"
                 >
-                  Flight
+                  Dashboard
                 </Link>
-                {token && (
-                  <Link
-                    to="/check-order"
-                    className="px-2 py-2 rounded-md text-sm font-medium"
-                  >
-                    History
-                  </Link>
+                {user?.role ==="USER"&&(
+                <Link
+                  to="/check-order"
+                  className="px-2 py-2 rounded-md text-sm font-medium"
+                >
+                  History
+                </Link>
                 )}
-                {token && (
-                  <Link
-                    to="/profile"
-                    className="px-2 py-2 rounded-md text-sm font-medium"
-                  >
-                    Profile
-                  </Link>
+                {/* {token&&( */}
+                {user?.role ==="USER"&&(
+                <Link
+                  to="/profile"
+                  className="px-2 py-2 rounded-md text-sm font-medium"
+                >
+                  Profile
+                </Link>
                 )}
                 {token && <Notif />}
                 {user?.role === "ADMIN" && (
                   <Link
                     to="/admin/orders"
                     className="px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    Admin
+                    >
+                    Transactions
                   </Link>
                 )}
                 {!token && (

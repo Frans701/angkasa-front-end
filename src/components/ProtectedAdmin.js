@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import axios from "./axios";
 
-const ProtectedAdmin =(children, setToken)=>{
+const ProtectedAdmin =({children, setToken})=>{
     const [admin, setAdmin] = useState(localStorage.getItem("role")==="ADMIN"?true:null);
     const { token } = useSelector((state) => state.auth);
     const navigate = useNavigate();

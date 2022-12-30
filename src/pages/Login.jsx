@@ -88,7 +88,11 @@ const Login = () => {
                     required
                   />
                 </label>
-                <p className={error ? "errmsg" : "offscreen" } aria-live="assertive">{error}</p>
+                {error && (
+                        <p className="text-red-500">
+                          {error}
+                        </p>
+                )}
                 <button className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold">
                   Login
                 </button>
@@ -98,7 +102,7 @@ const Login = () => {
                 >
                   Create Account
                 </Link>
-                <fieldset>
+                {/* <fieldset>
                   <input
                     id="default-checkbox"
                     type="checkbox"
@@ -111,7 +115,7 @@ const Login = () => {
                   >
                     Remember me
                   </label>
-                </fieldset>
+                </fieldset> */}
               </form>
             </div>
           </div>

@@ -27,14 +27,6 @@ const Register = () => {
       alert("Please enter the same password");
       return;
     }
-    if (fullname === "" || username === "" || email ==="" || password === "" || passwordConfirmation===""){
-      alert("Please fill the blank field");
-      return;
-    }
-    if (password !== passwordConfirmation){
-      alert("Please enter the same password");
-      return;
-    }
     if (fullname !== "" && username !== "" && email !=="" && password === passwordConfirmation){
       const data= {
         fullname,
@@ -96,7 +88,11 @@ const Register = () => {
                     value={username}
                     required
                   />
-                  <p className={error ? "errmsg" : "offscreen" } aria-live="assertive">{error?.username}</p>
+                  {error && (
+                        <p className="text-red-500">
+                          {error.username}
+                        </p>
+                  )}
                 </label>
 
                 <label className="flex flex-col py-2">
@@ -113,7 +109,11 @@ const Register = () => {
                     value={email}
                     required
                   />
-                  <p className={error ? "errmsg" : "offscreen" } aria-live="assertive">{error?.email}</p>
+                  {error && (
+                        <p className="text-red-500">
+                          {error.email}
+                        </p>
+                  )}
                 </label>
 
                 <label className="flex flex-col py-2">
@@ -130,7 +130,11 @@ const Register = () => {
                     value={password}
                     required
                   />
-                  <p className={error ? "errmsg" : "offscreen" } aria-live="assertive">{error?.password}</p>
+                  {error && (
+                        <p className="text-red-500">
+                          {error.password}
+                        </p>
+                  )}
                 </label>
 
                 <label className="flex flex-col py-2">

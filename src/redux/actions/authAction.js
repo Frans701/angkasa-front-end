@@ -53,6 +53,27 @@ export const getMe = () => async (dispatch, getState) => {
   }
 };
 
+export const update = (data) => async (dispatch, getState) => {
+  try {
+    const { token } = getState().auth;
+    const response = await axios.put(
+      "https://angkasa-api-staging.km3ggwp.com/api/update-profile",
+      {fullname : data.fullname, 
+        username : data.username},{
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type' : 'application/json',
+
+        },
+      }
+    );
+    dispatch(setUser(response.data.data.user));
+  } catch (error) {
+    // console.log(error.message);
+    alert("error");
+  }
+};
+
 export const logout = () => async (dispatch) => {
   localStorage.removeItem("token");
   localStorage.removeItem("role");
