@@ -31,44 +31,26 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
-            <Route path ="/" element={<ProtectedUsers/>}>
+          <Route path ="/" element={<ProtectedUsers setToken={setToken} token={token}/>}>
               <Route
                 path="/search"
-                element={
-                  <Protected setToken={setToken} token={token}>
-                    <Search />
-                  </Protected>
-                }/>
+                element={<Search />}/>
               <Route
                 path="/chart"
-                element={
-                  <Protected setToken={setToken} token={token}>
-                    <Chart />
-                  </Protected>
-                }/>
+                element={<Chart />}/>
               <Route
                 path="/check-order"
-                element={
-                  <Protected setToken={setToken} token={token}>
-                    <Checkourder />
-                  </Protected>  
-                  }/>
-              <Route path="/profile" element ={
-              <Protected setToken={setToken} token={token}>
-                <Profile/>
-              </Protected>
-              }/>
+                element={<Checkourder />}/>
+              <Route 
+                path="/profile"
+                element ={<Profile/>}/>
             </Route>
 
-            <Route path ="/" element={<ProtectedAdmin/>}>
+            <Route path ="/" element={<ProtectedAdmin setToken={setToken} token={token}/>}>
               <Route path="/admin/orders" element={<Orders />} />
               <Route
                 path="/search"
-                element={
-                  <Protected setToken={setToken} token={token}>
-                    <Search />
-                  </Protected>
-                }/>
+                element={<Search />}/>
             </Route>
           </Routes>
         </SkeletonTheme>

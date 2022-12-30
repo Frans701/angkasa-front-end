@@ -37,9 +37,9 @@ function Nav() {
                   to="/"
                   className="px-2 py-2 rounded-md text-sm font-medium"
                 >
-                  Flight
+                  Dashboard
                 </Link>
-                {token&&(
+                {user?.role ==="USER"&&(
                 <Link
                   to="/check-order"
                   className="px-3 py-2 rounded-md text-sm font-medium"
@@ -47,7 +47,8 @@ function Nav() {
                   History
                 </Link>
                 )}
-                {token&&(
+                {/* {token&&( */}
+                {user?.role ==="USER"&&(
                 <Link
                   to="/profile"
                   className="px-3 py-2 rounded-md text-sm font-medium"
@@ -61,11 +62,11 @@ function Nav() {
                       to="/admin/orders"
                       className="px-3 py-2 rounded-md text-sm font-medium"
                       >
-                      Admin
+                      Transactions
                     </Link>
                   </>
                 )}
-                {token&&(
+                {user?.role ==="USER"&&(
                 <Notif/>
                 )}
                 {!token&&(
@@ -154,9 +155,9 @@ function Nav() {
                   to="/"
                   className="px-2 py-2 rounded-md text-sm font-medium"
                 >
-                  Flight
+                  Dashboard
                 </Link>
-                {token&&(
+                {user?.role ==="USER"&&(
                 <Link
                   to="/check-order"
                   className="px-2 py-2 rounded-md text-sm font-medium"
@@ -164,7 +165,8 @@ function Nav() {
                   History
                 </Link>
                 )}
-                {token&&(
+                {/* {token&&( */}
+                {user?.role ==="USER"&&(
                 <Link
                   to="/profile"
                   className="px-2 py-2 rounded-md text-sm font-medium"
@@ -172,7 +174,7 @@ function Nav() {
                   Profile
                 </Link>
                 )}
-                {token&&(
+                {user?.role ==="USER"&&(
                   <Notif/>
                 )}
                 {user?.role ==="ADMIN"&&(
@@ -180,7 +182,7 @@ function Nav() {
                     to="/admin/orders"
                     className="px-3 py-2 rounded-md text-sm font-medium"
                     >
-                    Admin
+                    Transactions
                   </Link>
                 )}
                 {!token&&(
