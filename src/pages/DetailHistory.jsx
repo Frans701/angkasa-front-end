@@ -1,8 +1,34 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import axios from "../components/axios";
+import { useSelector } from "react-redux";
 
 function DetailHistory() {
+  let [searchParams, setSearchParams] = useSearchParams();
+  let identifier = searchParams.get("identifier");
+  const { token, user } = useSelector((state) => state.auth);
+
+  const [notif, setNotif] = useState(null);
+
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await axios.get(
+          `https://angkasa-api-staging.km3ggwp.com/api/orders/${identifier}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setNotif(response);
+      };
+      fetchData();
+    } catch (error) {}
+  }, []);
+
+  console.log(notif);
+
   return (
     <>
       <Navbar />
