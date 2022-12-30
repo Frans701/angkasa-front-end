@@ -18,6 +18,7 @@ import Checkourder from "./pages/CheckOrder";
 import Orders from "./pages/admin/Orders";
 import ProtectedAdmin from "./components/ProtectedAdmin";
 import ProtectedUsers from "./components/ProtectedUsers";
+import DetailHistory from "./pages/DetailHistory";
 
 export default function App() {
   const tokenLocalStorage = localStorage.getItem("token");
@@ -31,36 +32,50 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
-            <Route path ="/" element={<ProtectedUsers/>}>
+            <Route path="/" element={<ProtectedUsers />}>
               <Route
                 path="/search"
                 element={
                   <Protected setToken={setToken} token={token}>
                     <Search />
                   </Protected>
-                }/>
+                }
+              />
               <Route
                 path="/chart"
                 element={
                   <Protected setToken={setToken} token={token}>
                     <Chart />
                   </Protected>
-                }/>
+                }
+              />
+              <Route
+                path="/check-order/detail"
+                element={
+                  <Protected setToken={setToken} token={token}>
+                    <DetailHistory />
+                  </Protected>
+                }
+              />
               <Route
                 path="/check-order"
                 element={
                   <Protected setToken={setToken} token={token}>
                     <Checkourder />
-                  </Protected>  
-                  }/>
-              <Route path="/profile" element ={
-              <Protected setToken={setToken} token={token}>
-                <Profile/>
-              </Protected>
-              }/>
+                  </Protected>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <Protected setToken={setToken} token={token}>
+                    <Profile />
+                  </Protected>
+                }
+              />
             </Route>
 
-            <Route path ="/" element={<ProtectedAdmin/>}>
+            <Route path="/" element={<ProtectedAdmin />}>
               <Route path="/admin/orders" element={<Orders />} />
               <Route
                 path="/search"
@@ -68,7 +83,8 @@ export default function App() {
                   <Protected setToken={setToken} token={token}>
                     <Search />
                   </Protected>
-                }/>
+                }
+              />
             </Route>
           </Routes>
         </SkeletonTheme>
