@@ -82,7 +82,7 @@ function Navbar() {
                       to="/admin/orders"
                       className="px-3 py-2 rounded-md text-sm font-medium"
                     >
-                      Transactions
+                      Transactionss
                     </Link>
                   </>
                 )}
