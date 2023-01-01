@@ -7,15 +7,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { register } from "../redux/actions/authAction";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 
 const Register = () => {
   const dispatch = useDispatch();
   const { token, error } = useSelector ((state) => state.auth);
+  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
+  // const [success,setSuccess] = useState(false);
   const [fullname, setFullname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [errors, setErrors] = useState("");
   const redirect = useNavigate();
   const showError = () => {
     toast.error('Salah', {
@@ -45,25 +49,16 @@ const Register = () => {
         password,
         passwordConfirmation,
       };
-      dispatch(register(data));
-      console.log(register(data));
-      // if(!error){
-      //   // redirect('/login')
-      //   alert("Success, please login with your created account")
-      // }
+      try{
+        const response = await axios.post(`${URL}/register`, data);
+        console.log(response);
+        redirect("/login");
+      } catch(e){
+        console.log(e.response.data.errors)
+        setErrors(e.response.data?.errors)
+      }
     }
   };
-  // useEffect(() => {
-  //   if (!error) {
-  //     redirect("/login")
-  //   }
-  // },[error]);
-  //   else{
-  //     // redirect("/login")
-  //     // alert("error")
-  //     console.log("error")
-  //   }
-  // }, [error]);
   return (
     <>
             <section>
@@ -107,9 +102,9 @@ const Register = () => {
                     value={username}
                     required
                   />
-                  {error && (
+                  {errors && (
                         <p className="text-red-500">
-                          {error.username}
+                          {errors.username}
                         </p>
                   )}
                 </label>
@@ -128,9 +123,9 @@ const Register = () => {
                     value={email}
                     required
                   />
-                  {error && (
+                  {errors && (
                         <p className="text-red-500">
-                          {error.email}
+                          {errors.email}
                         </p>
                   )}
                 </label>
@@ -149,9 +144,9 @@ const Register = () => {
                     value={password}
                     required
                   />
-                  {error && (
+                  {errors && (
                         <p className="text-red-500">
-                          {error.password}
+                          {errors.password}
                         </p>
                   )}
                 </label>
@@ -173,12 +168,8 @@ const Register = () => {
                 </label>
                 <button 
                 className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold"
-                onClick={!error ? (
-                  showSuccess
-                ):(
-                  showError)}
                 >
-                  Register
+                    Register
                 </button>
 
                 <Link

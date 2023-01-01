@@ -27,14 +27,12 @@ export const login = (data) => async (dispatch) => {
 export const register = (data) => async (dispatch) => {
   try {
     const response = await axios.post(`${URL}/register`, data);
-    if (response.data.data.token) {
-      localStorage.setItem("token", response.data.data.token);
-      dispatch(setToken(response.data.data.token));
-    }
+    return await axios.post(`${URL}/register`, data);
   } catch (error){
     dispatch(setError(error.response.data.errors))
-    console.log("ERROR", error.response.data.errors);
+    // console.log("ERROR", error.response.data.errors);
   }
+  
 };
 
 export const getMe = () => async (dispatch, getState) => {

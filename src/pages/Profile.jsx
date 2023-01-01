@@ -15,7 +15,6 @@ const Profile=()=> {
     const [show, setShow] = useState (false)
     const handleClose = () => setShow(false);
     const dispatch = useDispatch();
-    const [fullname, setFullname] = useState(user.fullname);
     const [reFetch, setReFetch] = useState(false);
 
     useEffect(()=>{
