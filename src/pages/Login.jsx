@@ -73,6 +73,8 @@ const Login = ({ token, setToken }) => {
     }
   };
 
+  console.log(profile);
+
   const onFailure = (err) => {
     console.log("failed", err);
   };
