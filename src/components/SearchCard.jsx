@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Fragment, useState } from "react";
 import { Combobox, Transition, Menu } from "@headlessui/react";
-import axios from "./axios";
+import axios from "axios";
 import {
   CheckIcon,
   ChevronUpDownIcon,
@@ -19,8 +19,6 @@ import {
 import { getSeatClassPopular } from "../redux/actions/SeatClassAction";
 
 function SearchCard() {
-  const AIRPORTS_URL = "/airports/popular"
-  const SEATCLASS_URL = "/seat-class"
   const [selectedFrom, setSelectedFrom] = useState({});
   const [selectedTo, setSelectedTo] = useState({});
   const [selectedSeatClass, setSelectedSeatClass] = useState({});
@@ -33,7 +31,7 @@ function SearchCard() {
   const [isLoading, setIsLoading] = useState(true);
 
   const dispatch = useDispatch();
-
+  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
   const { airports } = useSelector((state) => state.airport);
   const { seatClass } = useSelector((state) => state.seatClass);
   const { searchAirport } = useSelector((state) => state.airport);
@@ -51,7 +49,7 @@ function SearchCard() {
   useEffect(() => {
     const fetchAirports = async () => {
       const res = await axios.get(
-        AIRPORTS_URL
+        `${URL}/airports/popular`
       );
       setSelectedFrom(res.data.data.airports[0]);
       setSelectedTo(res.data.data.airports[1]);
@@ -63,7 +61,7 @@ function SearchCard() {
   useEffect(() => {
     const fetchSeatClass = async () => {
       const res = await axios.get(
-        SEATCLASS_URL
+        `${URL}/seat-class`
       );
       setSelectedSeatClass(res.data.data.seatClass[0]);
       setIsLoading(false);

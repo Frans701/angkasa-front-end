@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import axios from "../../components/axios";
+import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import Buttom from "../../components/Buttom";
 import { useNavigate } from "react-router-dom";
@@ -13,12 +13,11 @@ function Orders() {
   const { token, user } = useSelector((state) => state.auth);
   const [orders, setOrders] = useState([]);
   const [reFetch, setReFetch] = useState(false);
-  const ORDER_URL ='/orders'
+  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
   useEffect(() => {
     const fetchOrders = async () => {
       const res = await axios.get(
-        // "https://angkasa-api-staging.km3ggwp.com/api/orders?page=1&limit=10",
-        `${ORDER_URL}?page=1&limit=10`,
+        `${URL}/orders?page=1&limit=10`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -32,8 +31,7 @@ function Orders() {
 
   const onClickStatus = async (id) => {
     const { status } = await axios.put(
-      // `https://angkasa-api-staging.km3ggwp.com/api/orders/accept/${id}`,
-      `${ORDER_URL}/accept/${id}`,
+      `${URL}/orders/accept/${id}`,
       {
         id: id,
       },
@@ -118,7 +116,7 @@ function Orders() {
                                       onClickStatus(order.id);
                                     }}
                                   >
-                                    Active
+                                    Verify
                                   </Buttom>
                                 </td>
                               </tr>
