@@ -16,7 +16,6 @@ const Register = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const redirect = useNavigate();
 
-
   const handleSubmit = async (e)=>{
     e.preventDefault();
     if (fullname === "" || username === "" || email ==="" || password === "" || passwordConfirmation===""){
@@ -35,16 +34,22 @@ const Register = () => {
         password,
         passwordConfirmation,
       };
-      
       dispatch(register(data));
-      console.log(register(data));
+      if(!error){
+        redirect('/login')
+      }
     }
   };
-  useEffect(() => {
-    if (!error) {
-      redirect("/login")
-    }
-  }, [error]);
+  // useEffect(() => {
+  //   if (!error) {
+  //     redirect("/login")
+  //   }
+  //   else{
+  //     // redirect("/login")
+  //     // alert("error")
+  //     console.log("error")
+  //   }
+  // }, [error]);
   return (
     <>
             <section>

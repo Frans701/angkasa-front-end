@@ -1,10 +1,16 @@
-import axios from "axios";
+import axios from "../../components/axios";
 import { setToken, setUser, setError } from "../reducers/authReducer";
+
+const LOGIN_URL='/login'
+const REGISTER_URL = '/register'
+const GETME_URL = '/me'
+const UPDATE_URL = 'update-profile'
 
 export const login = (data) => async (dispatch) => {
   try {
     const response = await axios.post(
-      "https://angkasa-api-staging.km3ggwp.com/api/login",
+      // process.env.REACT_APP_BASE_URL,
+      LOGIN_URL,
       data
     );
     if (response.data.data.token) {
@@ -19,16 +25,14 @@ export const login = (data) => async (dispatch) => {
 
 export const register = (data) => async (dispatch) => {
   try {
-    const response = await axios.post(
-      "https://angkasa-api-staging.km3ggwp.com/api/register",
-      data
-    );
+    const response = await axios.post(REGISTER_URL, data);
     if (response.data.data.token) {
       localStorage.setItem("token", response.data.data.token);
       dispatch(setToken(response.data.data.token));
     }
-  } catch (error) {
-    dispatch(setError(error.response.data.errors));
+  } catch (error){
+    dispatch(setError(error.response.data.errors))
+    console.log("ERROR", error.response.data.errors);
   }
 };
 
@@ -36,7 +40,7 @@ export const getMe = () => async (dispatch, getState) => {
   try {
     const { token } = getState().auth;
     const response = await axios.get(
-      "https://angkasa-api-staging.km3ggwp.com/api/me",
+      GETME_URL,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -57,7 +61,7 @@ export const update = (data) => async (dispatch, getState) => {
   try {
     const { token } = getState().auth;
     const response = await axios.put(
-      "https://angkasa-api-staging.km3ggwp.com/api/update-profile",
+      UPDATE_URL,
       {fullname : data.fullname, 
         username : data.username},{
         headers: {

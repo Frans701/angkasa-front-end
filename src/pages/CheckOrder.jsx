@@ -2,17 +2,17 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import OrderCards from "../components/OrderCards";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../components/axios";
 import { useSelector } from "react-redux";
 
 function Checkourder() {
   const { token } = useSelector((state) => state.auth);
   const [ordersHistory, setOrdersHistory] = useState([]);
-
+  const HISTORY_URL = '/orders/history'
   useEffect(() => {
     const fetchAirports = async () => {
       const res = await axios.get(
-        "https://angkasa-api-staging.km3ggwp.com/api/orders/history",
+        HISTORY_URL,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

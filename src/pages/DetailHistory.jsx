@@ -9,14 +9,15 @@ function DetailHistory() {
   let [searchParams, setSearchParams] = useSearchParams();
   let identifier = searchParams.get("identifier");
   const { token, user } = useSelector((state) => state.auth);
-
   const [notif, setNotif] = useState(null);
+  const ORDER_URL = '/orders'
 
   useEffect(() => {
     try {
       const fetchData = async () => {
         const response = await axios.get(
-          `https://angkasa-api-staging.km3ggwp.com/api/orders/${identifier}`,
+          // `https://angkasa-api-staging.km3ggwp.com/api/orders/${identifier}`,
+          `${ORDER_URL}/${identifier}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

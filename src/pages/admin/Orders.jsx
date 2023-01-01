@@ -13,11 +13,12 @@ function Orders() {
   const { token, user } = useSelector((state) => state.auth);
   const [orders, setOrders] = useState([]);
   const [reFetch, setReFetch] = useState(false);
-
+  const ORDER_URL ='/orders'
   useEffect(() => {
     const fetchOrders = async () => {
       const res = await axios.get(
-        "https://angkasa-api-staging.km3ggwp.com/api/orders?page=1&limit=10",
+        // "https://angkasa-api-staging.km3ggwp.com/api/orders?page=1&limit=10",
+        `${ORDER_URL}?page=1&limit=10`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -31,7 +32,8 @@ function Orders() {
 
   const onClickStatus = async (id) => {
     const { status } = await axios.put(
-      `https://angkasa-api-staging.km3ggwp.com/api/orders/accept/${id}`,
+      // `https://angkasa-api-staging.km3ggwp.com/api/orders/accept/${id}`,
+      `${ORDER_URL}/accept/${id}`,
       {
         id: id,
       },

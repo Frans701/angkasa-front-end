@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
-import axios from "./axios";
+import axios from "axios";
 
 const ProtectedAdmin =({children, setToken})=>{
     const [admin, setAdmin] = useState(localStorage.getItem("role")==="ADMIN"?true:null);
     const { token } = useSelector((state) => state.auth);
     const navigate = useNavigate();
+    const GETME_URL="/me"
     
     useEffect(() => {
         (async () => {
         if (token) {
             try {
-            await axios.get("https://angkasa-api-staging.km3ggwp.com/api/me", {
+            await axios.get(GETME_URL, {
                 headers: {
                 Authorization: `Bearer ${token}`,
                 },

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./Notif.css";
 import { useDispatch } from "react-redux";
 import { getAllNotifications } from "../redux/actions/notifAction";
-import axios from "./axios";
+import axios from "axios";
 
 const Notif = ({ notif }) => {
   const [open, setOpen] = useState(false);

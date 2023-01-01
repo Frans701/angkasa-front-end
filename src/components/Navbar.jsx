@@ -6,7 +6,7 @@ import Buttom from "./Buttom";
 import Notif from "./Notif";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/actions/authAction";
-import axios from "./axios";
+import axios from "axios";
 import "./Notif.css";
 
 function Nav() {
@@ -20,11 +20,13 @@ function Nav() {
   };
 
   const [notif, setNotif] = useState(null);
+  const NOTIF_ALL = 'notifications/all';
   useEffect(() => {
     try {
       const fetchData = async () => {
         const response = await axios.get(
           "https://angkasa-api-staging.km3ggwp.com/api/notifications/all",
+          // NOTIF_ALL,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

@@ -6,11 +6,12 @@ import { useSelector } from "react-redux";
 function Protected({ children, setToken }) {
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const GETME_URL ="/me"
   useEffect(() => {
     (async () => {
       if (token) {
         try {
-          await axios.get("https://angkasa-api-staging.km3ggwp.com/api/me", {
+          await axios.get(GETME_URL, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

@@ -31,7 +31,7 @@ const Login = () => {
         password,
       };
       dispatch(login(data));
-      console.log(login(data));
+      // console.log(login(data));
     }
   };
 
