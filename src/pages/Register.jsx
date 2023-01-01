@@ -4,9 +4,6 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../redux/actions/authAction";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 
 const Register = () => {
@@ -21,16 +18,6 @@ const Register = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [errors, setErrors] = useState("");
   const redirect = useNavigate();
-  const showError = () => {
-    toast.error('Salah', {
-        position: toast.POSITION.BOTTOM_LEFT
-    });
-  };
-  const showSuccess = () => {
-    toast.success('Bener', {
-        position: toast.POSITION.BOTTOM_LEFT
-    });
-  };
   const handleSubmit = async (e)=>{
     e.preventDefault();
     if (fullname === "" || username === "" || email ==="" || password === "" || passwordConfirmation===""){
@@ -183,7 +170,6 @@ const Register = () => {
                 <img className="w-full h-full object-cover" src={loginIMG} alt="" />
               </div>
             </div>
-            <ToastContainer/>
             </section>
     </>
   );

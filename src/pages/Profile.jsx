@@ -93,12 +93,8 @@ const Profile=()=> {
                 <Modal onClose={handleClose} visible={show}/>
         </div>
         <Footer/>
-                <Modal onClose={handleClose} visible={show}/>
-        </div>
-        <Footer/>
         </>
-        )
-        )
+    )
 }
 
 export default Profile;

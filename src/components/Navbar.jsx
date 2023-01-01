@@ -62,7 +62,6 @@ function Navbar() {
                   className="px-2 py-2 rounded-md text-sm font-medium"
                 >
                   Dashboard
-                  Dashboard
                 </Link>
                 {user?.role ==="USER"&&(
                 <Link
