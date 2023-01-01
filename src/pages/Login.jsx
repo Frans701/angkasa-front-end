@@ -5,11 +5,13 @@ import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/actions/authAction";
 import { useNavigate, Link } from "react-router-dom";
-import { GoogleLogin, GoogleLogout } from "react-google-login";
+// import { GoogleLogin, GoogleLogout } from "react-google-login";
 import { gapi } from "gapi-script";
 import axios from "../components/axios";
+// import GoogleLogin from "../components/GoogleLogin";
+import { setToken } from "../redux/reducers/authReducer";
 
-const Login = ({ token, setToken }) => {
+const Login = () => {
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.auth);
   const redirect = useNavigate();
@@ -19,9 +21,6 @@ const Login = ({ token, setToken }) => {
   const [data, setData] = useState(null);
   const [errors, setErrors] = useState(null);
   const [role, setRole] = useState(null);
-
-  const clientId =
-    "401014098201-p74gpb0cm6ho8ofm1hcf5gmde79fqo45.apps.googleusercontent.com";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,45 +38,89 @@ const Login = ({ token, setToken }) => {
         password,
       };
       dispatch(login(data));
-      console.log(login(data));
+      // console.log(login(data));
     }
   };
 
   useEffect(() => {
-    const initClient = () => {
-      gapi.client.init({
-        clientId: clientId,
-        scope: "",
-      });
-    };
-    gapi.load("client:auth2", initClient);
-  });
+    /* global google */
+    google?.accounts.id.initialize({
+      client_id:
+        "401014098201-p74gpb0cm6ho8ofm1hcf5gmde79fqo45.apps.googleusercontent.com",
+      callback: googleHandler,
+    });
 
-  const onSuccess = async (res) => {
-    setProfile(res.profileObj);
+    google?.accounts.id.renderButton(document.getElementById("google-signin"), {
+      theme: "outline",
+      size: "large",
+      width: 200,
+    });
+
+    // google.accounts.id.prompt();
+  }, []);
+
+  const googleHandler = async (response) => {
     try {
-      const result = await axios.post(
-        "https://angkasa-api-staging.km3ggwp.com/api/login/google/callback",
-        {
-          credential: res.tokenId,
-        }
-      );
-      setData(result.data);
-      if (data.data.token) {
-        localStorage.setItem("token", result.data.data.token);
-        localStorage.setItem("role", result.data.data.user.role);
-        setToken(result.data.data.token);
-      }
+      await axios
+        .post(
+          "https://angkasa-api-staging.km3ggwp.com/api/login/google/callback",
+          {
+            credential: response.credential,
+          }
+        )
+        .then((result) => {
+          console.log(result);
+          // setData(result.data);
+          if (result.data.data.token) {
+            localStorage.setItem("token", result.data.data.token);
+            localStorage.setItem("role", result.data.data.user.role);
+            dispatch(setToken(result.data.data.token));
+            dispatch(setUser(result.data.data.token));
+            // setToken(result.data.data.token);
+            redirect("/");
+          }
+        });
     } catch (error) {
-      setErrors(error.response.data.errors);
+      // setErrors(error.response.data.errors);
     }
+    console.log(response);
   };
 
-  console.log(profile);
+  // useEffect(() => {
+  //   const initClient = () => {
+  //     gapi.client.init({
+  //       clientId: clientId,
+  //       scope: "",
+  //     });
+  //   };
+  //   gapi.load("client:auth2", initClient);
+  // });
 
-  const onFailure = (err) => {
-    console.log("failed", err);
-  };
+  // const onSuccess = async (res) => {
+  //   setProfile(res.profileObj);
+  // try {
+  //   const result = await axios.post(
+  //     "https://angkasa-api-staging.km3ggwp.com/api/login/google/callback",
+  //     {
+  //       credential: res.tokenId,
+  //     }
+  //   );
+  //   setData(result.data);
+  //   if (data.data.token) {
+  //     localStorage.setItem("token", result.data.data.token);
+  //     localStorage.setItem("role", result.data.data.user.role);
+  //     setToken(result.data.data.token);
+  //   }
+  // } catch (error) {
+  //   setErrors(error.response.data.errors);
+  // }
+  // };
+
+  // console.log(profile);
+
+  // const onFailure = (err) => {
+  //   console.log("failed", err);
+  // };
 
   // useEffect(() => {
   //   if (token) {
@@ -88,7 +131,7 @@ const Login = ({ token, setToken }) => {
   return (
     <>
       <section>
-        <Navbar setToken={setToken} token={token} />
+        <Navbar />
         <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
           <div className="hidden sm:block">
             <img className="w-full h-full object-cover" src={loginIMG} alt="" />
@@ -133,14 +176,16 @@ const Login = ({ token, setToken }) => {
                 Login
               </button>
 
-              <GoogleLogin
+              {/* <GoogleLogin
                 clientId={clientId}
                 buttonText="Sign in with Google"
                 onSuccess={onSuccess}
                 onFailure={onFailure}
                 cookiePolicy={"single_host_origin"}
                 isSignedIn={true}
-              />
+              /> */}
+              <div id="google-signin"></div>
+              {/* <GoogleLogin setToken={setToken} label="Login with Google" /> */}
 
               <Link
                 to="/register"

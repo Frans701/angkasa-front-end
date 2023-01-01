@@ -30,10 +30,7 @@ export default function App() {
         <SkeletonTheme baseColor="#F5F5F5" highlightColor="#ffffff">
           <Routes>
             <Route path="/" element={<Home token={token} />} />
-            <Route
-              path="/login"
-              element={<Login setToken={setToken} token={token} />}
-            />
+            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
             <Route path="/" element={<ProtectedUsers />}>
