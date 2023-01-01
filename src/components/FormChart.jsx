@@ -194,12 +194,13 @@ function FormChart() {
     });
     setDataPassenger(newData);
   };
-
+  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const result = await axios.post(
-        "https://angkasa-api-staging.km3ggwp.com/api/orders",
+        // "https://angkasa-api-staging.km3ggwp.com/api/orders",
+        `${URL}/orders`,
         {
           flightId: [Number(flightId)],
           totalPassengers: Number(passenger),

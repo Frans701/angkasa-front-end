@@ -5,6 +5,8 @@ import Navbar from "../components/Navbar";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../redux/actions/authAction";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -15,7 +17,16 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const redirect = useNavigate();
-
+  const showError = () => {
+    toast.error('Salah', {
+        position: toast.POSITION.BOTTOM_LEFT
+    });
+  };
+  const showSuccess = () => {
+    toast.success('Bener', {
+        position: toast.POSITION.BOTTOM_LEFT
+    });
+  };
   const handleSubmit = async (e)=>{
     e.preventDefault();
     if (fullname === "" || username === "" || email ==="" || password === "" || passwordConfirmation===""){
@@ -35,15 +46,18 @@ const Register = () => {
         passwordConfirmation,
       };
       dispatch(register(data));
-      if(!error){
-        redirect('/login')
-      }
+      console.log(register(data));
+      // if(!error){
+      //   // redirect('/login')
+      //   alert("Success, please login with your created account")
+      // }
     }
   };
   // useEffect(() => {
   //   if (!error) {
   //     redirect("/login")
   //   }
+  // },[error]);
   //   else{
   //     // redirect("/login")
   //     // alert("error")
@@ -157,13 +171,19 @@ const Register = () => {
                     required
                   />
                 </label>
-                <button className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold">
+                <button 
+                className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold"
+                onClick={!error ? (
+                  showSuccess
+                ):(
+                  showError)}
+                >
                   Register
                 </button>
+
                 <Link
                   to="/login"
-                  className="flex flex-col items-center text-sm font-medium mb-3 px-2 py-2 rounded-md"
-                >
+                  className="flex flex-col items-center text-sm font-medium mb-3 px-2 py-2 rounded-md">
                   Already Have Account?
                 </Link>
               </form>
@@ -172,6 +192,7 @@ const Register = () => {
                 <img className="w-full h-full object-cover" src={loginIMG} alt="" />
               </div>
             </div>
+            <ToastContainer/>
             </section>
     </>
   );

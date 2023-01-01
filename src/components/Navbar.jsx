@@ -20,13 +20,15 @@ function Nav() {
   };
 
   const [notif, setNotif] = useState(null);
-  const NOTIF_ALL = 'notifications/all';
+  // const NOTIF_ALL = 'notifications/all';
+  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
   useEffect(() => {
     try {
       const fetchData = async () => {
         const response = await axios.get(
-          "https://angkasa-api-staging.km3ggwp.com/api/notifications/all",
+          // "https://angkasa-api-staging.km3ggwp.com/api/notifications/all",
           // NOTIF_ALL,
+          `${URL}/notifications/all`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

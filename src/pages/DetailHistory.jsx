@@ -2,7 +2,8 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import axios from "../components/axios";
+// import axios from "../components/axios";
+import axios from "axios";
 import { useSelector } from "react-redux";
 
 function DetailHistory() {
@@ -10,14 +11,16 @@ function DetailHistory() {
   let identifier = searchParams.get("identifier");
   const { token, user } = useSelector((state) => state.auth);
   const [notif, setNotif] = useState(null);
-  const ORDER_URL = '/orders'
+  // const ORDER_URL = '/orders'
+  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
 
   useEffect(() => {
     try {
       const fetchData = async () => {
         const response = await axios.get(
           // `https://angkasa-api-staging.km3ggwp.com/api/orders/${identifier}`,
-          `${ORDER_URL}/${identifier}`,
+          // `${ORDER_URL}/${identifier}`,
+          `${URL}/orders/${identifier}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
