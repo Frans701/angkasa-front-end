@@ -30,10 +30,10 @@ const ProtectedAdmin =({children, setToken})=>{
         })();
     }, [token, navigate, setToken]);
 
-    if (!token) {
-        return <Navigate to={`/login`} />;
-    }
-    return children, admin ? <Outlet/> : <Navigate to="/"/>
-}
+  if (!token) {
+    return <Navigate to={`/login`} />;
+  }
+  return children, admin ? <Outlet /> : <Navigate to="/" />;
+};
 
 export default ProtectedAdmin;

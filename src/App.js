@@ -23,12 +23,13 @@ import DetailHistory from "./pages/DetailHistory";
 export default function App() {
   const tokenLocalStorage = localStorage.getItem("token");
   const [token, setToken] = useState(tokenLocalStorage);
+
   return (
     <>
       <Provider store={store}>
         <SkeletonTheme baseColor="#F5F5F5" highlightColor="#ffffff">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home token={token} />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 

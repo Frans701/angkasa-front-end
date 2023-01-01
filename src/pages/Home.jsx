@@ -5,7 +5,7 @@ import SearchCard from "../components/SearchCard";
 import { useSelector, useDispatch } from "react-redux";
 import { getMe } from "../redux/actions/authAction";
 
-function Home() {
+function Home({ token }) {
   const dispatch = useDispatch();
 
   useEffect(() => {

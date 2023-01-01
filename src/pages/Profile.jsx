@@ -50,14 +50,25 @@ const Profile=()=> {
                                     value={user.fullname}
                                     className="peer ... border p-2 w-full"
                                     />
+                                <span className="block text-base font-medium  text-slate-700">Name</span>
+                                <input 
+                                    value={user.fullname}
+                                    className="peer ... border p-2 w-full"
+                                    />
                                 </label>
+                            
                             
                                 <label className="block items-center py-1.5">
                                 <span className="block text-base font-medium  text-slate-700">Username</span>
                                 <input value={user.username} className="peer ... border p-2 w-full"/>
+                                <span className="block text-base font-medium  text-slate-700">Username</span>
+                                <input value={user.username} className="peer ... border p-2 w-full"/>
                                 </label>
                             
+                            
                                 <label className="block items-center py-1.5">
+                                <span className="block text-base font-medium  text-slate-700">Email</span>
+                                <input value={user.email} className="peer ... border p-2 w-full"/>
                                 <span className="block text-base font-medium  text-slate-700">Email</span>
                                 <input value={user.email} className="peer ... border p-2 w-full"/>
                                 </label>
@@ -65,10 +76,14 @@ const Profile=()=> {
                             <Buttom onPress={()=>setShow(true)}>
                                 Edit Profil
                             </Buttom>
+                            <Buttom onPress={()=>setShow(true)}>
+                                Edit Profil
+                            </Buttom>
                         </div>
                         <div className="flex col-span-3 items-center justify-center">
                             <div>
                                 <h2>Foto Profil</h2>
+                                <img src={avatar} alt="avatar" className="h-96 rounded-full"/>
                                 <img src={avatar} alt="avatar" className="h-96 rounded-full"/>
                                 <p className="flex justify-center">John Doe</p>
                             </div>
@@ -78,7 +93,11 @@ const Profile=()=> {
                 <Modal onClose={handleClose} visible={show}/>
         </div>
         <Footer/>
+                <Modal onClose={handleClose} visible={show}/>
+        </div>
+        <Footer/>
         </>
+        )
         )
 }
 

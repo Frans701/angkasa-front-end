@@ -30,11 +30,10 @@ const ProtectedUsers=({children, setToken})=>{
         })();
     }, [token, navigate, setToken]);
 
-    if (!token) {
-        return <Navigate to={`/login`} />;
-    }
-    return children, users ? <Outlet/> : <Navigate to="/"/>
-  
-}
+  if (!token) {
+    return <Navigate to={`/login`} />;
+  }
+  return children, users ? <Outlet /> : <Navigate to="/" />;
+};
 
 export default ProtectedUsers;

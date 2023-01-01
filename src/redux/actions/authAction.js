@@ -20,7 +20,7 @@ export const login = (data) => async (dispatch) => {
       dispatch(setToken(response.data.data.token));
     }
   } catch (error) {
-    dispatch(setError(error.response.data.message))
+    dispatch(setError(error.response.data.message));
   }
 };
 
