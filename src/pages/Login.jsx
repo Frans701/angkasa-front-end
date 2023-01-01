@@ -75,7 +75,6 @@ const Login = () => {
             localStorage.setItem("token", result.data.data.token);
             localStorage.setItem("role", result.data.data.user.role);
             dispatch(setToken(result.data.data.token));
-            dispatch(setUser(result.data.data.token));
             // setToken(result.data.data.token);
             redirect("/");
           }
