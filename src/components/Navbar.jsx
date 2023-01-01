@@ -9,7 +9,7 @@ import { logout } from "../redux/actions/authAction";
 import axios from "./axios";
 import "./Notif.css";
 
-function Nav() {
+function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { token, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ function Nav() {
     } catch (error) {}
   }, []);
 
-  console.log(notif);
+  // console.log(notif);
   return (
     <div>
       <nav className="bg-white">
@@ -59,19 +59,19 @@ function Nav() {
                 >
                   Dashboard
                 </Link>
-                {user?.role ==="USER"&&(
-                <Link
-                  to="/check-order"
-                  className="px-3 py-2 rounded-md text-sm font-medium"
+                {user?.role === "USER" && (
+                  <Link
+                    to="/check-order"
+                    className="px-3 py-2 rounded-md text-sm font-medium"
                   >
                     History
                   </Link>
                 )}
                 {/* {token&&( */}
-                {user?.role ==="USER"&&(
-                <Link
-                  to="/profile"
-                  className="px-3 py-2 rounded-md text-sm font-medium"
+                {user?.role === "USER" && (
+                  <Link
+                    to="/profile"
+                    className="px-3 py-2 rounded-md text-sm font-medium"
                   >
                     Profile
                   </Link>
@@ -81,7 +81,7 @@ function Nav() {
                     <Link
                       to="/admin/orders"
                       className="px-3 py-2 rounded-md text-sm font-medium"
-                      >
+                    >
                       Transactions
                     </Link>
                   </>
@@ -171,29 +171,29 @@ function Nav() {
                 >
                   Dashboard
                 </Link>
-                {user?.role ==="USER"&&(
-                <Link
-                  to="/check-order"
-                  className="px-2 py-2 rounded-md text-sm font-medium"
-                >
-                  History
-                </Link>
+                {user?.role === "USER" && (
+                  <Link
+                    to="/check-order"
+                    className="px-2 py-2 rounded-md text-sm font-medium"
+                  >
+                    History
+                  </Link>
                 )}
                 {/* {token&&( */}
-                {user?.role ==="USER"&&(
-                <Link
-                  to="/profile"
-                  className="px-2 py-2 rounded-md text-sm font-medium"
-                >
-                  Profile
-                </Link>
+                {user?.role === "USER" && (
+                  <Link
+                    to="/profile"
+                    className="px-2 py-2 rounded-md text-sm font-medium"
+                  >
+                    Profile
+                  </Link>
                 )}
                 {token && <Notif />}
                 {user?.role === "ADMIN" && (
                   <Link
                     to="/admin/orders"
                     className="px-3 py-2 rounded-md text-sm font-medium"
-                    >
+                  >
                     Transactions
                   </Link>
                 )}
@@ -220,4 +220,4 @@ function Nav() {
   );
 }
 
-export default Nav;
+export default Navbar;
