@@ -9,8 +9,8 @@ function DetailHistory() {
   let [searchParams, setSearchParams] = useSearchParams();
   let identifier = searchParams.get("identifier");
   const { token, user } = useSelector((state) => state.auth);
-  const [notif, setNotif] = useState(null);
-  const ORDER_URL = '/orders'
+
+  const [history, setHistory] = useState(null);
 
   useEffect(() => {
     try {
@@ -22,13 +22,13 @@ function DetailHistory() {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        setNotif(response);
+        setHistory(response.data.data.order);
       };
       fetchData();
     } catch (error) {}
   }, []);
 
-  console.log(notif);
+  console.log(history);
 
   return (
     <>
@@ -38,10 +38,10 @@ function DetailHistory() {
           <div className="px-[32px] py-[40px] text-sm shadow-xl bg-white border flex flex-col gap-[24px] rounded-lg w-[500px]">
             <div className="flex flex-col gap-[16px] text-center">
               <h3 className="text-4xl font-bold">Thanks for your order!</h3>
-              <p>Invoice #72FC00B9</p>
+              <p>Invoice # {history?.code}</p>
             </div>
             <div className="flex flex-col gap-[8px]">
-              <p>Hello, frans wahyu!</p>
+              <p>Hello, {history?.orderContact.fullName}!</p>
               <p>
                 You recently ordered flights from our website. Thank you for
                 your order!.
@@ -58,11 +58,13 @@ function DetailHistory() {
             <div className="flex flex-col gap-[8px]">
               <div className="flex justify-between">
                 <p>Transaction Date</p>
-                <p className="font-bold text-blue-500">Dec 29, 2022 8:32 PM</p>
+                <p className="font-bold text-blue-500">
+                  {history?.transactionDate.formatted}
+                </p>
               </div>
               <div className="flex justify-between">
                 <p>Invoice</p>
-                <p className="font-bold text-blue-500">72FC00B9</p>
+                <p className="font-bold text-blue-500">{history?.code}</p>
               </div>
             </div>
             <div className="border-dashed border-b-2 "></div>
@@ -70,16 +72,18 @@ function DetailHistory() {
               <div className="flex justify-between">
                 <p>Customer</p>
                 <p className="font-bold text-blue-500 ">
-                  franswahyu7@gmail.com
+                  {history?.orderContact.email}
                 </p>
               </div>
               <div className="flex justify-between">
                 <p>Payment Method</p>
-                <p className="font-bold text-blue-500">Bank Indonesia (BI)</p>
+                <p className="font-bold text-blue-500">
+                  {history?.paymentMethod}
+                </p>
               </div>
               <div className="flex justify-between">
                 <p>Status</p>
-                <p className="font-bold text-green-500">COMPLETED</p>
+                <p className="font-bold text-green-500">{history?.status}</p>
               </div>
             </div>
             <div className="border-dashed border-b-2 "></div>
@@ -89,46 +93,77 @@ function DetailHistory() {
             <div className="flex flex-col gap-[8px]">
               <div className="flex justify-between">
                 <p>Full Name</p>
-                <p className="font-bold text-blue-500">frans wahyu</p>
+                <p className="font-bold text-blue-500">
+                  {history?.orderContact.fullName}
+                </p>
               </div>
               <div className="flex justify-between">
                 <p>Email</p>
-                <p className="font-bold text-blue-500">franswahyu7@gmail.com</p>
+                <p className="font-bold text-blue-500">
+                  {history?.orderContact.email}
+                </p>
               </div>
               <div className="flex justify-between">
                 <p>Phone</p>
-                <p className="font-bold text-blue-500">0812919212</p>
+                <p className="font-bold text-blue-500">
+                  {history?.orderContact.phone}
+                </p>
               </div>
             </div>
             <div className="border-dashed border-b-2 "></div>
             <div>
               <p className="text-xl font-bold text-center">Flights</p>
             </div>
-            <div className="flex flex-col gap-[8px]">
-              <p>GARUDA INDONESIA - GA 421 - 2022-12-30</p>
-              <p>Soekarno-Hatta International Airport (CGK) [08:40]</p>
-              <div className="flex justify-between">
-                <p>Ngurah Rai (Bali) International Airport (DPS) [11:35]</p>
-                <p className="font-bold text-orange-500">Rp 7.372.600</p>
-              </div>
-              <p>ECONOMY</p>
-              <p>
-                1 x{" "}
-                <span className="font-bold text-orange-500">Rp 7.372.600</span>
-              </p>
-            </div>
+            {history?.orderDetails.map((detail) => {
+              return (
+                <>
+                  {" "}
+                  <div className="flex flex-col gap-[8px]">
+                    <p>
+                      {detail.airplane.airline.name} -{" "}
+                      {detail.flight.flightNumber} -{" "}
+                      {detail.flight.date.formatted}
+                    </p>
+                    <p>
+                      {detail.flight.fromAirport.name} (
+                      {detail.flight.fromAirport.iata}) [
+                      {detail.flight.std.hours}]
+                    </p>
+                    <div className="flex justify-between">
+                      <p>
+                        {detail.flight.toAirport.name} (
+                        {detail.flight.toAirport.iata}) [
+                        {detail.flight.sta.hours}]
+                      </p>
+                    </div>
+                    <p>ECONOMY</p>
+                  </div>
+                </>
+              );
+            })}
+
             <div className="border-dashed border-b-2 "></div>
             <div>
               <p className="text-xl font-bold text-center">Passengers</p>
             </div>
             <div className="flex flex-col gap-[8px]">
-              <p>joko anwar</p>
+              {history?.passengers.map((passenger) => {
+                return (
+                  <>
+                    {" "}
+                    <p>- {passenger.fullName}</p>
+                  </>
+                );
+              })}
             </div>
+
             <div className="border-dashed border-b-2 "></div>
             <div className="flex flex-col gap-[8px]">
               <div className="flex justify-between">
                 <p>Total Paid</p>
-                <p className="font-bold text-green-500">Rp 7.372.600</p>
+                <p className="font-bold text-green-500">
+                  {history?.total.formatted}
+                </p>
               </div>
             </div>
             <p>

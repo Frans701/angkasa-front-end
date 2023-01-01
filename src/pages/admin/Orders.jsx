@@ -41,7 +41,7 @@ function Orders() {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    if (status === 200) {
+    if (status === 200 || 204) {
       setReFetch(true);
     }
   };

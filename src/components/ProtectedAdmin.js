@@ -3,36 +3,37 @@ import { useSelector } from "react-redux";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const ProtectedAdmin =({children, setToken})=>{
-    const [admin, setAdmin] = useState(localStorage.getItem("role")==="ADMIN"?true:null);
-    const { token } = useSelector((state) => state.auth);
-    const navigate = useNavigate();
-    const GETME_URL="/me"
-    
-    useEffect(() => {
-        (async () => {
-        if (token) {
-            try {
-            await axios.get(GETME_URL, {
-                headers: {
-                Authorization: `Bearer ${token}`,
-                },
-            });
-            } catch (error) {
-            if (error.response.status === 401) {
-                localStorage.removeItem("token");
-                setToken(null);
-                navigate("/login");
-            }
-            }
-        }
-        })();
-    }, [token, navigate, setToken]);
+const ProtectedAdmin = ({ children, setToken }) => {
+  const [admin, setAdmin] = useState(
+    localStorage.getItem("role") === "ADMIN" ? true : null
+  );
+  const { token } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
-    if (!token) {
-        return <Navigate to={`/login`} />;
-    }
-    return children, admin ? <Outlet/> : <Navigate to="/"/>
-}
+  useEffect(() => {
+    (async () => {
+      if (token) {
+        try {
+          await axios.get("https://angkasa-api-staging.km3ggwp.com/api/me", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        } catch (error) {
+          if (error.response.status === 401) {
+            localStorage.removeItem("token");
+            setToken(null);
+            navigate("/login");
+          }
+        }
+      }
+    })();
+  }, [token, navigate, setToken]);
+
+  if (!token) {
+    return <Navigate to={`/login`} />;
+  }
+  return children, admin ? <Outlet /> : <Navigate to="/" />;
+};
 
 export default ProtectedAdmin;
