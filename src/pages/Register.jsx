@@ -4,19 +4,20 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../redux/actions/authAction";
+import axios from "axios";
 
 const Register = () => {
   const dispatch = useDispatch();
   const { token, error } = useSelector ((state) => state.auth);
+  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
+  // const [success,setSuccess] = useState(false);
   const [fullname, setFullname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [errors, setErrors] = useState("");
   const redirect = useNavigate();
-
-
   const handleSubmit = async (e)=>{
     e.preventDefault();
     if (fullname === "" || username === "" || email ==="" || password === "" || passwordConfirmation===""){
@@ -35,16 +36,16 @@ const Register = () => {
         password,
         passwordConfirmation,
       };
-      
-      dispatch(register(data));
-      console.log(register(data));
+      try{
+        const response = await axios.post(`${URL}/register`, data);
+        console.log(response);
+        redirect("/login");
+      } catch(e){
+        console.log(e.response.data.errors)
+        setErrors(e.response.data?.errors)
+      }
     }
   };
-  useEffect(() => {
-    if (!error) {
-      redirect("/login")
-    }
-  }, [error]);
   return (
     <>
             <section>
@@ -88,9 +89,9 @@ const Register = () => {
                     value={username}
                     required
                   />
-                  {error && (
+                  {errors && (
                         <p className="text-red-500">
-                          {error.username}
+                          {errors.username}
                         </p>
                   )}
                 </label>
@@ -109,9 +110,9 @@ const Register = () => {
                     value={email}
                     required
                   />
-                  {error && (
+                  {errors && (
                         <p className="text-red-500">
-                          {error.email}
+                          {errors.email}
                         </p>
                   )}
                 </label>
@@ -130,9 +131,9 @@ const Register = () => {
                     value={password}
                     required
                   />
-                  {error && (
+                  {errors && (
                         <p className="text-red-500">
-                          {error.password}
+                          {errors.password}
                         </p>
                   )}
                 </label>
@@ -152,13 +153,15 @@ const Register = () => {
                     required
                   />
                 </label>
-                <button className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold">
-                  Register
+                <button 
+                className="border w-full my-2 py-2 bg-yellow-300 text-blue-600 font-bold"
+                >
+                    Register
                 </button>
+
                 <Link
                   to="/login"
-                  className="flex flex-col items-center text-sm font-medium mb-3 px-2 py-2 rounded-md"
-                >
+                  className="flex flex-col items-center text-sm font-medium mb-3 px-2 py-2 rounded-md">
                   Already Have Account?
                 </Link>
               </form>

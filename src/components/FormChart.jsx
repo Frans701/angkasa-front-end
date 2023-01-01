@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFlight } from "../redux/actions/FlightAction";
 import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
-import axios from "./axios";
+import axios from "axios";
 import numeral from "numeral";
 import { PlusSmallIcon } from "@heroicons/react/24/solid";
 
@@ -21,6 +21,7 @@ function FormChart() {
   const [filteredItems, setFilteredItems] = useState(null);
   const [data, setData] = useState(null);
   const redirect = useNavigate();
+  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
   const [dataPassenger, setDataPassenger] = useState([]);
 
   const [selectedOptionBank, setSelectedOptionBank] = useState(null);
@@ -199,7 +200,7 @@ function FormChart() {
     event.preventDefault();
     try {
       const result = await axios.post(
-        "https://angkasa-api-staging.km3ggwp.com/api/orders",
+        `${URL}/orders`,
         {
           flightId: [Number(flightId)],
           totalPassengers: Number(passenger),

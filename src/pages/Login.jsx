@@ -5,20 +5,21 @@ import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/actions/authAction";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "../components/axios";
+import axios from "axios";
 import { setToken } from "../redux/reducers/authReducer";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.auth);
+  const { token, error } = useSelector((state) => state.auth);
   const redirect = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [profile, setProfile] = useState([]);
-  const [data, setData] = useState(null);
-  const [errors, setErrors] = useState(null);
-  const [role, setRole] = useState(null);
-
+  // const [profile, setProfile] = useState([]);
+  // const [data, setData] = useState(null);
+  // const [errors, setErrors] = useState(null);
+  // const [role, setRole] = useState(null);
+  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
+  const ID = process.env.REACT_APP_GOOGLE_CLIENT_ID || "401014098201-p74gpb0cm6ho8ofm1hcf5gmde79fqo45.apps.googleusercontent.com";
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (email === "") {
@@ -35,15 +36,18 @@ const Login = () => {
         password,
       };
       dispatch(login(data));
-      // console.log(login(data));
     }
   };
+  useEffect(()=>{
+    if(token){
+      redirect("/")
+    }
+  })
 
   useEffect(() => {
     /* global google */
     google?.accounts.id.initialize({
-      client_id:
-        "401014098201-p74gpb0cm6ho8ofm1hcf5gmde79fqo45.apps.googleusercontent.com",
+      client_id: ID,
       callback: googleHandler,
     });
 
@@ -60,23 +64,22 @@ const Login = () => {
     try {
       await axios
         .post(
-          "https://angkasa-api-staging.km3ggwp.com/api/login/google/callback",
+          `${URL}/login/google/callback`,
           {
             credential: response.credential,
           }
         )
         .then((result) => {
           console.log(result);
-          // setData(result.data);
           if (result.data.data.token) {
             localStorage.setItem("token", result.data.data.token);
             localStorage.setItem("role", result.data.data.user.role);
             dispatch(setToken(result.data.data.token));
-            // setToken(result.data.data.token);
             redirect("/");
           }
         });
     } catch (error) {
+      console.log(error)
       // setErrors(error.response.data.errors);
     }
     console.log(response);

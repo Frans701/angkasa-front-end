@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMe, update } from '../redux/actions/authAction';
-import { setUser } from '../redux/reducers/authReducer';
-import axios from './axios';
 
 
 function Modal({visible, onClose}) {

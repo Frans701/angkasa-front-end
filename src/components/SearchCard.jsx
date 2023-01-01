@@ -31,7 +31,7 @@ function SearchCard() {
   const [isLoading, setIsLoading] = useState(true);
 
   const dispatch = useDispatch();
-
+  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
   const { airports } = useSelector((state) => state.airport);
   const { seatClass } = useSelector((state) => state.seatClass);
   const { searchAirport } = useSelector((state) => state.airport);
@@ -49,7 +49,7 @@ function SearchCard() {
   useEffect(() => {
     const fetchAirports = async () => {
       const res = await axios.get(
-        "https://angkasa-api-staging.km3ggwp.com/api/airports/popular"
+        `${URL}/airports/popular`
       );
       setSelectedFrom(res.data.data.airports[0]);
       setSelectedTo(res.data.data.airports[1]);
@@ -61,7 +61,7 @@ function SearchCard() {
   useEffect(() => {
     const fetchSeatClass = async () => {
       const res = await axios.get(
-        "https://angkasa-api-staging.km3ggwp.com/api/seat-class"
+        `${URL}/seat-class`
       );
       setSelectedSeatClass(res.data.data.seatClass[0]);
       setIsLoading(false);
