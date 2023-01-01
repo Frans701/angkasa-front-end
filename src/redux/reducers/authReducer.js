@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   token: localStorage.getItem("token") || null,
   user: [],
-  error :[],
+  error: [],
 };
 
 const authSlicer = createSlice({
@@ -16,11 +16,11 @@ const authSlicer = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
-    setError:(state, action) =>{
+    setError: (state, action) => {
       state.error = action.payload;
-    }
+    },
   },
 });
 
-export const { setToken, setUser, setError} = authSlicer.actions;
+export const { setToken, setUser, setError } = authSlicer.actions;
 export default authSlicer.reducer;

@@ -161,8 +161,7 @@ const Cards = ({ fligts, loading, passenger }) => {
                               alt=""
                             />
                             <span className="text-xs xl:text-base">
-                              {flight.airplane.airplaneCode} |{" "}
-                              {flight.class.type}
+                              {flight.flightNumber} | {flight.class.type}
                             </span>
                           </div>
                           {/* <div className="font-semibold xl:text-base text-xs">

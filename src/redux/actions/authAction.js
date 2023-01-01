@@ -13,7 +13,7 @@ export const login = (data) => async (dispatch) => {
       dispatch(setToken(response.data.data.token));
     }
   } catch (error) {
-    dispatch(setError(error.response.data.message))
+    dispatch(setError(error.response.data.message));
   }
 };
 
@@ -58,12 +58,11 @@ export const update = (data) => async (dispatch, getState) => {
     const { token } = getState().auth;
     const response = await axios.put(
       "https://angkasa-api-staging.km3ggwp.com/api/update-profile",
-      {fullname : data.fullname, 
-        username : data.username},{
+      { fullname: data.fullname, username: data.username },
+      {
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type' : 'application/json',
-
+          "Content-Type": "application/json",
         },
       }
     );
