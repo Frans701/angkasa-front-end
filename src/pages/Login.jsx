@@ -5,10 +5,7 @@ import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/actions/authAction";
 import { useNavigate, Link } from "react-router-dom";
-// import { GoogleLogin, GoogleLogout } from "react-google-login";
-import { gapi } from "gapi-script";
 import axios from "../components/axios";
-// import GoogleLogin from "../components/GoogleLogin";
 import { setToken } from "../redux/reducers/authReducer";
 
 const Login = () => {
