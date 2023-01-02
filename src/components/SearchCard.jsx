@@ -31,7 +31,9 @@ function SearchCard() {
   const [isLoading, setIsLoading] = useState(true);
 
   const dispatch = useDispatch();
-  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
+  const URL =
+    process.env.REACT_APP_SERVER_URL ||
+    "https://angkasa-api-staging.km3ggwp.com/api";
   const { airports } = useSelector((state) => state.airport);
   const { seatClass } = useSelector((state) => state.seatClass);
   const { searchAirport } = useSelector((state) => state.airport);
@@ -48,9 +50,7 @@ function SearchCard() {
 
   useEffect(() => {
     const fetchAirports = async () => {
-      const res = await axios.get(
-        `${URL}/airports/popular`
-      );
+      const res = await axios.get(`${URL}/airports/popular`);
       setSelectedFrom(res.data.data.airports[0]);
       setSelectedTo(res.data.data.airports[1]);
       setIsLoading(false);
@@ -60,9 +60,7 @@ function SearchCard() {
 
   useEffect(() => {
     const fetchSeatClass = async () => {
-      const res = await axios.get(
-        `${URL}/seat-class`
-      );
+      const res = await axios.get(`${URL}/seat-class`);
       setSelectedSeatClass(res.data.data.seatClass[0]);
       setIsLoading(false);
     };
@@ -135,7 +133,7 @@ function SearchCard() {
 
   return (
     <>
-      <div className=" bg-white p-[24px] xl:absolute bottom-0 gap-[16px] rounded-lg xl:w-[1000px] w-full shadow-lg">
+      <div className="bg-white p-[24px] xl:absolute bottom-0 gap-[16px] rounded-lg xl:w-[1000px] w-full shadow-lg md:w-[600px] md:mt-[16px]">
         <div className="flex space-x-1 rounded-xl bg-blue-900/20 p-1 xl:w-[40%] w-full">
           <TabsButtom
             select={active.tab1}
@@ -158,10 +156,10 @@ function SearchCard() {
             <div className="w-full relative Z-20">
               <h6>From</h6>
               <Combobox value={selectedFrom} onChange={setSelectedFrom}>
-                <div className="relative mt-1 Z-20">
+                <div className="relative mt-1 z-30">
                   <div className="">
                     <Combobox.Input
-                      className="px-2 form-select appearance-none block w-full py-1.5 xl:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
+                      className="px-2 form-select appearance-none block w-full py-1.5 md:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
                       displayValue={(airport) =>
                         isLoading
                           ? "loading..."
@@ -296,7 +294,7 @@ function SearchCard() {
                 <div className="relative mt-1 z-20">
                   <div className="">
                     <Combobox.Input
-                      className="px-2 form-select appearance-none block w-full py-1.5 xl:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
+                      className="px-2 form-select appearance-none block w-full py-1.5 md:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
                       displayValue={(airport) =>
                         isLoading
                           ? "loading..."
@@ -434,7 +432,7 @@ function SearchCard() {
                   onChange={(e) => {
                     setSelectedDateDepature(e.target.value);
                   }}
-                  className="px-2 form-select appearance-none block w-full py-1.5 xl:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
+                  className="px-2 form-select appearance-none block w-full py-1.5 md:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
                   type="date"
                 />
               </div>
@@ -444,7 +442,7 @@ function SearchCard() {
                 <h6>Return</h6>
                 <div className="">
                   <input
-                    className="px-2 form-select appearance-none block w-full py-1.5 xl:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
+                    className="px-2 form-select appearance-none block w-full py-1.5 md:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
                     type="date"
                   />
                 </div>
@@ -460,10 +458,10 @@ function SearchCard() {
                 value={selectedSeatClass}
                 onChange={setSelectedSeatClass}
               >
-                <div className="relative mt-1">
+                <div className="relative mt-1 z-10">
                   <div className="">
                     <Combobox.Input
-                      className="px-2 form-select appearance-none block w-full py-1.5 xl:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
+                      className="px-2 form-select appearance-none block w-full py-1.5 md:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
                       displayValue={(seatClass) =>
                         isLoading ? "loading..." : seatClass.type
                       }
@@ -534,7 +532,7 @@ function SearchCard() {
             </div>
             <div className="w-full relative">
               <h6>Passenger</h6>
-              <div className="py-2 px-3 form-select appearance-none block w-full xl:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none">
+              <div className="py-2 px-3 form-select appearance-none block w-full md:text-sm text-xs font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-b-[2px] border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none">
                 <div className="w-full border-none text-sm leading-5 text-gray-900 focus:outline-none flex flex-row justify-between">
                   <MinusIcon
                     onClick={dec}
