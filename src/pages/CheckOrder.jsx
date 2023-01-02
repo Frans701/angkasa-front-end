@@ -25,9 +25,7 @@ function Checkourder() {
     <>
       <Navbar />
       <div className="px-[24px] xl:px-[80px]">
-        <p className="mt-[32px] mb-[16px]">
-          Displays the best {ordersHistory.length} flights at the best prices.
-        </p>
+        <p className="mt-[32px] mb-[16px]">Displays the history transaction.</p>
         <div className="flex flex-col gap-[16px]">
           <OrderCards ordersHistory={ordersHistory} />
         </div>

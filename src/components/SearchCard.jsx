@@ -153,7 +153,7 @@ function SearchCard() {
           className="flex flex-col gap-[16px] items-end"
         >
           <div className="flex items-end xl:flex-row flex-col justify-between mt-[16px] w-full gap-[24px]">
-            <div className="w-full relative Z-20">
+            <div className="w-full relative">
               <h6>From</h6>
               <Combobox value={selectedFrom} onChange={setSelectedFrom}>
                 <div className="relative mt-1 z-30">

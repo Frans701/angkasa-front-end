@@ -32,7 +32,7 @@ function DetailHistory() {
     <>
       <Navbar />
       <div className="p-[24px] xl:px-[80px]">
-        <div className="flex flex-row justify-center p-[24px]">
+        <div className="flex flex-row justify-center md:p-[24px]">
           <div className="px-[32px] py-[40px] text-sm shadow-xl bg-white border flex flex-col gap-[24px] rounded-lg w-[500px]">
             <div className="flex flex-col gap-[16px] text-center">
               <h3 className="text-4xl font-bold">Thanks for your order!</h3>
@@ -47,7 +47,10 @@ function DetailHistory() {
               <p>
                 Here is summary of recently the order you have been made up. You
                 can also view this invoice in our
-                <span className="font-bold text-blue-500"> Email.</span>
+                <span className="font-bold text-blue-500 text-right">
+                  {" "}
+                  Email.
+                </span>
               </p>
             </div>
             <div>
@@ -56,26 +59,28 @@ function DetailHistory() {
             <div className="flex flex-col gap-[8px]">
               <div className="flex justify-between">
                 <p>Transaction Date</p>
-                <p className="font-bold text-blue-500">
+                <p className="font-bold text-blue-500 text-right">
                   {history?.transactionDate.formatted}
                 </p>
               </div>
               <div className="flex justify-between">
                 <p>Invoice</p>
-                <p className="font-bold text-blue-500">{history?.code}</p>
+                <p className="font-bold text-blue-500 text-right">
+                  {history?.code}
+                </p>
               </div>
             </div>
             <div className="border-dashed border-b-2 "></div>
             <div className="flex flex-col gap-[8px]">
               <div className="flex justify-between">
                 <p>Customer</p>
-                <p className="font-bold text-blue-500 ">
+                <p className="font-bold text-blue-500 text-right ">
                   {history?.orderContact.email}
                 </p>
               </div>
               <div className="flex justify-between">
                 <p>Payment Method</p>
-                <p className="font-bold text-blue-500">
+                <p className="font-bold text-blue-500 text-right">
                   {history?.paymentMethod}
                 </p>
               </div>
@@ -91,19 +96,19 @@ function DetailHistory() {
             <div className="flex flex-col gap-[8px]">
               <div className="flex justify-between">
                 <p>Full Name</p>
-                <p className="font-bold text-blue-500">
+                <p className="font-bold text-blue-500 text-right">
                   {history?.orderContact.fullName}
                 </p>
               </div>
               <div className="flex justify-between">
                 <p>Email</p>
-                <p className="font-bold text-blue-500">
+                <p className="font-bold text-blue-500 text-right">
                   {history?.orderContact.email}
                 </p>
               </div>
               <div className="flex justify-between">
                 <p>Phone</p>
-                <p className="font-bold text-blue-500">
+                <p className="font-bold text-blue-500 text-right">
                   {history?.orderContact.phone}
                 </p>
               </div>

@@ -152,7 +152,7 @@ const Cards = ({ fligts, loading, passenger }) => {
                               {flight.std.hours}
                             </h1>
                           </span>
-                          <span className="text-gray-500">{`${fromDate[1]} ${fromDate[0]}`}</span>
+                          <span className="text-gray-500">{flight.std.dm}</span>
                         </div>
                         <div className="border-l-2"></div>
                         <div className="flex flex-col py-[16px]">
@@ -193,7 +193,7 @@ const Cards = ({ fligts, loading, passenger }) => {
                           <span className="w-[80px] md:text-lg text-base font-semibold">
                             {flight.sta.hours}
                           </span>
-                          <span className="text-gray-500">{`${toDate[1]} ${toDate[0]}`}</span>
+                          <span className="text-gray-500">{flight.std.dm}</span>
                         </div>
                         <div className="border-l-2"></div>
                         <div className="flex flex-col py-[16px]">

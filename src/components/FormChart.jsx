@@ -111,7 +111,6 @@ function FormChart() {
     placeholder: "Example: Kurt Cobain",
     errorMsg: "Please enter a valid full name",
     label: "Full Name",
-    pattern: "^[A-Za-z]+ [A-Za-z]+$",
   };
 
   const contactEmail = {
@@ -119,8 +118,6 @@ function FormChart() {
     type: "text",
     placeholder: "Example: kurt@gmail.com",
     errorMsg: "It should be valid email address",
-    pattern:
-      "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
     label: "Email",
   };
 
@@ -131,36 +128,6 @@ function FormChart() {
     errorMsg: "It should be valid Phone",
     label: "Phone",
   };
-
-  const contacts = [
-    {
-      id: 1,
-      name: "fullName",
-      type: "text",
-      placeholder: "Example: Kurt Cobain",
-      errorMsg: "Please enter a valid full name",
-      label: "Full Name",
-      pattern: "^[A-Za-z]+ [A-Za-z]+$",
-    },
-    {
-      id: 2,
-      name: "email",
-      type: "text",
-      placeholder: "Example: kurt@gmail.com",
-      errorMsg: "It should be valid email address",
-      pattern:
-        "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
-      label: "Email",
-    },
-    {
-      id: 3,
-      name: "phone",
-      type: "text",
-      placeholder: "Example: 082172xxxx",
-      errorMsg: "It should be valid Phone",
-      label: "Phone",
-    },
-  ];
 
   const passengers = {
     id: 1,
@@ -374,7 +341,7 @@ function FormChart() {
             <Buttom>Submit</Buttom>
           </div>
         </form>
-        <div className="flex flex-col items-start gap-[16px] lg:px-[40px] px-[16px] py-[24px] rounded-lg drop-shadow-lg bg-white lg:w-[800px] w-full relative z-0">
+        <div className="flex flex-col items-start gap-[16px] md:px-[40px] px-[16px] py-[24px] rounded-lg drop-shadow-lg bg-white lg:w-[800px] w-full relative z-0">
           <h1 className="text-2xl font-semibold">Flight</h1>
 
           <div className="flex flex-row gap-[8px] items-center">

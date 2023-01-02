@@ -31,7 +31,7 @@ const Notif = ({ notif }) => {
         {!open && <div className="icon"></div>}
 
         {open && (
-          <div className="notif flex flex-col bg-gray-100 p-4 w-72 shadow-lg absolute top-12">
+          <div className="notif flex flex-col bg-gray-100 p-4 w-72 shadow-lg md:absolute top-12">
             <div>
               <ul>
                 {notif.map((data) => (

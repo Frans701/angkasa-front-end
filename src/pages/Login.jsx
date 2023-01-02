@@ -173,16 +173,10 @@ const Login = () => {
                 Login
               </button>
 
-              {/* <GoogleLogin
-                clientId={clientId}
-                buttonText="Sign in with Google"
-                onSuccess={onSuccess}
-                onFailure={onFailure}
-                cookiePolicy={"single_host_origin"}
-                isSignedIn={true}
-              /> */}
-              <div id="google-signin"></div>
-              {/* <GoogleLogin setToken={setToken} label="Login with Google" /> */}
+              <div
+                className="flex justify-center my-[8px]"
+                id="google-signin"
+              ></div>
 
               <Link
                 to="/register"
@@ -190,20 +184,6 @@ const Login = () => {
               >
                 Create Account
               </Link>
-              {/* <fieldset>
-                  <input
-                    id="default-checkbox"
-                    type="checkbox"
-                    value=""
-                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    htmlFor="default-checkbox"
-                    className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-800"
-                  >
-                    Remember me
-                  </label>
-                </fieldset> */}
             </form>
           </div>
         </div>
