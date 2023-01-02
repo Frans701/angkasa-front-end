@@ -136,8 +136,6 @@ function FormChart() {
     placeholder: "Example: Kurt Cobain",
     errorMsg: "Please enter a valid full name",
     label: "Full Name",
-
-    pattern: "^[A-Za-z]+ [A-Za-z]+$",
   };
 
   const numberID = {
