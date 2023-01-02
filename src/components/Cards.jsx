@@ -72,7 +72,7 @@ const Cards = ({ fligts, loading, passenger }) => {
                         </span>
                         <span className="border-b-2 w-full"></span>
                         <span className="md:text-sm text-xs text-gray-300">
-                          Langsung
+                          Directly
                         </span>
                       </div>
                       <div>
