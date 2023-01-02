@@ -133,7 +133,7 @@ function SearchCard() {
 
   return (
     <>
-      <div className="bg-white p-[24px] xl:absolute bottom-0 gap-[16px] rounded-lg xl:w-[1000px] w-full shadow-lg md:w-[600px] md:mt-[16px]">
+      <div className="bg-white p-[16px] xl:absolute bottom-0 gap-[16px] rounded-lg xl:w-[1000px] w-full shadow-lg md:w-[600px] md:mt-[16px]">
         <div className="flex space-x-1 rounded-xl bg-blue-900/20 p-1 xl:w-[40%] w-full">
           <TabsButtom
             select={active.tab1}

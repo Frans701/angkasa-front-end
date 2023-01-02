@@ -21,7 +21,9 @@ function FormChart() {
   const [filteredItems, setFilteredItems] = useState(null);
   const [data, setData] = useState(null);
   const redirect = useNavigate();
-  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
+  const URL =
+    process.env.REACT_APP_SERVER_URL ||
+    "https://angkasa-api-staging.km3ggwp.com/api";
   const [dataPassenger, setDataPassenger] = useState([]);
 
   const [selectedOptionBank, setSelectedOptionBank] = useState(null);
@@ -247,12 +249,12 @@ function FormChart() {
 
   return (
     <>
-      <div className="flex xl:flex-row flex-col gap-[24px] mt-[32px] items-start">
+      <div className="flex flex-col-reverse lg:flex-row gap-[24px] mt-[32px] items-start">
         <form
           className="w-full flex-col gap-[24px] flex"
           onSubmit={handleSubmit}
         >
-          <div className="flex flex-col px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px]">
+          <div className="flex flex-col md:px-[40px] md:py-[24px] p-[16px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px]">
             <h3 className="text-2xl font-semibold">Orderer Details</h3>
             <div>
               <FormInput
@@ -291,7 +293,7 @@ function FormChart() {
           {dataPassenger.map((_, i) => {
             return (
               <>
-                <div className="flex flex-col px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px] relative z-10">
+                <div className="flex flex-col md:px-[40px] md:py-[24px] p-[16px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px] relative z-10">
                   <h3 className="text-2xl font-semibold">Passenger Details</h3>
                   <div>
                     <FormInput
@@ -353,10 +355,10 @@ function FormChart() {
             );
           })}
 
-          <div className="flex flex-col px-[40px] py-[24px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px]">
+          <div className="flex flex-col md:px-[40px] md:py-[24px] p-[16px] rounded-lg drop-shadow-lg bg-white w-full gap-[8px]">
             <div className="flex flex-col my-[8px] gap-[4px]">
               <h4>Payment Method</h4>
-              <div className="my-[4px]">
+              <div className="my-[4px] relative z-10">
                 <Select
                   styles={customStyles}
                   options={paymentMethod}
@@ -372,13 +374,20 @@ function FormChart() {
             <Buttom>Submit</Buttom>
           </div>
         </form>
-        <div className="flex flex-col items-start gap-[16px] xl:px-[40px] px-[24px] py-[24px] rounded-lg drop-shadow-lg bg-white xl:w-[800px] w-full">
-          <h1 className="text-2xl font-semibold">Penerbangan</h1>
+        <div className="flex flex-col items-start gap-[16px] lg:px-[40px] px-[16px] py-[24px] rounded-lg drop-shadow-lg bg-white lg:w-[800px] w-full relative z-0">
+          <h1 className="text-2xl font-semibold">Flight</h1>
 
-          <div>{flight?.airplane?.airline?.name}</div>
-          <div className="flex xl:flex-row flex-col justify-between xl:items-center w-full items-start gap-[16px] xl:gap-0 border-b-2 pb-[16px]">
-            <div className="flex flex-row gap-[16px] xl:items-center">
-              <div className="">
+          <div className="flex flex-row gap-[8px] items-center">
+            <img
+              className="md:w-[80px] w-[64px] border p-[8px] rounded-lg lg:hidden"
+              src={flight?.airplane?.airline?.logo}
+              alt=""
+            />
+            <p>{flight?.airplane?.airline?.name}</p>
+          </div>
+          <div className="flex lg:flex-row flex-col justify-between lg:items-center w-full items-start gap-[16px] lg:gap-0 border-b-2 pb-[16px]">
+            <div className="flex flex-row gap-[16px] md:items-center w-full">
+              <div className="hidden lg:block">
                 <img
                   className="w-[80px] border p-[8px] rounded-lg"
                   src={flight?.airplane?.airline?.logo}
@@ -386,8 +395,12 @@ function FormChart() {
                 />
               </div>
               <div className="flex flex-col gap-[8px] items-start">
-                <h1 className="font-bold text-xl">{flight?.std?.hours}</h1>
-                <span className="text-lg">{flight?.fromAirport?.iata}</span>
+                <h1 className="font-bold lg:text-xl text-base">
+                  {flight?.std?.hours}
+                </h1>
+                <span className="lg:text-lg text-sm">
+                  {flight?.fromAirport?.iata}
+                </span>
               </div>
               <div className="flex flex-row items-center w-[100px]">
                 <div className="flex flex-col items-center gap-[8px] w-full">
@@ -395,21 +408,25 @@ function FormChart() {
                     {flight?.estimated}
                   </span>
                   <span className="border-b-2 w-full"></span>
-                  <span className="text-sm text-gray-300">Langsung</span>
+                  <span className="text-sm text-gray-300">Directly</span>
                 </div>
                 <div>
                   <PaperAirplaneIcon className="h-6 w-6 text-gray-300" />
                 </div>
               </div>
               <div className="flex flex-col gap-[8px] items-start">
-                <h1 className="font-bold text-xl">{flight?.sta?.hours}</h1>
-                <span className="text-lg">{flight?.toAirport?.iata}</span>
+                <h1 className="font-bold lg:text-xl text-base">
+                  {flight?.sta?.hours}
+                </h1>
+                <span className="lg:text-lg text-sm">
+                  {flight?.toAirport?.iata}
+                </span>
               </div>
             </div>
           </div>
-          <div className="flex flex-row justify-between w-full items-center">
-            <h5 className="font-semibold xl:text-xl">Total Pembayaran</h5>
-            <h5 className="font-semibold xl:text-2xl text-blue-500">
+          <div className="flex md:flex-row flex-col justify-between w-full lg:items-center gap-[8px] items-end">
+            <h5 className="font-semibold lg:text-xl">Total Pembayaran</h5>
+            <h5 className="font-semibold lg:text-2xl text-xl text-blue-500">
               Rp{" "}
               {numeral(Number(passenger) * price[0]?.price.raw).format("0,0")}
             </h5>
