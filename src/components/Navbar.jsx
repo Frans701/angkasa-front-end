@@ -18,17 +18,16 @@ function Navbar() {
     dispatch(logout());
     redirect("/login");
   };
-  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
+  const URL =
+    process.env.REACT_APP_SERVER_URL ||
+    "https://angkasa-api-staging.km3ggwp.com/api";
   const [notif, setNotif] = useState(null);
   useEffect(() => {
     try {
       const fetchData = async () => {
-        const response = await axios.get(
-          `${URL}/notifications/all`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const response = await axios.get(`${URL}/notifications/all`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setNotif(response.data.data.notifications);
       };
       fetchData();
@@ -55,9 +54,9 @@ function Navbar() {
               <div className="flex flex-row items-center gap-[24px]">
                 <Link
                   to="/"
-                  className="px-2 py-2 rounded-md text-sm font-medium"
+                  className="px-3 py-2 rounded-md text-sm font-medium"
                 >
-                  Dashboard
+                  Home
                 </Link>
                 {user?.role === "USER" && (
                   <Link
@@ -165,12 +164,9 @@ function Navbar() {
               id="mobile-menu"
             >
               <div ref={ref} className="flex flex-col items-end gap-[16px]">
-                <Link
-                  to="/"
-                  className="px-2 py-2 rounded-md text-sm font-medium"
-                >
-                  Dashboard
-                </Link>
+                {user?.role === "USER" && (
+                  <>{token && <Notif notif={notif} />}</>
+                )}
                 {user?.role === "USER" && (
                   <Link
                     to="/check-order"
@@ -188,7 +184,6 @@ function Navbar() {
                     Profile
                   </Link>
                 )}
-                {token && <Notif />}
                 {user?.role === "ADMIN" && (
                   <Link
                     to="/admin/orders"

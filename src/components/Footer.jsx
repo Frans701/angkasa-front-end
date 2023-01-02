@@ -2,8 +2,12 @@ import React from "react";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import angkasaLogo from "../assets/angkasaLogo.svg";
 import Buttom from "./Buttom";
+import { useSelector, useDispatch } from "react-redux";
 
 function Footer() {
+  const { token, user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const redirect = useNavigate();
 
   return (
     <>
@@ -19,7 +23,7 @@ function Footer() {
                   alt="Angkasa Logo"
                 />
               </Link>
-              <p>
+              <p className="text-sm font-medium md:w-[50%] xl:w-[90%]">
                 Here you can use rows and columns to organize your footer
                 content. Lorem ipsum dolor sit amet, consectetur adipisicing
                 elit.
@@ -29,21 +33,39 @@ function Footer() {
               <h6 class="uppercase font-semibold mb-4 xl:flex justify-center md:justify-start">
                 Navigation
               </h6>
-              <p class="mb-4">
-                <a href="#!" class="">
-                  Flight
-                </a>
-              </p>
-              <p class="mb-4">
-                <a href="#!" class="">
-                  Check Order
-                </a>
-              </p>
-              <p class="mb-4">
-                <a href="#!" class="">
-                  FAQ
-                </a>
-              </p>
+              <div className="flex flex-col items-start gap-[14px]">
+                <Link to="/" className="text-sm font-medium">
+                  Home
+                </Link>
+                {user?.role === "USER" && (
+                  <Link to="/check-order" className="text-sm font-medium">
+                    History
+                  </Link>
+                )}
+                {/* {token&&( */}
+                {user?.role === "USER" && (
+                  <Link to="/profile" className="text-sm font-medium">
+                    Profile
+                  </Link>
+                )}
+                {user?.role === "ADMIN" && (
+                  <>
+                    <Link to="/admin/orders" className="text-sm font-medium">
+                      Transactions
+                    </Link>
+                  </>
+                )}
+                {!token && (
+                  <>
+                    <Link to="/login" className="text-sm font-medium">
+                      Login
+                    </Link>
+                    <Link to="/register" className="text-sm font-medium">
+                      Register
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
             <div class="xl:justify-self-center">
               <h6 class="uppercase font-semibold mb-4 xl:flex justify-center md:justify-start">

@@ -8,15 +8,14 @@ import { useSelector } from "react-redux";
 function Checkourder() {
   const { token } = useSelector((state) => state.auth);
   const [ordersHistory, setOrdersHistory] = useState([]);
-  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
+  const URL =
+    process.env.REACT_APP_SERVER_URL ||
+    "https://angkasa-api-staging.km3ggwp.com/api";
   useEffect(() => {
     const fetchAirports = async () => {
-      const res = await axios.get(
-        `${URL}/orders/history`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await axios.get(`${URL}/orders/history`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setOrdersHistory(res.data.data.orders);
     };
     fetchAirports();

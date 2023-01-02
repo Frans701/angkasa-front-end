@@ -14,12 +14,13 @@ const Login = () => {
   const redirect = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [profile, setProfile] = useState([]);
-  // const [data, setData] = useState(null);
-  // const [errors, setErrors] = useState(null);
-  // const [role, setRole] = useState(null);
-  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
-  const ID = process.env.REACT_APP_GOOGLE_CLIENT_ID || "401014098201-p74gpb0cm6ho8ofm1hcf5gmde79fqo45.apps.googleusercontent.com";
+
+  const URL =
+    process.env.REACT_APP_SERVER_URL ||
+    "https://angkasa-api-staging.km3ggwp.com/api";
+  const ID =
+    process.env.REACT_APP_GOOGLE_CLIENT_ID ||
+    "401014098201-p74gpb0cm6ho8ofm1hcf5gmde79fqo45.apps.googleusercontent.com";
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (email === "") {
@@ -38,11 +39,11 @@ const Login = () => {
       dispatch(login(data));
     }
   };
-  useEffect(()=>{
-    if(token){
-      redirect("/")
+  useEffect(() => {
+    if (token) {
+      redirect("/");
     }
-  })
+  });
 
   useEffect(() => {
     /* global google */
@@ -63,12 +64,9 @@ const Login = () => {
   const googleHandler = async (response) => {
     try {
       await axios
-        .post(
-          `${URL}/login/google/callback`,
-          {
-            credential: response.credential,
-          }
-        )
+        .post(`${URL}/login/google/callback`, {
+          credential: response.credential,
+        })
         .then((result) => {
           console.log(result);
           if (result.data.data.token) {
@@ -79,7 +77,7 @@ const Login = () => {
           }
         });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       // setErrors(error.response.data.errors);
     }
     console.log(response);
