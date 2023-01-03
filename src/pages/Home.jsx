@@ -22,25 +22,27 @@ function Home() {
 
   useEffect(() => {
     if (!token) {
-      /* global google */
-      google?.accounts.id.initialize({
-        client_id: ID,
-        callback: googleHandler,
-        cancel_on_tap_outside: false,
-        prompt_parent_id: "g_id_onload",
-      });
+      if (window.google) {
+        /* global google */
+        google?.accounts.id.initialize({
+          client_id: ID,
+          callback: googleHandler,
+          cancel_on_tap_outside: false,
+          prompt_parent_id: "g_id_onload",
+        });
 
-      google?.accounts.id.renderButton(
-        document.getElementById("google-signin"),
-        {
-          theme: "outline",
-          size: "large",
-          width: 200,
-        }
-      );
+        google?.accounts.id.renderButton(
+          document.getElementById("google-signin"),
+          {
+            theme: "outline",
+            size: "large",
+            width: 200,
+          }
+        );
 
-      // document.cookie = `g_state=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT`;
-      google?.accounts.id.prompt();
+        // document.cookie = `g_state=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT`;
+        google?.accounts.id.prompt();
+      }
     }
   }, []);
 
