@@ -11,8 +11,7 @@ function DetailHistory() {
   const { token, user } = useSelector((state) => state.auth);
   const [history, setHistory] = useState(null);
   const URL =
-    process.env.REACT_APP_SERVER_URL ||
-    "https://angkasa-api-staging.km3ggwp.com/api";
+    process.env.REACT_APP_SERVER_URL || "https://angkasa-api.km3ggwp.com/api";
 
   useEffect(() => {
     try {

@@ -32,8 +32,7 @@ function SearchCard() {
 
   const dispatch = useDispatch();
   const URL =
-    process.env.REACT_APP_SERVER_URL ||
-    "https://angkasa-api-staging.km3ggwp.com/api";
+    process.env.REACT_APP_SERVER_URL || "https://angkasa-api.km3ggwp.com/api";
   const { airports } = useSelector((state) => state.airport);
   const { seatClass } = useSelector((state) => state.seatClass);
   const { searchAirport } = useSelector((state) => state.airport);

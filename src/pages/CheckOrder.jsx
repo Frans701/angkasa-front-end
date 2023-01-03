@@ -9,8 +9,7 @@ function Checkourder() {
   const { token } = useSelector((state) => state.auth);
   const [ordersHistory, setOrdersHistory] = useState([]);
   const URL =
-    process.env.REACT_APP_SERVER_URL ||
-    "https://angkasa-api-staging.km3ggwp.com/api";
+    process.env.REACT_APP_SERVER_URL || "https://angkasa-api.km3ggwp.com/api";
   useEffect(() => {
     const fetchAirports = async () => {
       const res = await axios.get(`${URL}/orders/history`, {

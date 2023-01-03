@@ -10,8 +10,7 @@ const Register = () => {
   const dispatch = useDispatch();
   const { token, error } = useSelector((state) => state.auth);
   const URL =
-    process.env.REACT_APP_SERVER_URL ||
-    "https://angkasa-api-staging.km3ggwp.com/api";
+    process.env.REACT_APP_SERVER_URL || "https://angkasa-api.km3ggwp.com/api";
 
   const [fullname, setFullname] = useState("");
   const [username, setUsername] = useState("");

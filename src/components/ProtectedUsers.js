@@ -9,7 +9,8 @@ const ProtectedUsers = ({ children, setToken }) => {
   );
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
+  const URL =
+    process.env.REACT_APP_SERVER_URL || "https://angkasa-api.km3ggwp.com/api";
   useEffect(() => {
     (async () => {
       if (token) {

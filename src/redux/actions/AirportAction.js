@@ -4,12 +4,11 @@ import {
   getSearchAirportReducer,
 } from "../reducers/airportReducer";
 
-const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
+const URL =
+  process.env.REACT_APP_SERVER_URL || "https://angkasa-api.km3ggwp.com/api";
 export const getAirportPopular = () => async (dispatch) => {
   try {
-    const { data } = await axios.get(
-      `${URL}/airports/popular`
-    );
+    const { data } = await axios.get(`${URL}/airports/popular`);
 
     dispatch(getAirportPopularReducer(data.data.airports));
   } catch (error) {
@@ -19,9 +18,7 @@ export const getAirportPopular = () => async (dispatch) => {
 
 export const getSearchPopular = (query) => async (dispatch) => {
   try {
-    const { data } = await axios.get(
-      `${URL}/airports/search?airport=${query}`
-    );
+    const { data } = await axios.get(`${URL}/airports/search?airport=${query}`);
 
     dispatch(getSearchAirportReducer(data));
   } catch (error) {

@@ -13,15 +13,13 @@ function Orders() {
   const { token, user } = useSelector((state) => state.auth);
   const [orders, setOrders] = useState([]);
   const [reFetch, setReFetch] = useState(false);
-  const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
+  const URL =
+    process.env.REACT_APP_SERVER_URL || "https://angkasa-api.km3ggwp.com/api";
   useEffect(() => {
     const fetchOrders = async () => {
-      const res = await axios.get(
-        `${URL}/orders?page=1&limit=10`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await axios.get(`${URL}/orders?page=1&limit=10`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setOrders(res.data.data.orders);
     };
     fetchOrders();

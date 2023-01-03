@@ -4,7 +4,8 @@ import {
   getFlightReducer,
 } from "../reducers/flightReducer";
 
-const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
+const URL =
+  process.env.REACT_APP_SERVER_URL || "https://angkasa-api.km3ggwp.com/api";
 export const getSearchFlight =
   (departure, arrival, date, seatClass) => async (dispatch) => {
     try {
@@ -20,9 +21,7 @@ export const getSearchFlight =
 
 export const getFlight = (flightId, seatClass) => async (dispatch) => {
   try {
-    const { data } = await axios.get(
-      `${URL}//flights/${flightId}`
-    );
+    const { data } = await axios.get(`${URL}//flights/${flightId}`);
 
     const filteredArray = data.data.flight?.class?.filter(
       (flight) => flight.type === `${seatClass}`

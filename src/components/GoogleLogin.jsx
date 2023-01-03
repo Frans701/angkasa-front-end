@@ -4,7 +4,8 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
-const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
+const URL =
+  process.env.REACT_APP_SERVER_URL || "https://angkasa-api.km3ggwp.com/api";
 
 function GoogleLogin({ setToken, label }) {
   const redirect = useNavigate();
@@ -14,10 +15,7 @@ function GoogleLogin({ setToken, label }) {
         const data = {
           credential: response.access_token,
         };
-        const result = await axios.post(
-          `${URL}/login/google/callback`,
-          data
-        );
+        const result = await axios.post(`${URL}/login/google/callback`, data);
         if (result.data.data.token) {
           localStorage.setItem("token", result.data.data.token);
           setToken(result.data.data.token);

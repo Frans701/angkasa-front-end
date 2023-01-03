@@ -16,8 +16,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const URL =
-    process.env.REACT_APP_SERVER_URL ||
-    "https://angkasa-api-staging.km3ggwp.com/api";
+    process.env.REACT_APP_SERVER_URL || "https://angkasa-api.km3ggwp.com/api";
   const ID =
     process.env.REACT_APP_GOOGLE_CLIENT_ID ||
     "401014098201-p74gpb0cm6ho8ofm1hcf5gmde79fqo45.apps.googleusercontent.com";
@@ -97,7 +96,7 @@ const Login = () => {
   //   setProfile(res.profileObj);
   // try {
   //   const result = await axios.post(
-  //     "https://angkasa-api-staging.km3ggwp.com/api/login/google/callback",
+  //     "https://angkasa-api.km3ggwp.com/api/login/google/callback",
   //     {
   //       credential: res.tokenId,
   //     }

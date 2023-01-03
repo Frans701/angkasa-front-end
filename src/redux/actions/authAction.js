@@ -1,13 +1,11 @@
 import axios from "axios";
 import { setToken, setUser, setError } from "../reducers/authReducer";
 
-const URL = process.env.REACT_APP_SERVER_URL || "https://angkasa-api-staging.km3ggwp.com/api";
+const URL =
+  process.env.REACT_APP_SERVER_URL || "https://angkasa-api.km3ggwp.com/api";
 export const login = (data) => async (dispatch) => {
   try {
-    const response = await axios.post(
-      `${URL}/login`,
-      data
-    );
+    const response = await axios.post(`${URL}/login`, data);
     if (response.data.data.token) {
       localStorage.setItem("token", response.data.data.token);
       localStorage.setItem("role", response.data.data.user.role);
@@ -21,14 +19,11 @@ export const login = (data) => async (dispatch) => {
 export const getMe = () => async (dispatch, getState) => {
   try {
     const { token } = getState().auth;
-    const response = await axios.get(
-      `${URL}/me`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${URL}/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     dispatch(setUser(response.data.data.user));
   } catch (error) {
     // eslint-disable-next-line
