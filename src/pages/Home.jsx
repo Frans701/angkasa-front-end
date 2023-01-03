@@ -20,8 +20,6 @@ function Home() {
     dispatch(getMe());
   }, [dispatch]);
 
-  console.log(token);
-
   useEffect(() => {
     /* global google */
     if (!token) {
@@ -41,6 +39,7 @@ function Home() {
         }
       );
 
+      // document.cookie = `g_state=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT`;
       google.accounts.id.prompt();
     }
   }, []);
@@ -63,8 +62,9 @@ function Home() {
       console.log(error);
       // setErrors(error.response.data.errors);
     }
-    console.log(response);
   };
+
+  console.log(token);
 
   return (
     <>

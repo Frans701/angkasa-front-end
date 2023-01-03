@@ -12,13 +12,14 @@ import "./Notif.css";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { token, user } = useSelector((state) => state.auth);
+  const [notif, setNotif] = useState([]);
   const dispatch = useDispatch();
   const redirect = useNavigate();
   const handleLogout = () => {
     dispatch(logout());
     redirect("/login");
   };
-  const [notif, setNotif] = useState(null);
+
   const URL =
     process.env.REACT_APP_SERVER_URL || "https://angkasa-api.km3ggwp.com/api";
 
@@ -32,7 +33,9 @@ function Navbar() {
       };
       fetchData();
     } catch (error) {}
-  }, []);
+  }, [user]);
+
+  console.log(notif);
 
   // console.log(notif);
   return (
