@@ -21,8 +21,8 @@ function Home() {
   }, [dispatch]);
 
   useEffect(() => {
-    /* global google */
     if (!token) {
+      /* global google */
       google?.accounts.id.initialize({
         client_id: ID,
         callback: googleHandler,
@@ -40,7 +40,7 @@ function Home() {
       );
 
       // document.cookie = `g_state=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT`;
-      google.accounts.id.prompt();
+      google?.accounts.id.prompt();
     }
   }, []);
 
