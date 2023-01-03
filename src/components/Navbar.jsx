@@ -18,9 +18,8 @@ function Navbar() {
     dispatch(logout());
     redirect("/login");
   };
-  const URL =
-    process.env.REACT_APP_SERVER_URL || "https://angkasa-api.km3ggwp.com/api";
   const [notif, setNotif] = useState(null);
+
   useEffect(() => {
     try {
       const fetchData = async () => {

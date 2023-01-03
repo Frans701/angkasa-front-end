@@ -82,48 +82,6 @@ const Login = () => {
     console.log(response);
   };
 
-  // useEffect(() => {
-  //   const initClient = () => {
-  //     gapi.client.init({
-  //       clientId: clientId,
-  //       scope: "",
-  //     });
-  //   };
-  //   gapi.load("client:auth2", initClient);
-  // });
-
-  // const onSuccess = async (res) => {
-  //   setProfile(res.profileObj);
-  // try {
-  //   const result = await axios.post(
-  //     "https://angkasa-api.km3ggwp.com/api/login/google/callback",
-  //     {
-  //       credential: res.tokenId,
-  //     }
-  //   );
-  //   setData(result.data);
-  //   if (data.data.token) {
-  //     localStorage.setItem("token", result.data.data.token);
-  //     localStorage.setItem("role", result.data.data.user.role);
-  //     setToken(result.data.data.token);
-  //   }
-  // } catch (error) {
-  //   setErrors(error.response.data.errors);
-  // }
-  // };
-
-  // console.log(profile);
-
-  // const onFailure = (err) => {
-  //   console.log("failed", err);
-  // };
-
-  // useEffect(() => {
-  //   if (token) {
-  //     redirect("/");
-  //   }
-  // }, [token]);
-
   return (
     <>
       <section>
