@@ -32,8 +32,6 @@ function FormChart() {
     dispatch(getFlight(flightId, seatClass));
   }, [dispatch]);
 
-  // console.log(data);
-
   const [values, setValues] = useState({
     email: "",
     fullName: "",
@@ -179,8 +177,6 @@ function FormChart() {
     label: "",
   };
 
-  // console.log(username);
-
   const onChangeOrder = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
@@ -237,12 +233,6 @@ function FormChart() {
       setDataPassenger(passengersData);
     }
   }, [passenger]);
-
-  console.log(dataPassenger);
-
-  console.log(values);
-
-  console.log(errors);
 
   return (
     <>

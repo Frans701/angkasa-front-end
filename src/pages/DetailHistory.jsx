@@ -27,8 +27,6 @@ function DetailHistory() {
     } catch (error) {}
   }, []);
 
-  console.log(notif);
-
   return (
     <>
       <Navbar />

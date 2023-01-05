@@ -35,7 +35,6 @@ function Nav() {
     } catch (error) {}
   }, []);
 
-  console.log(notif);
   return (
     <div>
       <nav className="bg-white">
