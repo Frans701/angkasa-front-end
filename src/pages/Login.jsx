@@ -45,18 +45,22 @@ const Login = () => {
   });
 
   useEffect(() => {
-    /* global google */
-    google?.accounts.id.initialize({
-      client_id: ID,
-      callback: googleHandler,
-    });
+    if (window.google) {
+      /* global google */
+      google?.accounts.id.initialize({
+        client_id: ID,
+        callback: googleHandler,
+      });
 
-    google?.accounts.id.renderButton(document.getElementById("google-signin"), {
-      theme: "outline",
-      size: "large",
-      width: 200,
-    });
-
+      google?.accounts.id.renderButton(
+        document.getElementById("google-signin"),
+        {
+          theme: "outline",
+          size: "large",
+          width: 200,
+        }
+      );
+    }
     // google.accounts.id.prompt();
   }, []);
 
