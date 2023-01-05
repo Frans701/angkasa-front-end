@@ -61,12 +61,9 @@ function Home() {
           }
         });
     } catch (error) {
-      console.log(error);
       // setErrors(error.response.data.errors);
     }
   };
-
-  console.log(token);
 
   return (
     <>

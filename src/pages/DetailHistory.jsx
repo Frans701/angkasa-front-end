@@ -25,8 +25,6 @@ function DetailHistory() {
     } catch (error) {}
   }, []);
 
-  console.log(history);
-
   return (
     <>
       <Navbar />

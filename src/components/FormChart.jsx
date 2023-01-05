@@ -205,12 +205,6 @@ function FormChart() {
     }
   }, [passenger]);
 
-  console.log(dataPassenger);
-
-  console.log(values);
-
-  console.log(errors);
-
   return (
     <>
       <div className="flex flex-col-reverse lg:flex-row gap-[24px] mt-[32px] items-start">

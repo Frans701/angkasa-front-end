@@ -67,7 +67,6 @@ const Login = () => {
           credential: response.credential,
         })
         .then((result) => {
-          console.log(result);
           if (result.data.data.token) {
             localStorage.setItem("token", result.data.data.token);
             localStorage.setItem("role", result.data.data.user.role);
@@ -76,10 +75,8 @@ const Login = () => {
           }
         });
     } catch (error) {
-      console.log(error);
       // setErrors(error.response.data.errors);
     }
-    console.log(response);
   };
 
   return (

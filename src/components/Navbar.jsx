@@ -35,8 +35,6 @@ function Navbar() {
     } catch (error) {}
   }, [user]);
 
-  console.log(notif);
-
   // console.log(notif);
   return (
     <div>

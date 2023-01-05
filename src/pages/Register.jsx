@@ -50,10 +50,8 @@ const Register = () => {
       };
       try {
         const response = await axios.post(`${URL}/register`, data);
-        console.log(response);
         redirect("/login");
       } catch (e) {
-        console.log(e.response.data.errors);
         setErrors(e.response.data?.errors);
       }
     }
