@@ -83,7 +83,15 @@ function DetailHistory() {
               </div>
               <div className="flex justify-between">
                 <p>Status</p>
-                <p className="font-bold text-green-500">{history?.status}</p>
+                <p
+                  className={
+                    history?.status === "COMPLETED"
+                      ? "font-bold text-green-500"
+                      : "text-orange-500"
+                  }
+                >
+                  {history?.status}
+                </p>
               </div>
             </div>
             <div className="border-dashed border-b-2 "></div>
